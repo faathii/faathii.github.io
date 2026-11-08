@@ -30,3 +30,4 @@ export const BlueprintFooter: React.FC = () => {
     </footer>
   );
 };
+
