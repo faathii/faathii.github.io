@@ -1,19 +1,22 @@
 import type { Project, SkillCategory, TimelineItem } from '../types';
 
 export const PERSONAL_INFO = {
-  name: 'Hamza',
-  title: 'Ingeniero de Sistemas Ciberfísicos & Desarrollador Full-Stack',
-  tagline: 'Convergencia entre software de alto rendimiento, sistemas embebidos (IoT) y ciberseguridad.',
-  bio: 'Ingeniero con enfoque sistémico especializado en el diseño de soluciones ciberfísicas integrales: desde el trazado y ruteo de PCBs y desarrollo de firmware sobre Raspberry Pi 5 / microcontroladores, hasta arquitecturas de software concurrente en C#, Python y Node.js, y auditoría de seguridad defensiva.',
-  location: 'Madrid, España',
+  name: 'Hamza El Fathi Sofyani',
+  shortName: 'Hamza',
+  title: 'Ingeniero de Sistemas Ciberfísicos, Administración IT & Full-Stack',
+  tagline: 'Convergencia entre software de alto rendimiento, sistemas embebidos (IoT), infraestructuras y ciberseguridad.',
+  bio: 'Técnico IT especializado en soporte informático, administración de sistemas (Windows Server / Linux / M365) y automatización de procesos. Estudiante de Grado en Ingeniería Informática (UNED) y Certificado en Ciberseguridad por Cisco. Experiencia en desarrollo con Python, C#, C++, Java, diseño de PCBs electrónicas, integración de IA y proyectos de hardening y seguridad.',
+  location: 'Ávila / Madrid, España',
+  phone: '+34 609 38 64 12',
   availability: 'Disponible para proyectos de alta exigencia técnica',
-  email: 'contacto.hamza.dev@gmail.com',
+  email: 'hamzaelfathisofyani@gmail.com',
   github: 'https://github.com',
   linkedin: 'https://linkedin.com',
+  cvPdfPath: './Curriculum_Hamza_El_Fathi_Sofyani.pdf',
   stats: [
-    { label: 'Enfoque Técnico', value: 'Hardware + Software + Sec' },
-    { label: 'Proyectos de Ingeniería', value: '5 Clave' },
-    { label: 'Ecosistemas Dominados', value: 'C#, Python, Linux, C++' },
+    { label: 'Especialización', value: 'Sistemas & Ciberseguridad' },
+    { label: 'Certificación', value: 'Cisco Cybersecurity' },
+    { label: 'Grado Universitario', value: 'Ing. Informática (UNED)' },
   ],
 };
 
@@ -25,6 +28,7 @@ export const PROJECTS_DATA: Project[] = [
     category: 'IoT & Hardware',
     iconName: 'Cpu',
     badge: 'Hardware + Firmware + Cloud',
+    imageUrl: 'iqsense-render',
     description: 'Plataforma embebida end-to-end desplegada sobre Raspberry Pi 5 que orquesta la monitorización continua y la actuación autónoma (riego y nebulización) con telemetría en tiempo real.',
     longDescription: 'iQsense 2.0 es una solución integral de ingeniería que combina telemetría en tiempo real, firmware asíncrono sobre Raspberry Pi 5 y microcontroladores C++, control de actuadores de potencia, diseño de PCB a medida y envolventes paramétricas modeladas con la API de Python en Blender y fabricadas mediante impresión 3D.',
     challenge: 'Asegurar lectura fiable de sensores analógicos/digitales bajo condiciones de humedad extrema, mitigar picos de tensión inductiva generados por electroválvulas y bombas, y mantener un servicio daemon ininterrumpido 24/7 sin latencia de red.',
@@ -79,6 +83,7 @@ export const PROJECTS_DATA: Project[] = [
     category: 'Videojuegos',
     iconName: 'Gamepad2',
     badge: 'Game Architecture & C#',
+    imageUrl: 'godot-runner',
     description: 'Videojuego de acción y supervivencia cenital desarrollado con el motor Godot 4 y C#, enfocado en patrones de optimización de memoria para combate fluido a 60 FPS estables.',
     longDescription: 'Videojuego de acción con mecánicas cinéticas exigentes. Construido bajo una arquitectura fuertemente desacoplada en C# (.NET Core), implementa reciclaje dinámico de memoria para hordas masivas de proyectiles y una máquina de estados finitos jerárquica para la inteligencia artificial.',
     challenge: 'Evitar caídas de fotogramas (micro-stuttering) generadas por la recolección de basura (GC) de .NET al instanciar y destruir cientos de balas y partículas simultáneamente.',
@@ -106,6 +111,7 @@ export const PROJECTS_DATA: Project[] = [
     category: 'IoT & Hardware',
     iconName: 'Layers',
     badge: 'Diseño Electrónico & CAD',
+    imageUrl: 'pcb-esp32',
     description: 'Diseño e ingeniería física de placas de circuito impreso multicapa complementarias para Raspberry Pi y automatización paramétrica de envolventes mecánicas mediante scripts de Python.',
     longDescription: 'Laboratorio de prototipado rápido que une el diseño esquemático y ruteo de PCBs de 2 capas con tolerancias industriales, selección de componentes pasivos/activos SMD, y desarrollo de scripts en Python dentro de Blender y FreeCAD para la generación automática de carcasas adaptadas al milímetro.',
     challenge: 'Garantizar el ancho de pista adecuado para corrientes de control, preservar la integridad de señal en buses digitales de alta frecuencia y asegurar encaje mecánico perfecto entre carcasa impresa y conectores.',
@@ -157,80 +163,86 @@ export const PROJECTS_DATA: Project[] = [
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
-    title: 'Desarrollo de Software & Arquitectura',
-    icon: 'Code2',
-    description: 'Construcción de software concurrente, modular y orientado al alto rendimiento.',
-    skills: [
-      { name: 'Python (Asyncio / Data / Automation)', level: 'Avanzado', highlight: true },
-      { name: 'C# (.NET Core / Godot)', level: 'Avanzado', highlight: true },
-      { name: 'TypeScript / JavaScript', level: 'Avanzado', highlight: true },
-      { name: 'Node.js & Express (Event Loop)', level: 'Avanzado' },
-      { name: 'React & Tailwind CSS', level: 'Avanzado', highlight: true },
-      { name: 'WebSockets & APIs REST', level: 'Avanzado' },
-      { name: 'Git & Flujo de Trabajo en Equipos', level: 'Avanzado' }
-    ]
-  },
-  {
-    title: 'Sistemas Embebidos & IoT (Edge)',
-    icon: 'Cpu',
-    description: 'Interconexión de lógica digital con sensores y actuadores del mundo físico.',
-    skills: [
-      { name: 'Raspberry Pi 5 (Linux Embedded)', level: 'Avanzado', highlight: true },
-      { name: 'Arduino & Microcontroladores C++', level: 'Avanzado', highlight: true },
-      { name: 'Buses: I2C, SPI, UART, GPIO', level: 'Avanzado', highlight: true },
-      { name: 'Servicios Residentes (Systemd Daemons)', level: 'Avanzado' },
-      { name: 'Adquisición & Filtrado de Señal', level: 'Avanzado', highlight: true },
-      { name: 'Control de Potencia & Relés', level: 'Avanzado' }
-    ]
-  },
-  {
-    title: 'Hardware, PCBs & CAD Paramétrico',
-    icon: 'Box',
-    description: 'Diseño de circuitos electrónicos físicos y manufactura digital.',
-    skills: [
-      { name: 'Diseño Esquemático & Ruteo de PCBs', level: 'Avanzado', highlight: true },
-      { name: 'Blender Python API (Modelado Procedural)', level: 'Avanzado', highlight: true },
-      { name: 'FreeCAD & Modelado Paramétrico', level: 'Intermedio-Avanzado' },
-      { name: 'Selección de Componentes SMD & BOM', level: 'Avanzado' },
-      { name: 'Impresión 3D FDM & Tolerancias', level: 'Avanzado', highlight: true },
-      { name: 'Prototipado por Mecanizado CNC', level: 'Intermedio' }
-    ]
-  },
-  {
-    title: 'Ciberseguridad & Administración de Sistemas',
+    title: 'Sistemas Operativos, Cloud & IT',
     icon: 'Shield',
-    description: 'Auditoría técnica de redes, análisis de vulnerabilidades y resiliencia.',
+    description: 'Administración de infraestructuras empresariales, virtualización y gestión cloud.',
     skills: [
-      { name: 'Kali Linux & Distribuciones Debian', level: 'Avanzado', highlight: true },
-      { name: 'Bash Scripting Avanzado', level: 'Avanzado', highlight: true },
-      { name: 'Nmap & Nmap Scripting Engine (NSE)', level: 'Avanzado', highlight: true },
-      { name: 'Análisis de Protocolos (Wireshark/TCPdump)', level: 'Intermedio-Avanzado' },
-      { name: 'Hardening de Infraestructura & Firewalls', level: 'Intermedio-Avanzado' },
-      { name: 'Virtualización & Contenedores', level: 'Intermedio' }
+      { name: 'Windows Server & Active Directory', level: 'Avanzado', highlight: true },
+      { name: 'Linux Desktop & Server (Debian/Kali/Ubuntu)', level: 'Avanzado', highlight: true },
+      { name: 'Microsoft 365 & Entra ID (Azure AD)', level: 'Avanzado', highlight: true },
+      { name: 'Virtualización (Entornos Virtuales/KVM/VMware)', level: 'Avanzado' },
+      { name: 'PowerShell Scripting & Automatización', level: 'Avanzado', highlight: true },
+      { name: 'Soporte Técnico & Resolución de Incidencias', level: 'Avanzado' }
+    ]
+  },
+  {
+    title: 'Ciberseguridad & Redes de Datos',
+    icon: 'ShieldCheck',
+    description: 'Certificado Cisco. Hardening de sistemas, defensa perimetral y análisis de tráfico.',
+    skills: [
+      { name: 'Ciberseguridad Cisco (Certificado)', level: 'Certificado', highlight: true },
+      { name: 'Redes TCP/IP, DNS, DHCP, VPNs', level: 'Avanzado', highlight: true },
+      { name: 'Switching & Routing Básico / VLANs', level: 'Avanzado' },
+      { name: 'Hardening de Sistemas & Políticas de Acceso', level: 'Avanzado', highlight: true },
+      { name: 'Gestión de Vulnerabilidades & Nmap', level: 'Avanzado' },
+      { name: 'Fundamentos Criptográficos, RSA & MFA', level: 'Intermedio-Avanzado' }
+    ]
+  },
+  {
+    title: 'Programación, Software & Automatización',
+    icon: 'Code2',
+    description: 'Desarrollo de herramientas, APIs y arquitecturas orientadas a objetos y datos.',
+    skills: [
+      { name: 'Python (Automatización, IA, Asyncio)', level: 'Avanzado', highlight: true },
+      { name: 'C# (.NET Core, Motores de Juego)', level: 'Avanzado', highlight: true },
+      { name: 'C++ & Java', level: 'Intermedio-Avanzado' },
+      { name: 'APIs REST & WebSockets', level: 'Avanzado', highlight: true },
+      { name: 'Git & Gestión de Repositorios GitHub', level: 'Avanzado', highlight: true },
+      { name: 'TypeScript / React / Tailwind CSS', level: 'Avanzado' }
+    ]
+  },
+  {
+    title: 'Hardware, Electrónica & CAD 3D',
+    icon: 'Box',
+    description: 'Diagnóstico y reparación de equipos, microelectrónica y modelado paramétrico.',
+    skills: [
+      { name: 'Diseño & Ruteo de PCBs (KiCad)', level: 'Avanzado', highlight: true },
+      { name: 'Blender Python API (Modelado Procedural)', level: 'Avanzado', highlight: true },
+      { name: 'FreeCAD Paramétrico & Fusion 360', level: 'Intermedio-Avanzado' },
+      { name: 'Electrónica Digital Básica & SMD', level: 'Avanzado', highlight: true },
+      { name: 'Montaje & Mantenimiento de Hardware', level: 'Avanzado' },
+      { name: 'Impresión 3D FDM & Tolerancias', level: 'Avanzado' }
     ]
   }
 ];
 
 export const TIMELINE_DATA: TimelineItem[] = [
   {
-    period: '2025 - Presente',
-    role: 'Desarrollo de Soluciones Ciberfísicas & Laboratorio de Hardware',
-    institution: 'Proyectos Propios & Laboratorio de Prototipado',
-    description: 'Concepción integral, ruteo de placas de circuito impreso (PCBs), firmware residente en Raspberry Pi 5 y desarrollo de algoritmos de simulación cuantitativa.',
-    skills: ['IoT', 'Raspberry Pi 5', 'PCBs KiCad', 'Python Asyncio', 'C#', 'Blender API']
+    period: '2025 - Actualidad',
+    role: 'Grado en Ingeniería Informática',
+    institution: 'UNED (Universidad Nacional de Educación a Distancia)',
+    description: 'Cursando estudios de grado universitario en Ingeniería Informática con especialización en ciencias de la computación, fundamentos matemáticos y sistemas distribuidos.',
+    skills: ['Ingeniería Informática', 'Estructuras de Datos', 'Algoritmia', 'Sistemas Operativos']
   },
   {
     period: '2024 - 2025',
-    role: 'Especialización en Redes, Ciberseguridad & Sistemas',
-    institution: 'Formación Técnica Superior en Ingeniería Informática',
-    description: 'Auditorías de laboratorio de redes TCP/IP, elaboración de memorias técnicas de seguridad, hardening de sistemas operativos y programación de bajo nivel.',
-    skills: ['Kali Linux', 'Nmap NSE', 'Bash Scripting', 'Wireshark', 'C++', 'Hardening']
+    role: 'Especialización en Seguridad Informática & Certificación Cisco',
+    institution: 'Formación Superior (540 Horas) + Cisco Networking Academy',
+    description: 'Certificación oficial de Ciberseguridad por Cisco. Análisis de vulnerabilidades, arquitectura de redes seguras, hardening de servidores y respuestas ante incidentes.',
+    skills: ['Ciberseguridad Cisco', 'Hardening', 'Redes TCP/IP', 'Linux Sec', 'VPNs']
   },
   {
-    period: '2023 - 2024',
-    role: 'Desarrollo de Software, Motores de Juego & Simulación',
-    institution: 'Desarrollo Independiente & Algoritmia',
-    description: 'Implementación de patrones de arquitectura en C# (.NET Core) en el motor Godot, optimización de algoritmos de recolección de basura e ingesta de series temporales de datos.',
-    skills: ['Godot Engine', 'C# .NET', 'Object Pooling', 'FSM Patterns', 'Git Workflows']
+    period: '2018 - 2024',
+    role: 'Encargado de Operaciones & Liderazgo de Equipos',
+    institution: 'Grupo Zena Pizza',
+    description: 'Gestión integral del establecimiento, liderazgo de personal técnico y operativo, resolución de contingencias bajo alta demanda y optimización de procesos de producción.',
+    skills: ['Liderazgo de Equipos', 'Gestión de Procesos', 'Resolución de Problemas', 'Control Operativo']
+  },
+  {
+    period: '2013 - 2015',
+    role: 'Técnico en Sistemas Microinformáticos y Redes (SMR)',
+    institution: 'Formación Profesional de Grado Medio',
+    description: 'Montaje y reparación de equipos microinformáticos, despliegue de redes locales, instalación y configuración de sistemas operativos y soporte técnico a usuarios.',
+    skills: ['Hardware', 'Redes Locales', 'Windows Server', 'Linux', 'Soporte Técnico']
   }
 ];

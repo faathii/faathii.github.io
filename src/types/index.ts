@@ -14,6 +14,7 @@ export interface Project {
   demoUrl?: string;
   badge?: string;
   iconName: string;
+  imageUrl?: string;
 }
 
 export interface SkillCategory {
@@ -22,7 +23,7 @@ export interface SkillCategory {
   description: string;
   skills: {
     name: string;
-    level: string; // e.g. "Avanzado", "Intermedio", "Especializado"
+    level: string;
     highlight?: boolean;
   }[];
 }
@@ -34,4 +35,3 @@ export interface TimelineItem {
   description: string;
   skills: string[];
 }
-

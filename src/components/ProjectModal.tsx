@@ -1,7 +1,17 @@
 import React from 'react';
 import type { Project } from '../types';
-import { X, CheckCircle2, Target, Lightbulb, BarChart3 } from 'lucide-react';
+import { X, CheckCircle2, Target, Lightbulb, BarChart3, Image as ImageIcon } from 'lucide-react';
 import { GithubIcon } from './Icons';
+
+import iqsenseImg from '../assets/projects/iqsense-render.png';
+import pcbImg from '../assets/projects/pcb-esp32.png';
+import godotImg from '../assets/projects/godot-runner.png';
+
+const projectImages: Record<string, string> = {
+  'iqsense-render': iqsenseImg,
+  'pcb-esp32': pcbImg,
+  'godot-runner': godotImg,
+};
 
 interface ProjectModalProps {
   project: Project | null;
@@ -11,18 +21,20 @@ interface ProjectModalProps {
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   if (!project) return null;
 
+  const hasImage = project.imageUrl && projectImages[project.imageUrl];
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-zinc-950/70 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-zinc-950/75 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal Dialog */}
       <div className="relative w-full max-w-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl p-6 sm:p-8 z-10 max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-zinc-200 dark:border-zinc-800">
+        <div className="flex items-start justify-between gap-4 mb-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="px-2.5 py-1 text-xs font-semibold rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
@@ -43,15 +55,30 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-zinc-400 hover:text-zinc-700 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-2 rounded-xl text-zinc-400 hover:text-zinc-700 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
+        {/* Real Image Showcase in Modal */}
+        {hasImage && (
+          <div className="mb-6 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950 max-h-72 flex items-center justify-center relative">
+            <img
+              src={projectImages[project.imageUrl!]}
+              alt={project.title}
+              className="w-full h-full object-contain max-h-72"
+            />
+            <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-zinc-950/80 backdrop-blur-sm border border-zinc-700 text-[10px] font-mono text-emerald-400 flex items-center gap-1">
+              <ImageIcon className="w-3 h-3" />
+              <span>Evidencia Visual</span>
+            </div>
+          </div>
+        )}
+
         {/* Long Description */}
         <div className="mb-6">
-          <p className="text-base text-zinc-700 dark:text-zinc-300 leading-relaxed">
+          <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed">
             {project.longDescription}
           </p>
         </div>
