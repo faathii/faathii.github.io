@@ -1,0 +1,155 @@
+import React from 'react';
+import type { Project } from '../types';
+import { X, CheckCircle2, Target, Lightbulb, BarChart3 } from 'lucide-react';
+import { GithubIcon } from './Icons';
+
+interface ProjectModalProps {
+  project: Project | null;
+  onClose: () => void;
+}
+
+export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
+  if (!project) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 bg-zinc-950/70 backdrop-blur-sm transition-opacity"
+        onClick={onClose}
+      />
+
+      {/* Modal Dialog */}
+      <div className="relative w-full max-w-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl p-6 sm:p-8 z-10 max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-zinc-200 dark:border-zinc-800">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2.5 py-1 text-xs font-semibold rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                {project.category}
+              </span>
+              {project.badge && (
+                <span className="px-2 py-0.5 text-xs rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300">
+                  {project.badge}
+                </span>
+              )}
+            </div>
+            <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
+              {project.title}
+            </h3>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+              {project.subtitle}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-xl text-zinc-400 hover:text-zinc-700 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Long Description */}
+        <div className="mb-6">
+          <p className="text-base text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            {project.longDescription}
+          </p>
+        </div>
+
+        {/* Challenge & Solution Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="p-4 rounded-xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/20">
+            <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold text-sm mb-2">
+              <Target className="w-4 h-4" />
+              <span>El Desafío</span>
+            </div>
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              {project.challenge}
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20">
+            <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm mb-2">
+              <Lightbulb className="w-4 h-4" />
+              <span>La Solución Técnica</span>
+            </div>
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              {project.solution}
+            </p>
+          </div>
+        </div>
+
+        {/* Key Features */}
+        <div className="mb-6">
+          <h4 className="text-sm font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">
+            Características Clave & Arquitectura
+          </h4>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {project.features.map((feature, idx) => (
+              <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Metrics */}
+        {project.metrics && (
+          <div className="mb-6 p-4 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-800">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3">
+              <BarChart3 className="w-4 h-4 text-cyan-500" />
+              <span>Métricas del Proyecto</span>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              {project.metrics.map((m, idx) => (
+                <div key={idx} className="text-center p-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800">
+                  <p className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white font-mono">{m.value}</p>
+                  <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">{m.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Tech tags */}
+        <div className="mb-8">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">
+            Tecnologías Empleadas
+          </h4>
+          <div className="flex flex-wrap gap-1.5">
+            {project.tags.map((tag, idx) => (
+              <span
+                key={idx}
+                className="px-2.5 py-1 text-xs font-mono rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer Actions */}
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+          >
+            Cerrar
+          </button>
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+            >
+              <GithubIcon className="w-4 h-4" />
+              <span>Ver Repositorio</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
