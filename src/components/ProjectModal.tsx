@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Project } from '../types';
-import { X, CheckCircle2, Target, Lightbulb, BarChart3, Image as ImageIcon } from 'lucide-react';
+import { X, CheckCircle2, Target, Lightbulb, BarChart3, Image as ImageIcon, Activity } from 'lucide-react';
 import { GithubIcon } from './Icons';
 
 import iqsenseImg from '../assets/projects/iqsense-render.png';
@@ -69,9 +69,36 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               alt={project.title}
               className="w-full h-full object-contain max-h-72"
             />
-            <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-zinc-950/80 backdrop-blur-sm border border-zinc-700 text-[10px] font-mono text-emerald-400 flex items-center gap-1">
+            <div className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-zinc-950/80 backdrop-blur-sm border border-zinc-700 text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
               <ImageIcon className="w-3 h-3" />
-              <span>Evidencia Visual</span>
+              <span>Evidencia Visual & Física</span>
+            </div>
+          </div>
+        )}
+
+        {/* Architecture Diagram for iQsense */}
+        {project.id === 'iqsense-iot' && (
+          <div className="mb-6 p-4 rounded-xl bg-zinc-950 border border-zinc-800 text-xs">
+            <div className="flex items-center justify-between mb-3">
+              <span className="font-bold text-emerald-400 font-mono flex items-center gap-1.5">
+                <Activity className="w-4 h-4" />
+                Arquitectura Ciberfísica de 3 Capas
+              </span>
+              <span className="text-[10px] text-zinc-500 font-mono">Hardware ➔ Edge ➔ App</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+              <div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300">
+                <p className="font-semibold text-teal-400 mb-1">1. Sensores & Actuadores</p>
+                <p className="text-[11px] text-zinc-400 leading-relaxed">Sondas de suelo (I2C/ADC), temp/humedad canopy, electroválvulas y bombas protegidas con optoacopladores.</p>
+              </div>
+              <div className="p-3 rounded-lg bg-zinc-900 border border-emerald-500/40 text-zinc-300">
+                <p className="font-semibold text-emerald-400 mb-1">2. Edge Computing (RPi 5)</p>
+                <p className="text-[11px] text-zinc-400 leading-relaxed">Daemon asíncrono en Python con systemd, persistencia local ante caídas de red y control de riego.</p>
+              </div>
+              <div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300">
+                <p className="font-semibold text-cyan-400 mb-1">3. Telemetría & App</p>
+                <p className="text-[11px] text-zinc-400 leading-relaxed">Sincronización pub/sub, dashboard de control en tiempo real y app móvil para supervisión remota.</p>
+              </div>
             </div>
           </div>
         )}

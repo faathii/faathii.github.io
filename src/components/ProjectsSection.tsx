@@ -39,23 +39,24 @@ export const ProjectsSection: React.FC = () => {
     return matchesCategory && matchesSearch;
   });
 
-  const renderBanner = (project: Project) => {
+  const renderBanner = (project: Project, isFeatured = false) => {
     // If the project has a real image imported
     if (project.imageUrl && projectImages[project.imageUrl]) {
       return (
-        <div className="h-44 w-full rounded-xl relative overflow-hidden mb-4 border border-zinc-200 dark:border-zinc-800 bg-zinc-950 group/img">
+        <div className={`${isFeatured ? 'h-60 sm:h-72' : 'h-44'} w-full rounded-xl relative overflow-hidden mb-4 border border-zinc-200 dark:border-zinc-800 bg-zinc-950 group/img`}>
           <img
             src={projectImages[project.imageUrl]}
             alt={project.title}
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-zinc-950/20 to-transparent" />
-          <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-zinc-950/70 backdrop-blur-sm border border-zinc-700/60 text-[10px] font-mono text-emerald-400 flex items-center gap-1">
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/85 via-zinc-950/25 to-transparent" />
+          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-zinc-950/80 backdrop-blur-md border border-zinc-700/60 text-[10px] font-mono text-emerald-400 flex items-center gap-1.5 shadow-lg">
             <ImageIcon className="w-3 h-3" />
-            <span>Captura Real</span>
+            <span>Evidencia Física / Render 3D</span>
           </div>
-          <div className="absolute bottom-2.5 left-3 text-[11px] font-mono font-semibold text-white/90 drop-shadow">
-            {project.badge}
+          <div className="absolute bottom-3 left-3 text-xs font-mono font-semibold text-white/95 drop-shadow flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>{project.badge}</span>
           </div>
         </div>
       );
@@ -80,7 +81,7 @@ export const ProjectsSection: React.FC = () => {
             <div className="w-3 bg-cyan-400 h-10 rounded-sm self-end" />
           </div>
           <div className="text-[10px] text-zinc-400 font-mono flex items-center justify-between">
-            <span>VOLATILITY: Managed</span>
+            <span>VOLATILITY: Controlled</span>
             <span className="text-emerald-400 font-bold">+34.8% Sim Profit</span>
           </div>
         </div>
@@ -94,7 +95,7 @@ export const ProjectsSection: React.FC = () => {
             <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> Security Hardening</span>
             <span className="px-2 py-0.5 rounded bg-red-500/20 text-[10px]">Kali Linux</span>
           </div>
-          <div className="bg-black/70 rounded p-2.5 border border-zinc-800/80 font-mono text-[10px] text-zinc-300 space-y-1">
+          <div className="bg-black/75 rounded p-2.5 border border-zinc-800/80 font-mono text-[10px] text-zinc-300 space-y-1">
             <p className="text-zinc-500"># ./auditoria_kali.sh --stealth</p>
             <p className="text-emerald-400">Host 192.168.1.1 is UP (0.0012s latency)</p>
             <p className="text-cyan-400">Services: 22/tcp [SSH] | 443/tcp [HTTPS]</p>
@@ -117,10 +118,10 @@ export const ProjectsSection: React.FC = () => {
         <div className="flex flex-col items-center text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold mb-3 border border-emerald-500/20">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Portfolio Técnico</span>
+            <span>Bento Showcase & Ingeniería</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
-            Proyectos Destacados
+            Proyectos de Ingeniería & Software
           </h2>
           <p className="mt-3 text-base text-zinc-600 dark:text-zinc-400 max-w-xl">
             Soluciones reales que combinan ingeniería de hardware físico, automatización con microcontroladores, trading cuantitativo y desarrollo de videojuegos en C#.
@@ -158,82 +159,101 @@ export const ProjectsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Projects Grid */}
+        {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              className="group flex flex-col justify-between rounded-2xl bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800/80 hover:border-emerald-500/50 dark:hover:border-emerald-500/40 p-6 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/5 hover:-translate-y-1"
-            >
-              <div>
-                {/* Visual Banner or Real Image */}
-                {renderBanner(project)}
+          {filteredProjects.map((project, idx) => {
+            // Flagship project (iQsense) gets 2 columns on large screens when in "Todos" mode!
+            const isFeatured = idx === 0 && selectedCategory === 'Todos' && searchQuery === '';
 
-                {/* Top Bar: Icon + Category Badge */}
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-9 h-9 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-105 transition-transform">
-                    {categoryIcons[project.iconName] || <Cpu className="w-4 h-4" />}
+            return (
+              <div
+                key={project.id}
+                className={`group flex flex-col justify-between rounded-2xl bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800/80 hover:border-emerald-500/50 dark:hover:border-emerald-500/40 p-6 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/5 hover:-translate-y-1 ${
+                  isFeatured ? 'md:col-span-2' : ''
+                }`}
+              >
+                <div>
+                  {/* Visual Banner */}
+                  {renderBanner(project, isFeatured)}
+
+                  {/* Top Bar: Icon + Category Badge */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-9 h-9 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-105 transition-transform">
+                      {categoryIcons[project.iconName] || <Cpu className="w-4 h-4" />}
+                    </div>
+                    <span className="text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200/80 dark:border-zinc-700/80">
+                      {project.category}
+                    </span>
                   </div>
-                  <span className="text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200/80 dark:border-zinc-700/80">
-                    {project.category}
-                  </span>
+
+                  {/* Title & Subtitle */}
+                  <h3 className="text-xl font-bold text-zinc-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 font-medium">
+                    {project.subtitle}
+                  </p>
+
+                  {/* Description */}
+                  <p className="mt-3 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  {/* Highlight metrics pills for featured card */}
+                  {isFeatured && project.metrics && (
+                    <div className="grid grid-cols-3 gap-3 my-4 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/70 dark:border-zinc-800">
+                      {project.metrics.map((m, midx) => (
+                        <div key={midx} className="text-center">
+                          <span className="block text-sm font-bold text-emerald-600 dark:text-emerald-400 font-mono">{m.value}</span>
+                          <span className="text-[10px] text-zinc-500 uppercase tracking-wider">{m.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Tech Tags */}
+                  <div className="flex flex-wrap gap-1.5 mt-4">
+                    {project.tags.slice(0, isFeatured ? 8 : 4).map((tag, tIdx) => (
+                      <span
+                        key={tIdx}
+                        className="px-2 py-0.5 text-[11px] font-mono rounded bg-zinc-100 dark:bg-zinc-800/70 text-zinc-700 dark:text-zinc-300 border border-zinc-200/60 dark:border-zinc-700/60"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                    {!isFeatured && project.tags.length > 4 && (
+                      <span className="px-2 py-0.5 text-[11px] font-mono rounded bg-zinc-50 dark:bg-zinc-800/40 text-zinc-500 dark:text-zinc-400">
+                        +{project.tags.length - 4}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
-                {/* Title & Subtitle */}
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 font-medium">
-                  {project.subtitle}
-                </p>
+                {/* Bottom Actions */}
+                <div className="mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between">
+                  <button
+                    onClick={() => setActiveModalProject(project)}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors cursor-pointer"
+                  >
+                    <span>Ver Caso de Estudio & Arquitectura</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </button>
 
-                {/* Description */}
-                <p className="mt-3 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed line-clamp-3">
-                  {project.description}
-                </p>
-
-                {/* Tech Tags */}
-                <div className="flex flex-wrap gap-1.5 mt-4">
-                  {project.tags.slice(0, 4).map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="px-2 py-0.5 text-[11px] font-mono rounded bg-zinc-100 dark:bg-zinc-800/70 text-zinc-700 dark:text-zinc-300 border border-zinc-200/60 dark:border-zinc-700/60"
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="GitHub Repository"
+                      className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-800 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                     >
-                      {tag}
-                    </span>
-                  ))}
-                  {project.tags.length > 4 && (
-                    <span className="px-2 py-0.5 text-[11px] font-mono rounded bg-zinc-50 dark:bg-zinc-800/40 text-zinc-500 dark:text-zinc-400">
-                      +{project.tags.length - 4}
-                    </span>
+                      <GithubIcon className="w-4 h-4" />
+                    </a>
                   )}
                 </div>
               </div>
-
-              {/* Bottom Actions */}
-              <div className="mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between">
-                <button
-                  onClick={() => setActiveModalProject(project)}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors cursor-pointer"
-                >
-                  <span>Ver Caso de Estudio</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </button>
-
-                {project.githubUrl && (
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="GitHub Repository"
-                    className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-800 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                  >
-                    <GithubIcon className="w-4 h-4" />
-                  </a>
-                )}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
