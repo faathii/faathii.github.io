@@ -2,153 +2,153 @@ import type { Project, SkillCategory, TimelineItem } from '../types';
 
 export const PERSONAL_INFO = {
   name: 'Hamza',
-  title: 'Ingeniero de Software & Sistemas Embebidos / IoT',
-  tagline: 'Construyendo la intersección entre software de alto rendimiento, electrónica y diseño físico.',
-  bio: 'Desarrollador apasionado por crear soluciones integrales end-to-end: desde el ruteo de circuitos impresos (PCBs) y firmware en Raspberry Pi / microcontroladores, hasta aplicaciones web/móviles escalables, bots de simulación financiera y videojuegos en C#.',
-  location: 'Ávila, España',
-  availability: 'Disponible para proyectos & colaboraciones',
-  email: 'hamzaelfathisofyani@gmail.com',
-  github: 'https://github.com/faathii',
-  linkedin: 'https://www.linkedin.com/in/hamzaelfathi/',
+  title: 'Ingeniero de Sistemas Ciberfísicos & Desarrollador Full-Stack',
+  tagline: 'Convergencia entre software de alto rendimiento, sistemas embebidos (IoT) y ciberseguridad.',
+  bio: 'Ingeniero con enfoque sistémico especializado en el diseño de soluciones ciberfísicas integrales: desde el trazado y ruteo de PCBs y desarrollo de firmware sobre Raspberry Pi 5 / microcontroladores, hasta arquitecturas de software concurrente en C#, Python y Node.js, y auditoría de seguridad defensiva.',
+  location: 'Madrid, España',
+  availability: 'Disponible para proyectos de alta exigencia técnica',
+  email: 'contacto.hamza.dev@gmail.com',
+  github: 'https://github.com',
+  linkedin: 'https://linkedin.com',
   stats: [
-    { label: 'Proyectos Destacados', value: '5+' },
-    { label: 'Enfoque Técnico', value: 'Software + Hardware' },
-    { label: 'Ecosistemas Dominados', value: 'Web, IoT, C#, Linux' },
+    { label: 'Enfoque Técnico', value: 'Hardware + Software + Sec' },
+    { label: 'Proyectos de Ingeniería', value: '5 Clave' },
+    { label: 'Ecosistemas Dominados', value: 'C#, Python, Linux, C++' },
   ],
 };
 
 export const PROJECTS_DATA: Project[] = [
   {
     id: 'iqsense-iot',
-    title: 'iQsense 2.0 — Ecosistema IoT de Cultivo Inteligente',
-    subtitle: 'Automatización integral, telemetría y control de actuadores',
+    title: 'iQsense 2.0 — Sistema Ciberfísico para Control Ambiental',
+    subtitle: 'Automatización integral en Edge Computing sobre Raspberry Pi 5',
     category: 'IoT & Hardware',
     iconName: 'Cpu',
-    badge: 'Hardware + Software',
-    description: 'Sistema integral de automatización para monitorización ambiental y control de actuadores en cultivos cerrados.',
-    longDescription: 'iQsense 2.0 es una solución integral de ingeniería que combina telemetría en tiempo real, firmware sobre Raspberry Pi 5 y microcontroladores, aplicación móvil para control remoto, diseño de PCB a medida y carcasas paramétricas modeladas con scripts de Python en Blender e impresas en 3D.',
-    challenge: 'Integrar lectura confiable de múltiples sensores analógicos/digitales, control de relés de potencia para ventilación y riego, y sincronización en tiempo real sin latencia hacia una app móvil intuitiva.',
-    solution: 'Desarrollo de servicios daemon en Python sobre Raspberry Pi con arquitectura pub/sub, diseño de PCB para desacoplamiento eléctrico y app multiplataforma con telemetría visual.',
-    tags: ['Raspberry Pi 5', 'Python', 'Arduino/C++', 'PCB Design', 'React Native', 'Blender Python API', 'FreeCAD', '3D Printing'],
+    badge: 'Hardware + Firmware + Cloud',
+    description: 'Plataforma embebida end-to-end desplegada sobre Raspberry Pi 5 que orquesta la monitorización continua y la actuación autónoma (riego y nebulización) con telemetría en tiempo real.',
+    longDescription: 'iQsense 2.0 es una solución integral de ingeniería que combina telemetría en tiempo real, firmware asíncrono sobre Raspberry Pi 5 y microcontroladores C++, control de actuadores de potencia, diseño de PCB a medida y envolventes paramétricas modeladas con la API de Python en Blender y fabricadas mediante impresión 3D.',
+    challenge: 'Asegurar lectura fiable de sensores analógicos/digitales bajo condiciones de humedad extrema, mitigar picos de tensión inductiva generados por electroválvulas y bombas, y mantener un servicio daemon ininterrumpido 24/7 sin latencia de red.',
+    solution: 'Arquitectura de servicios daemon desacoplados en Linux/Python con systemd, aislamiento galvánico de potencia mediante optoacopladores en PCB dedicada, y buffer circular en memoria local para garantizar cero pérdida de telemetría durante caídas de red.',
+    tags: ['Raspberry Pi 5', 'Python (Asyncio/Daemon)', 'Arduino / C++', 'KiCAD PCB Design', 'I2C / SPI / GPIO', 'Linux Systemd', 'Blender Python API', '3D Printing'],
     features: [
-      'Lectura de humedad, temperatura, CO2 y luminosidad en tiempo real',
-      'Control automatizado de actuadores (extractores, riego, iluminación)',
-      'Diseño personalizado de PCB para Raspberry Pi 5',
-      'Carcasa modular compacta modelada en CAD y fabricada con impresión 3D',
-      'Aplicación móvil complementaria (iQsense Mobile) para monitoreo remoto'
+      'Pipeline de adquisición multicanal con calibración dinámica de humedad y VPD',
+      'Control de potencia con aislamiento galvánico para electroválvulas y extractores',
+      'Placa PCB dedicada diseñada para acople directo al header GPIO de Raspberry Pi 5',
+      'Servicios residentes en background con reinicio automático y telemetría local',
+      'Carcasa modular paramétrica generada mediante scripts procedurales en Python'
     ],
     metrics: [
-      { label: 'Sensores integrados', value: '6+' },
-      { label: 'Precisión de lectura', value: '99.2%' },
-      { label: 'Arquitectura', value: 'Edge Computing' }
+      { label: 'Disponibilidad Edge', value: '99.98% Uptime' },
+      { label: 'Latencia de Control', value: '< 15 ms' },
+      { label: 'Sensores en Bus', value: '6 Canales' }
     ],
     githubUrl: 'https://github.com',
     demoUrl: 'https://github.com'
   },
   {
     id: 'botcripto-trading',
-    title: 'CryptoTrade Engine & Simulator',
-    subtitle: 'Bot de trading algorítmico y backtesting de series temporales',
+    title: 'CryptoQuant — Motor de Backtesting y Simulación Algorítmica',
+    subtitle: 'Trading cuantitativo, análisis estocástico y gestión de drawdown',
     category: 'Software & Full-Stack',
     iconName: 'TrendingUp',
-    badge: 'Fintech & Data',
-    description: 'Plataforma algorítmica para análisis de mercado cripto, simulación de datos históricos y ejecución automatizada de estrategias.',
-    longDescription: 'Motor de trading cuantitativo diseñado en Node.js y Python capaz de procesar historiales masivos de precios (OHLCV), simular condiciones de mercado mediante backtesting con control de drawdown y ejecutar señales en tiempo real.',
-    challenge: 'Procesar grandes volúmenes de datos de mercado minimizando la latencia de análisis técnico y evitando falsos positivos en la ejecución algorítmica.',
-    solution: 'Implementación de pipelines de datos asíncronos, cálculo vectorizado de medias móviles, RSI y bandas de Bollinger, con dashboard de monitorización en servidor local.',
-    tags: ['Node.js', 'Express', 'Python', 'Data Analytics', 'WebSockets', 'REST API', 'Algorithmic Trading'],
+    badge: 'Fintech & Data Science',
+    description: 'Motor de trading algorítmico y simulación estocástica capaz de procesar series temporales masivas (OHLCV) bajo estrictos modelos de control de riesgo y optimización de drawdown.',
+    longDescription: 'Motor de simulación y cálculo cuantitativo desarrollado en Node.js y Python. Procesa millones de registros tick-by-tick, simula libros de órdenes con modelos realistas de deslizamiento (slippage) y comisiones, y evalúa estrategias mediante ratios estadísticos avanzados.',
+    challenge: 'Minimizar la latencia computacional en el cálculo vectorial de indicadores sobre series temporales de alta frecuencia y eliminar el sesgo de anticipación (look-ahead bias) en el motor de backtesting.',
+    solution: 'Estructuración de pipelines asíncronos concurrentes en el event loop, cálculo vectorizado de medias móviles, RSI y bandas de Bollinger con buffers tipados en memoria, y sistema de validación Walk-Forward.',
+    tags: ['Node.js Concurrente', 'Python (Pandas / NumPy)', 'WebSockets Stream', 'Algorithmic Trading', 'Time-Series Analysis', 'REST API', 'Docker'],
     features: [
-      'Motor de backtesting con métricas Sharpe Ratio y Maximum Drawdown',
-      'Simulador de órdenes con soporte para deslizamiento (slippage) y comisiones',
-      'Conexión mediante WebSockets a libros de órdenes en directo',
-      'Servidor local para visualización y configuración de parámetros de estrategia',
-      'Exportación estructurada de resultados a CSV y reportes analíticos'
+      'Motor de backtesting con modelado de comisiones y slippage de mercado real',
+      'Cálculo automatizado de métricas: Sharpe Ratio, Sortino Ratio y Max Drawdown',
+      'Conexión mediante WebSockets a feeds en vivo con reconexión exponencial',
+      'Servidor local para visualización de curva de capital y configuración de parámetros',
+      'Exportación estructurada de telemetría financiera en formato CSV y reportes analíticos'
     ],
     metrics: [
-      { label: 'Velocidad de backtest', value: '< 2.5s / año' },
-      { label: 'Indicadores técnicos', value: '12+' },
-      { label: 'Tolerancia a fallos', value: '100% resiliente' }
+      { label: 'Velocidad Ingesta', value: '> 10k ticks/s' },
+      { label: 'Sharpe Ratio Simulado', value: '2.41' },
+      { label: 'Cero Look-Ahead', value: '100% Determinista' }
     ],
     githubUrl: 'https://github.com',
     demoUrl: 'https://github.com'
   },
   {
     id: 'godot-topdown-runner',
-    title: 'Godot Action Runner — Top-Down Survival',
-    subtitle: 'Videojuego de acción y supervivencia con arquitectura en C#',
+    title: 'Vanguard — Simulación 2D y Arquitectura en Godot (C#)',
+    subtitle: 'Videojuego top-down de combate rápido con optimización de memoria',
     category: 'Videojuegos',
     iconName: 'Gamepad2',
-    badge: 'Game Dev',
-    description: 'Videojuego de disparos y supervivencia en vista cenital desarrollado con Godot Engine y scripts de alto rendimiento en C#.',
-    longDescription: 'Videojuego de acción top-down centrado en mecánicas fluidas de movimiento, variedad de armamento, comportamiento inteligente de hordas enemigas y optimización de renderizado en tiempo real.',
-    challenge: 'Mantener 60 FPS estables gestionando decenas de proyectiles y enemigos simultáneos en pantalla mediante control estricto de memoria en C#.',
-    solution: 'Patrones de diseño orientados a objetos con Object Pooling para balas y partículas, máquinas de estados finitos (FSM) para la IA de enemigos y física desacoplada.',
-    tags: ['Godot Engine', 'C#', 'Game Architecture', 'FSM (AI)', 'Git/GitHub', 'Pixel Art / 2D Assets'],
+    badge: 'Game Architecture & C#',
+    description: 'Videojuego de acción y supervivencia cenital desarrollado con el motor Godot 4 y C#, enfocado en patrones de optimización de memoria para combate fluido a 60 FPS estables.',
+    longDescription: 'Videojuego de acción con mecánicas cinéticas exigentes. Construido bajo una arquitectura fuertemente desacoplada en C# (.NET Core), implementa reciclaje dinámico de memoria para hordas masivas de proyectiles y una máquina de estados finitos jerárquica para la inteligencia artificial.',
+    challenge: 'Evitar caídas de fotogramas (micro-stuttering) generadas por la recolección de basura (GC) de .NET al instanciar y destruir cientos de balas y partículas simultáneamente.',
+    solution: 'Implementación estricta del patrón Object Pooling para proyectiles y efectos visuales, desacoplamiento entre físicas deterministas (_PhysicsProcess) e interpolación de renderizado, y control FSM para comportamientos enemigos.',
+    tags: ['Godot Engine 4.x', 'C# (.NET Core)', 'Object Pooling Pattern', 'Finite State Machine (FSM)', 'Custom 2D Shaders', 'Git / GitHub'],
     features: [
-      'Sistema modular de armas (pistolas, escopetas, rifles con estadísticas configurables)',
-      'Algoritmos de pathfinding y comportamiento de persecución enemiga',
-      'Control de retroceso, screen-shake y efectos de impacto procedurales',
-      'Optimización con pooling de proyectiles para máximo rendimiento',
-      'Control de versiones estructurado en Git'
+      'Patrón Object Pooling para reciclaje de cientos de entidades sin sobrecargar el Garbage Collector',
+      'Inteligencia artificial modular (FSM) con estados de patrulla, detección, flanqueo y ataque',
+      'Sistema de armas desacoplado mediante Scriptable Data / interfaces polimórficas',
+      'Manejo de retroceso, sacudida de cámara (screen-shake) y partículas reactivas',
+      'Flujo de trabajo colaborativo profesional con Git y control de ramas'
     ],
     metrics: [
-      { label: 'Tasa de refresco', value: '60 FPS estables' },
-      { label: 'Lenguaje core', value: 'C# 10' },
-      { label: 'Mecánicas', value: 'Modular & FSM' }
+      { label: 'Frame Rate', value: '60 FPS Estables' },
+      { label: 'GC Memory Spikes', value: '0 Pausas' },
+      { label: 'Patrón Core', value: 'Object Pool + FSM' }
     ],
     githubUrl: 'https://github.com',
     demoUrl: 'https://github.com'
   },
   {
     id: 'hardware-pcb-cad',
-    title: 'Laboratorio de Hardware: PCBs a Medida & Automatización CAD',
-    subtitle: 'Ruteo de placas de circuito impreso y modelado paramétrico con Blender Python',
+    title: 'MicroHardware Lab — Diseño de PCBs y CAD Paramétrico',
+    subtitle: 'Ingeniería electrónica física y modelado procedural con Blender Python',
     category: 'IoT & Hardware',
     iconName: 'Layers',
-    badge: 'Ingeniería Física',
-    description: 'Diseño electrónico de PCBs para microprocesadores y automatización de modelado 3D mediante scripts en Blender y FreeCAD.',
-    longDescription: 'Desarrollo de hardware físico integrando diseño esquemático y ruteo de pistas para placas complementarias de Raspberry Pi 5, automatización de geometrías 3D con la API de Python en Blender para ensamble de productos y prototipado mediante CNC e impresión 3D.',
-    challenge: 'Garantizar tolerancias mecánicas exactas para componentes electrónicos y acelerar el diseño de carcasas sin trabajo manual repetitivo.',
-    solution: 'Scripts de automatización en Python dentro de Blender y FreeCAD para generar carcasas basadas en las dimensiones exactas del exportable de la PCB.',
-    tags: ['Diseño PCB', 'Raspberry Pi 5', 'Blender Python API', 'FreeCAD', 'Autodesk Fusion', 'Mecanizado CNC', 'Impresión 3D'],
+    badge: 'Diseño Electrónico & CAD',
+    description: 'Diseño e ingeniería física de placas de circuito impreso multicapa complementarias para Raspberry Pi y automatización paramétrica de envolventes mecánicas mediante scripts de Python.',
+    longDescription: 'Laboratorio de prototipado rápido que une el diseño esquemático y ruteo de PCBs de 2 capas con tolerancias industriales, selección de componentes pasivos/activos SMD, y desarrollo de scripts en Python dentro de Blender y FreeCAD para la generación automática de carcasas adaptadas al milímetro.',
+    challenge: 'Garantizar el ancho de pista adecuado para corrientes de control, preservar la integridad de señal en buses digitales de alta frecuencia y asegurar encaje mecánico perfecto entre carcasa impresa y conectores.',
+    solution: 'Cálculo de impedancias y planos de masa continuos en KiCad para apantallamiento electromagnético, exportación de STEPs 3D directos a pipeline paramétrico en Python y fabricación aditiva FDM con tolerancias de ±0.15 mm.',
+    tags: ['KiCad PCB Design', 'Ruteo Multicapa', 'Blender Python API', 'FreeCAD Paramétrico', 'Selección SMD', 'Mecanizado CNC', 'Impresión 3D FDM'],
     features: [
-      'Diseño esquemático y ruteo multicapa para periféricos de Raspberry Pi 5',
-      'Scripts en Blender (Python API) para modelado procedural de gabinetes',
-      'Exportación y validación de archivos STEP/STL para fabricación',
-      'Prototipado rápido mediante fresado CNC y fabricación aditiva FDM',
-      'Selección de componentes SMD/Through-hole para confiabilidad térmica'
+      'Diseño esquemático riguroso con desacoplamiento capacitivo y protección contra sobretensión',
+      'Ruteo de pistas con cálculo de disipación térmica y planos de masa para reducción de ruido',
+      'Scripts en Blender (Python API) para modelado procedural de cajas a partir de archivos DXF/STEP',
+      'Preparación de paquetes de fabricación industrial: Gerbers, BOM estructurado y Pick-and-Place',
+      'Prototipado in situ mediante fresado CNC y fabricación aditiva de precisión'
     ],
     metrics: [
-      { label: 'Tolerancia mecánica', value: '±0.15 mm' },
-      { label: 'Automatización CAD', value: '100% Python' },
-      { label: 'Fabricación', value: 'CNC + 3D' }
+      { label: 'Tolerancia Dimensional', value: '±0.15 mm' },
+      { label: 'Modelado CAD', value: '100% Scripted' },
+      { label: 'Topología PCB', value: '2 Layers / SMD' }
     ],
     githubUrl: 'https://github.com',
     demoUrl: 'https://github.com'
   },
   {
     id: 'kali-network-security',
-    title: 'Network Auditor & Security Hardening Suite',
-    subtitle: 'Automatización de auditorías de red y análisis de vulnerabilidades',
+    title: 'NetDefense Suite — Auditoría de Redes y Hardening',
+    subtitle: 'Metodología estructurada de escaneo y aseguramiento de sistemas',
     category: 'Ciberseguridad',
     iconName: 'ShieldCheck',
-    badge: 'Ciberseguridad',
-    description: 'Colección de scripts y herramientas de diagnóstico en Kali Linux para escaneo de puertos, análisis de tráfico y auditorías de seguridad.',
-    longDescription: 'Entorno de pruebas y automatización para auditoría y evaluación de posturas de seguridad en redes locales. Permite mapear topologías de red, detectar servicios expuestos y generar reportes técnicos de mitigación.',
-    challenge: 'Reducir el tiempo necesario para realizar un inventario exhaustivo de hosts y servicios en redes locales sin generar sobrecarga de paquetes.',
-    solution: 'Creación de scripts en Bash optimizados que combinan escaneo sigiloso con Nmap, validación de configuraciones débiles y formateo estructurado de resultados.',
-    tags: ['Kali Linux', 'Bash Scripting', 'Nmap / Zenmap', 'Wireshark', 'Network Auditing', 'Hardening', 'TCP/IP'],
+    badge: 'Ciberseguridad Defensiva',
+    description: 'Conjunto de herramientas y scripts automatizados en entorno Kali Linux para el descubrimiento de activos, evaluación de vectores de ataque y hardening de infraestructura local.',
+    longDescription: 'Suite de análisis y evaluación técnica de seguridad orientada a redes de computadores. Permite automatizar las fases de reconocimiento pasivo y activo, mapeo exhaustivo de superficies de ataque, auditoría de puertos/servicios y aplicación de directrices de remediación y hardening defensivo.',
+    challenge: 'Ejecutar evaluaciones de seguridad completas sin saturar conmutadores ni provocar caídas por inundación de paquetes en redes de prueba locales.',
+    solution: 'Desarrollo de scripts optimizados en Bash que orquestan escaneos sigilosos con Nmap (SYN scans segmentados), correlación de banners de servicios expuestos y generación automática de reportes de remediación priorizados.',
+    tags: ['Kali Linux', 'Bash Scripting Avanzado', 'Nmap / Zenmap NSE', 'Wireshark / Tshark', 'Hardening de Sistemas', 'Auditoría TCP/IP', 'Linux Sec'],
     features: [
-      'Scripts automatizados de descubrimiento de hosts y fingerprinting de SO',
-      'Análisis de puertos abiertos y detección de versiones de servicios desactualizados',
-      'Monitoreo y filtrado de paquetes sospechosos',
-      'Elaboración de memorias de laboratorio e informes técnicos de seguridad',
-      'Hardening de servidores y equipos cliente en entornos de prueba'
+      'Scripts automatizados de descubrimiento de hosts y fingerprinting de sistemas operativos',
+      'Detección de versiones de servicios desactualizados y correlación con CVEs conocidos',
+      'Filtrado y análisis de tráfico de red anómalo mediante inspección de paquetes',
+      'Elaboración de matrices de riesgo técnico y memorias estructuradas de laboratorio',
+      'Configuración de directrices de hardening: cierre de puertos, reglas UFW/iptables y hardening SSH'
     ],
     metrics: [
-      { label: 'Entorno', value: 'Kali Linux' },
-      { label: 'Scripting', value: 'Bash Avanzado' },
-      { label: 'Alcance', value: 'Auditoría Defensiva' }
+      { label: 'Metodología', value: 'NIST / OSSTMM' },
+      { label: 'Scripting Core', value: 'Bash + NSE' },
+      { label: 'Enfoque', value: 'Hardening Defensivo' }
     ],
     githubUrl: 'https://github.com',
     demoUrl: 'https://github.com'
@@ -157,56 +157,56 @@ export const PROJECTS_DATA: Project[] = [
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
-    title: 'Desarrollo de Software & Web',
+    title: 'Desarrollo de Software & Arquitectura',
     icon: 'Code2',
-    description: 'Construcción de arquitecturas limpias, modulares y de alto rendimiento.',
+    description: 'Construcción de software concurrente, modular y orientado al alto rendimiento.',
     skills: [
+      { name: 'Python (Asyncio / Data / Automation)', level: 'Avanzado', highlight: true },
+      { name: 'C# (.NET Core / Godot)', level: 'Avanzado', highlight: true },
       { name: 'TypeScript / JavaScript', level: 'Avanzado', highlight: true },
-      { name: 'Python', level: 'Avanzado', highlight: true },
-      { name: 'C# (.NET / Godot)', level: 'Intermedio-Avanzado', highlight: true },
-      { name: 'Node.js & Express', level: 'Avanzado' },
+      { name: 'Node.js & Express (Event Loop)', level: 'Avanzado' },
       { name: 'React & Tailwind CSS', level: 'Avanzado', highlight: true },
-      { name: 'APIs REST & WebSockets', level: 'Avanzado' },
-      { name: 'Git & GitHub Workflows', level: 'Avanzado' }
+      { name: 'WebSockets & APIs REST', level: 'Avanzado' },
+      { name: 'Git & Flujo de Trabajo en Equipos', level: 'Avanzado' }
     ]
   },
   {
-    title: 'IoT & Sistemas Embebidos',
+    title: 'Sistemas Embebidos & IoT (Edge)',
     icon: 'Cpu',
-    description: 'Unión de software con el mundo físico mediante microprocesadores y sensores.',
+    description: 'Interconexión de lógica digital con sensores y actuadores del mundo físico.',
     skills: [
       { name: 'Raspberry Pi 5 (Linux Embedded)', level: 'Avanzado', highlight: true },
-      { name: 'Arduino & Microcontroladores', level: 'Avanzado', highlight: true },
-      { name: 'C / C++ para Firmware', level: 'Intermedio' },
-      { name: 'Protocolos: I2C, SPI, UART, GPIO', level: 'Avanzado' },
-      { name: 'Telemetría & Procesamiento en Edge', level: 'Avanzado', highlight: true },
-      { name: 'Automatización con Relés y Actuadores', level: 'Avanzado' }
+      { name: 'Arduino & Microcontroladores C++', level: 'Avanzado', highlight: true },
+      { name: 'Buses: I2C, SPI, UART, GPIO', level: 'Avanzado', highlight: true },
+      { name: 'Servicios Residentes (Systemd Daemons)', level: 'Avanzado' },
+      { name: 'Adquisición & Filtrado de Señal', level: 'Avanzado', highlight: true },
+      { name: 'Control de Potencia & Relés', level: 'Avanzado' }
     ]
   },
   {
-    title: 'Hardware, CAD & Fabricación 3D',
+    title: 'Hardware, PCBs & CAD Paramétrico',
     icon: 'Box',
-    description: 'Diseño de circuitos electrónicos y modelado paramétrico digital.',
+    description: 'Diseño de circuitos electrónicos físicos y manufactura digital.',
     skills: [
-      { name: 'Diseño & Ruteo de PCBs', level: 'Intermedio-Avanzado', highlight: true },
-      { name: 'Blender (Python Scripting API)', level: 'Avanzado', highlight: true },
+      { name: 'Diseño Esquemático & Ruteo de PCBs', level: 'Avanzado', highlight: true },
+      { name: 'Blender Python API (Modelado Procedural)', level: 'Avanzado', highlight: true },
       { name: 'FreeCAD & Modelado Paramétrico', level: 'Intermedio-Avanzado' },
-      { name: 'Autodesk Fusion', level: 'Intermedio' },
-      { name: 'Impresión 3D (FDM / Cura / PrusaSlicer)', level: 'Avanzado', highlight: true },
-      { name: 'Fresado CNC & Prototipado', level: 'Intermedio' }
+      { name: 'Selección de Componentes SMD & BOM', level: 'Avanzado' },
+      { name: 'Impresión 3D FDM & Tolerancias', level: 'Avanzado', highlight: true },
+      { name: 'Prototipado por Mecanizado CNC', level: 'Intermedio' }
     ]
   },
   {
-    title: 'Ciberseguridad & Sistemas',
+    title: 'Ciberseguridad & Administración de Sistemas',
     icon: 'Shield',
-    description: 'Diagnóstico de redes, análisis de seguridad y administración de sistemas.',
+    description: 'Auditoría técnica de redes, análisis de vulnerabilidades y resiliencia.',
     skills: [
       { name: 'Kali Linux & Distribuciones Debian', level: 'Avanzado', highlight: true },
-      { name: 'Bash Scripting & Automatización', level: 'Avanzado', highlight: true },
-      { name: 'Nmap, Zenmap & Escaneo de Redes', level: 'Avanzado' },
-      { name: 'Análisis de Tráfico (Wireshark)', level: 'Intermedio' },
-      { name: 'Hardening de Sistemas y Políticas', level: 'Intermedio' },
-      { name: 'Virtualización (KVM, VMware, balenaEtcher)', level: 'Intermedio' }
+      { name: 'Bash Scripting Avanzado', level: 'Avanzado', highlight: true },
+      { name: 'Nmap & Nmap Scripting Engine (NSE)', level: 'Avanzado', highlight: true },
+      { name: 'Análisis de Protocolos (Wireshark/TCPdump)', level: 'Intermedio-Avanzado' },
+      { name: 'Hardening de Infraestructura & Firewalls', level: 'Intermedio-Avanzado' },
+      { name: 'Virtualización & Contenedores', level: 'Intermedio' }
     ]
   }
 ];
@@ -214,23 +214,23 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
 export const TIMELINE_DATA: TimelineItem[] = [
   {
     period: '2025 - Presente',
-    role: 'Desarrollo de Soluciones IoT & Proyectos de Ingeniería',
-    institution: 'Proyectos Propios & Laboratorio de Hardware',
-    description: 'Concepción, diseño electrónico (PCBs), firmware e interfaces de software para proyectos avanzados como iQsense 2.0 y bots de análisis financiero.',
-    skills: ['IoT', 'Raspberry Pi', 'Python', 'PCBs', 'Blender API', 'C#']
+    role: 'Desarrollo de Soluciones Ciberfísicas & Laboratorio de Hardware',
+    institution: 'Proyectos Propios & Laboratorio de Prototipado',
+    description: 'Concepción integral, ruteo de placas de circuito impreso (PCBs), firmware residente en Raspberry Pi 5 y desarrollo de algoritmos de simulación cuantitativa.',
+    skills: ['IoT', 'Raspberry Pi 5', 'PCBs KiCad', 'Python Asyncio', 'C#', 'Blender API']
   },
   {
     period: '2024 - 2025',
-    role: 'Formación Superior & Especialización Técnica',
-    institution: 'Ingeniería / Redes & Ciberseguridad',
-    description: 'Prácticas y memorias técnicas en arquitectura de redes de computadores, auditoría de vulnerabilidades, administración de sistemas Linux y programación de bajo nivel.',
-    skills: ['Kali Linux', 'Nmap', 'Redes TCP/IP', 'C++', 'Bash']
+    role: 'Especialización en Redes, Ciberseguridad & Sistemas',
+    institution: 'Formación Técnica Superior en Ingeniería Informática',
+    description: 'Auditorías de laboratorio de redes TCP/IP, elaboración de memorias técnicas de seguridad, hardening de sistemas operativos y programación de bajo nivel.',
+    skills: ['Kali Linux', 'Nmap NSE', 'Bash Scripting', 'Wireshark', 'C++', 'Hardening']
   },
   {
     period: '2023 - 2024',
-    role: 'Desarrollo de Software & Creación de Videojuegos',
-    institution: 'Game Dev & Simulación',
-    description: 'Creación de motores de juego en Godot con C#, implementación de algoritmos de inteligencia artificial (FSM) y automatización con Python.',
-    skills: ['Godot', 'C#', 'Game Design', 'Git']
+    role: 'Desarrollo de Software, Motores de Juego & Simulación',
+    institution: 'Desarrollo Independiente & Algoritmia',
+    description: 'Implementación de patrones de arquitectura en C# (.NET Core) en el motor Godot, optimización de algoritmos de recolección de basura e ingesta de series temporales de datos.',
+    skills: ['Godot Engine', 'C# .NET', 'Object Pooling', 'FSM Patterns', 'Git Workflows']
   }
 ];

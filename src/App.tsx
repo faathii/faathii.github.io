@@ -7,6 +7,7 @@ import { SkillsSection } from './components/SkillsSection';
 import { TimelineSection } from './components/TimelineSection';
 import { ContactSection } from './components/ContactSection';
 import { ResumeModal } from './components/ResumeModal';
+import { FloatingDock } from './components/FloatingDock';
 import { Footer } from './components/Footer';
 
 export function App() {
@@ -36,7 +37,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-300 flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-300 flex flex-col font-sans selection:bg-emerald-500 selection:text-white pb-16 sm:pb-0">
       <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       <main className="flex-grow">
         <Hero onOpenResume={() => setIsResumeOpen(true)} />
@@ -47,6 +48,9 @@ export function App() {
         <ContactSection />
       </main>
       <Footer />
+
+      {/* Quick Access Floating Dock for Tablets & Mobile */}
+      <FloatingDock onOpenResume={() => setIsResumeOpen(true)} />
 
       {/* Interactive Printable CV Modal */}
       <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
