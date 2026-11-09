@@ -1,5 +1,6 @@
 import React from 'react';
 import { Compass, Download, ShieldCheck } from 'lucide-react';
+import hamzaImg from '../../assets/hamza.jpg';
 
 interface BlueprintHeaderProps {
   onOpenCv: () => void;
@@ -34,8 +35,12 @@ export const BlueprintHeader: React.FC<BlueprintHeaderProps> = ({ onOpenCv }) =>
       {/* Main Navigation & Title Block */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
         <a href="#hero" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 rounded border border-cyan-400/50 bg-cyan-950/60 flex items-center justify-center text-cyan-300 font-bold group-hover:bg-cyan-500 group-hover:text-black transition-colors">
-            H
+          <div className="w-9 h-9 rounded-lg border border-cyan-400/50 overflow-hidden relative group-hover:border-cyan-300 transition-colors shrink-0 shadow-sm">
+            <img
+              src={hamzaImg}
+              alt="Hamza El Fathi Sofyani"
+              className="w-full h-full object-cover object-top"
+            />
           </div>
           <div>
             <span className="font-bold tracking-wider text-white text-sm sm:text-base block">

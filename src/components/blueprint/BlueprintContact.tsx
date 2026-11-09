@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 import { Send, Check, Download } from 'lucide-react';
+import hamzaImg from '../../assets/hamza.jpg';
 
 export const BlueprintContact: React.FC = () => {
   const [sent, setSent] = useState(false);
@@ -35,12 +36,21 @@ export const BlueprintContact: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
           {/* Engineering Title Block Card (2 cols) */}
           <div className="md:col-span-2 blueprint-card p-6 rounded-lg border border-cyan-500/40 space-y-5 text-xs">
-            <div className="pb-3 border-b border-cyan-500/20">
-              <span className="text-[10px] text-cyan-500 font-bold uppercase tracking-widest block">
-                CANAL DE TRANSMISIÓN OFICIAL
-              </span>
-              <p className="font-bold text-white text-sm mt-1">{PERSONAL_INFO.name}</p>
-              <p className="text-cyan-400 text-[11px]">{PERSONAL_INFO.title}</p>
+            <div className="pb-3 border-b border-cyan-500/20 flex items-center gap-3.5">
+              <div className="w-12 h-16 rounded border border-cyan-400/50 overflow-hidden shrink-0 shadow-sm">
+                <img
+                  src={hamzaImg}
+                  alt={PERSONAL_INFO.name}
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] text-cyan-500 font-bold uppercase tracking-widest block">
+                  CANAL DE TRANSMISIÓN OFICIAL
+                </span>
+                <p className="font-bold text-white text-sm mt-0.5">{PERSONAL_INFO.name}</p>
+                <p className="text-cyan-400 text-[11px]">{PERSONAL_INFO.title}</p>
+              </div>
             </div>
 
             <div className="space-y-3 font-mono">

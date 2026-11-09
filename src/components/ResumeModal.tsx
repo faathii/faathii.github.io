@@ -2,6 +2,7 @@ import React from 'react';
 import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES } from '../data/portfolioData';
 import { X, Printer, MapPin, Mail, Phone, Download, Award, GraduationCap, Briefcase, Languages } from 'lucide-react';
 import { GithubIcon } from './Icons';
+import hamzaImg from '../assets/hamza.jpg';
 import ciscoCyberOpsImg from '../assets/certificates/cisco-cyberops-associate.png';
 import ciscoIntroImg from '../assets/certificates/cisco-intro-cybersecurity.png';
 import ciscoEnterpriseImg from '../assets/certificates/cisco-module-enterprise-protection.png';
@@ -65,35 +66,47 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
         {/* CV Content (Printable area) */}
         <div className="p-6 sm:p-10 overflow-y-auto print:p-0 print:overflow-visible text-zinc-800 dark:text-zinc-200 space-y-6">
-          {/* Header */}
-          <div className="border-b border-zinc-200 dark:border-zinc-800 pb-6">
-            <h1 className="text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
-              {PERSONAL_INFO.name}
-            </h1>
-            <p className="text-base text-emerald-600 dark:text-emerald-400 font-semibold mt-1">
-              {PERSONAL_INFO.title}
-            </p>
-            <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-500 dark:text-zinc-400 mt-3 font-mono">
-              <span className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-zinc-400" />
-                {PERSONAL_INFO.location}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Phone className="w-3.5 h-3.5 text-zinc-400" />
-                {PERSONAL_INFO.phone}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-zinc-400" />
-                {PERSONAL_INFO.email}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <GithubIcon className="w-3.5 h-3.5" />
-                GitHub / Portfolio
+          {/* Header with Photo */}
+          <div className="border-b border-zinc-200 dark:border-zinc-800 pb-6 flex flex-col sm:flex-row items-center sm:items-start gap-5">
+            <div className="relative shrink-0">
+              <img
+                src={hamzaImg}
+                alt={PERSONAL_INFO.name}
+                className="w-24 h-32 sm:w-28 sm:h-36 object-cover object-top rounded-xl border-2 border-emerald-500/40 shadow-md"
+              />
+              <span className="absolute -bottom-2 -right-1 px-1.5 py-0.5 rounded bg-emerald-500 text-black text-[9px] font-bold font-mono">
+                DISPONIBLE
               </span>
             </div>
-            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 mt-4 leading-relaxed">
-              {PERSONAL_INFO.bio}
-            </p>
+            <div className="flex-grow text-center sm:text-left">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
+                {PERSONAL_INFO.name}
+              </h1>
+              <p className="text-sm sm:text-base text-emerald-600 dark:text-emerald-400 font-semibold mt-1">
+                {PERSONAL_INFO.title}
+              </p>
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-4 text-xs text-zinc-500 dark:text-zinc-400 mt-2.5 font-mono">
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-zinc-400" />
+                  {PERSONAL_INFO.location}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Phone className="w-3.5 h-3.5 text-zinc-400" />
+                  {PERSONAL_INFO.phone}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5 text-zinc-400" />
+                  {PERSONAL_INFO.email}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <GithubIcon className="w-3.5 h-3.5" />
+                  GitHub / Portfolio
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 mt-3 leading-relaxed">
+                {PERSONAL_INFO.bio}
+              </p>
+            </div>
           </div>
 
           {/* Formación Académica & Certificaciones */}

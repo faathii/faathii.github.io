@@ -40,7 +40,9 @@ export const TerminalSection: React.FC = () => {
             <p className="text-cyan-400 font-semibold mb-1">Comandos disponibles:</p>
             <p><span className="text-emerald-400 font-mono">projects</span> — Ver lista de proyectos y especificaciones</p>
             <p><span className="text-emerald-400 font-mono">hfs-sentry</span> — Ejecutar auditoría y ver catálogo de HFS-Sentry</p>
+            <p><span className="text-emerald-400 font-mono">cisco</span> — Ver acreditaciones oficiales y badges verificados de Cisco</p>
             <p><span className="text-emerald-400 font-mono">iqsense</span> — Telemetría en vivo y estado de Super-IA Edge</p>
+            <p><span className="text-emerald-400 font-mono">omnistream</span> — Hub de streaming con deep linking para España</p>
             <p><span className="text-emerald-400 font-mono">skills</span> — Ver stack tecnológico y herramientas</p>
             <p><span className="text-emerald-400 font-mono">hardware</span> — Resumen de diseño de PCBs KiCad y CAD 3D</p>
             <p><span className="text-emerald-400 font-mono">contact</span> — Canales de comunicación directa</p>
@@ -69,6 +71,37 @@ export const TerminalSection: React.FC = () => {
             <p className="text-[10px] text-zinc-500 font-mono">
               GitHub: <a href="https://github.com/faathii/HFS-Sentry" target="_blank" rel="noreferrer" className="text-cyan-400 underline">github.com/faathii/HFS-Sentry</a> (0 External Dependencies)
             </p>
+          </div>
+        );
+        break;
+
+      case 'cisco':
+      case 'certificaciones':
+      case 'certs':
+        out = (
+          <div className="space-y-2 text-xs text-zinc-300 font-mono">
+            <div className="p-2.5 rounded bg-zinc-900 border border-cyan-500/30">
+              <p className="text-cyan-400 font-bold">Cisco Networking Academy — Certificaciones Oficiales Verificadas</p>
+              <p className="text-zinc-400 text-[11px] mt-0.5">Acreditación internacional en Ciberseguridad & Operaciones de Seguridad</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+              <div className="p-2.5 rounded bg-sky-950/40 border border-sky-500/30">
+                <p className="text-sky-400 font-bold">✓ Cisco CyberOps Associate</p>
+                <p className="text-zinc-400 text-[10px] mt-0.5">SOC, análisis de telemetría de eventos, respuesta a incidentes y análisis forense.</p>
+              </div>
+              <div className="p-2.5 rounded bg-emerald-950/40 border border-emerald-500/30">
+                <p className="text-emerald-400 font-bold">✓ Introduction to Cybersecurity</p>
+                <p className="text-zinc-400 text-[10px] mt-0.5">Defensa perimetral, criptografía, privacidad de datos y mitigación de amenazas.</p>
+              </div>
+            </div>
+            <div className="p-2.5 rounded bg-zinc-900/60 border border-zinc-800 text-[10px] space-y-1">
+              <p className="text-cyan-300 font-bold uppercase">5 Módulos de Especialización Cisco Superados:</p>
+              <p>• [OK] Defensa Perimetral & Firewalls (SPI, ACLs)</p>
+              <p>• [OK] Ataques, Vulnerabilidades & Malware</p>
+              <p>• [OK] Criptografía, Hash (SHA-256) & Claves PKI</p>
+              <p>• [OK] Seguridad de Red & Infraestructura de Conmutación</p>
+              <p>• [OK] Gobernanza, Gestión de Incidentes & Protección Organizacional</p>
+            </div>
           </div>
         );
         break;
