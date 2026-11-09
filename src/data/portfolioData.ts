@@ -58,8 +58,15 @@ export const PROJECTS_DATA: Project[] = [
     category: 'Software & Full-Stack',
     iconName: 'Film',
     badge: 'Desktop App • Python & WebTech',
-    imageUrl: 'omnistream-banner',
-    images: ['omnistream-banner', 'omnistream-logo'],
+    imageUrl: 'omnistream-ui-catalog',
+    images: [
+      'omnistream-ui-catalog',
+      'omnistream-ui-detail',
+      'omnistream-ui-filter',
+      'omnistream-ui-settings',
+      'omnistream-banner',
+      'omnistream-logo'
+    ],
     description: 'Aplicación de escritorio con interfaz cinematográfica que unifica el catálogo y la disponibilidad legal de 9 plataformas de streaming en España con redirección instantánea a reproductores oficiales.',
     longDescription: 'OmniStream resuelve la fragmentación del mercado de contenidos bajo demanda integrando los catálogos de Netflix, Prime Video, Disney+, Max, Apple TV+, Filmin y Movistar+. Construida con un patrón desacoplado que une un backend en Python con una interfaz web embebida de alto rendimiento mediante pywebview, consume metadatos de la API v3 de TMDb/JustWatch y resuelve esquemas URI nativos (nflx://, primevideo://, etc.) para lanzamiento directo en cliente o navegador. Incluye pipeline de compilación con PyInstaller y wizard de instalación asistido.',
     challenge: 'Unificar metadatos heterogéneos de múltiples proveedores sin latencia de renderizado y orquestar el lanzamiento determinista de protocolos URI nativos en el sistema operativo Windows.',

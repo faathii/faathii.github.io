@@ -12,6 +12,10 @@ import iqsenseRenderImg from '../assets/projects/iqsense-render.png';
 
 import omnistreamBanner from '../assets/projects/omnistream-banner.jpg';
 import omnistreamLogo from '../assets/projects/omnistream-logo.png';
+import omnistreamUiCatalog from '../assets/projects/omnistream-ui-catalog.png';
+import omnistreamUiDetail from '../assets/projects/omnistream-ui-detail.png';
+import omnistreamUiFilter from '../assets/projects/omnistream-ui-filter.png';
+import omnistreamUiSettings from '../assets/projects/omnistream-ui-settings.png';
 
 import pcbEsp32Img from '../assets/projects/pcb-esp32.png';
 import pcbAngle3Img from '../assets/projects/pcb-angle-3.png';
@@ -38,6 +42,10 @@ const projectImages: Record<string, string> = {
   'iqsense-render': iqsenseRenderImg,
 
   // OmniStream
+  'omnistream-ui-catalog': omnistreamUiCatalog,
+  'omnistream-ui-detail': omnistreamUiDetail,
+  'omnistream-ui-filter': omnistreamUiFilter,
+  'omnistream-ui-settings': omnistreamUiSettings,
   'omnistream-banner': omnistreamBanner,
   'omnistream-logo': omnistreamLogo,
 
