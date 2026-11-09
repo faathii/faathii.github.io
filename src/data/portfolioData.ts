@@ -51,6 +51,34 @@ export const PROJECTS_DATA: Project[] = [
     demoUrl: 'https://github.com'
   },
   {
+    id: 'omnistream-hub',
+    title: 'OmniStream — Agregador Unificado de Streaming & Deep Linking',
+    subtitle: 'Arquitectura híbrida Python (pywebview) + JS/CSS con integración TMDb y empaquetado Windows',
+    category: 'Software & Full-Stack',
+    iconName: 'Film',
+    badge: 'Desktop App • Python & WebTech',
+    imageUrl: 'omnistream-banner',
+    description: 'Aplicación de escritorio con interfaz cinematográfica que unifica el catálogo y la disponibilidad legal de 9 plataformas de streaming en España con redirección instantánea a reproductores oficiales.',
+    longDescription: 'OmniStream resuelve la fragmentación del mercado de contenidos bajo demanda integrando los catálogos de Netflix, Prime Video, Disney+, Max, Apple TV+, Filmin y Movistar+. Construida con un patrón desacoplado que une un backend en Python con una interfaz web embebida de alto rendimiento mediante pywebview, consume metadatos de la API v3 de TMDb/JustWatch y resuelve esquemas URI nativos (nflx://, primevideo://, etc.) para lanzamiento directo en cliente o navegador. Incluye pipeline de compilación con PyInstaller y wizard de instalación asistido.',
+    challenge: 'Unificar metadatos heterogéneos de múltiples proveedores sin latencia de renderizado y orquestar el lanzamiento determinista de protocolos URI nativos en el sistema operativo Windows.',
+    solution: 'Implementación de un puente RPC asíncrono entre JavaScript y Python con pywebview, caché local indexada en JSON de más de 200k entradas, y resolvedor de deep links con fallback automático a versión web oficial.',
+    tags: ['Python Desktop', 'pywebview Bridge', 'JavaScript / CSS3 Cinematográfico', 'TMDb & JustWatch API', 'Deep Linking (Custom URIs)', 'PyInstaller Compilation', 'Windows Installer Wizard', 'Async RPC'],
+    features: [
+      'Agregador Multi-Plataforma: Catálogo unificado para España (Netflix, Prime, Disney+, Max, Filmin, etc.)',
+      'Deep Linking Protocol Handler: Resolución automática de esquemas URI nativos de escritorio',
+      'Puente Híbrido Python <-> JS: pywebview con comunicación bidireccional sin servidor local expuesto',
+      'Filtros Cruzados en Tiempo Real: Búsqueda instantánea por plataforma activa, género y año',
+      'Pipeline de Distribución: Empaquetado en binario ejecutable (.exe) y wizard de instalación personalizado'
+    ],
+    metrics: [
+      { label: 'Plataformas Cubiertas', value: '9 Servicios (ES)' },
+      { label: 'Latencia Deep Link', value: '< 250 ms' },
+      { label: 'Arquitectura', value: 'pywebview + Native URI' }
+    ],
+    githubUrl: 'https://github.com',
+    demoUrl: 'https://github.com'
+  },
+  {
     id: 'botcripto-trading',
     title: 'CryptoQuant — Motor de Trading Cuantitativo & IA Predictiva',
     subtitle: 'Modelos de Machine Learning para series temporales y optimización estocástica de riesgo',

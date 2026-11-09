@@ -11,6 +11,7 @@ import iqsenseRenderImg from '../assets/projects/iqsense-render.png';
 import pcbEsp32Img from '../assets/projects/pcb-esp32.png';
 import godotImg from '../assets/projects/godot-runner.png';
 import hfsSentryBanner from '../assets/projects/hfs-sentry-banner.jpg';
+import omnistreamBanner from '../assets/projects/omnistream-banner.jpg';
 
 const projectImages: Record<string, string> = {
   'iqsense-cad-despiece': iqsenseCadImg,
@@ -20,6 +21,7 @@ const projectImages: Record<string, string> = {
   'pcb-esp32': pcbEsp32Img,
   'godot-runner': godotImg,
   'hfs-sentry-banner': hfsSentryBanner,
+  'omnistream-banner': omnistreamBanner,
 };
 
 type IqsenseTab = 'cad' | 'dashboard' | 'cableado' | 'cocina' | 'render';

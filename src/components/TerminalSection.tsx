@@ -38,11 +38,67 @@ export const TerminalSection: React.FC = () => {
         out = (
           <div className="space-y-1 text-xs text-zinc-300">
             <p className="text-cyan-400 font-semibold mb-1">Comandos disponibles:</p>
-            <p><span className="text-emerald-400 font-mono">projects</span> — Ver lista de proyectos y arquitecturas</p>
+            <p><span className="text-emerald-400 font-mono">projects</span> — Ver lista de proyectos y especificaciones</p>
+            <p><span className="text-emerald-400 font-mono">hfs-sentry</span> — Ejecutar auditoría y ver catálogo de HFS-Sentry</p>
+            <p><span className="text-emerald-400 font-mono">iqsense</span> — Telemetría en vivo y estado de Super-IA Edge</p>
             <p><span className="text-emerald-400 font-mono">skills</span> — Ver stack tecnológico y herramientas</p>
-            <p><span className="text-emerald-400 font-mono">hardware</span> — Resumen de proyectos de electrónica y CAD</p>
-            <p><span className="text-emerald-400 font-mono">contact</span> — Métodos de contacto directo</p>
+            <p><span className="text-emerald-400 font-mono">hardware</span> — Resumen de diseño de PCBs KiCad y CAD 3D</p>
+            <p><span className="text-emerald-400 font-mono">contact</span> — Canales de comunicación directa</p>
             <p><span className="text-emerald-400 font-mono">clear</span> — Limpiar pantalla de la terminal</p>
+          </div>
+        );
+        break;
+
+      case 'sentry':
+      case 'hfs-sentry':
+        out = (
+          <div className="space-y-2 text-xs text-zinc-300">
+            <div className="p-2.5 rounded bg-zinc-900 border border-cyan-500/30">
+              <p className="text-cyan-400 font-bold font-mono">HFS-Sentry v1.2 — Suite Modular de Ciberseguridad</p>
+              <p className="text-zinc-400 text-[11px] mt-0.5">Autor: Hamza El Fathi Sofyani | Cisco Certified | Pure Python 3</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[11px] font-mono">
+              <p>• <span className="text-emerald-400 font-bold">netsentry:</span> Escáner TCP concurrente & OWASP</p>
+              <p>• <span className="text-emerald-400 font-bold">logsentinel:</span> Ingesta forense & bloqueo UFW</p>
+              <p>• <span className="text-emerald-400 font-bold">certsentry:</span> Caducidad X.509 & TLS obsoleto</p>
+              <p>• <span className="text-emerald-400 font-bold">subnetsweep:</span> Mapeo /24 & OUI IEEE MAC</p>
+              <p>• <span className="text-emerald-400 font-bold">integrityguard:</span> Monitor FIM con SHA-256</p>
+              <p>• <span className="text-emerald-400 font-bold">dnsprobe:</span> Telemetría de resolución DNS</p>
+              <p>• <span className="text-emerald-400 font-bold">trafficsentry:</span> Sniffer/inspección de paquetes</p>
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono">
+              GitHub: <a href="https://github.com/faathii/HFS-Sentry" target="_blank" rel="noreferrer" className="text-cyan-400 underline">github.com/faathii/HFS-Sentry</a> (0 External Dependencies)
+            </p>
+          </div>
+        );
+        break;
+
+      case 'iqsense':
+        out = (
+          <div className="space-y-1.5 text-xs text-zinc-300 font-mono">
+            <p className="text-emerald-400 font-bold">iQsense View PC — Telemetría Activa (Super-IA Autopilot Edge)</p>
+            <div className="grid grid-cols-2 gap-2 p-2 rounded bg-zinc-900/80 border border-emerald-500/30 text-[11px]">
+              <p>• Temp Aire: <span className="text-cyan-400 font-bold">24.2 °C</span></p>
+              <p>• Humedad: <span className="text-cyan-400 font-bold">58.5 %</span></p>
+              <p>• VPD Estomas: <span className="text-emerald-400 font-bold">1.15 kPa (Óptimo)</span></p>
+              <p>• PPFD Luz: <span className="text-amber-400 font-bold">785 µmol</span></p>
+              <p>• Estado Super-IA: <span className="text-emerald-400 font-bold">Salud Biológica 98%</span></p>
+              <p>• Actuadores Activos: <span className="text-cyan-400 font-bold">5 de 13 (PWM + DWC)</span></p>
+            </div>
+          </div>
+        );
+        break;
+
+      case 'omnistream':
+        out = (
+          <div className="space-y-1.5 text-xs text-zinc-300 font-mono">
+            <p className="text-purple-400 font-bold">OmniStream v1.0 — Unified Cinema Hub (Desktop Client)</p>
+            <p className="text-zinc-400 text-[11px]">Agregador de streaming en España con Deep Linking a reproductores nativos</p>
+            <div className="p-2 rounded bg-zinc-900 border border-purple-500/30 text-[11px] space-y-1">
+              <p>• <span className="text-emerald-400">Plataformas:</span> Netflix, Prime Video, Disney+, Max, Apple TV+, Filmin, Movistar+</p>
+              <p>• <span className="text-emerald-400">Arquitectura:</span> Python + pywebview Bridge + TMDb API v3</p>
+              <p>• <span className="text-emerald-400">Distribución:</span> Instalador autónomo (.exe) con Wizard visual</p>
+            </div>
           </div>
         );
         break;
@@ -167,6 +223,28 @@ export const TerminalSection: React.FC = () => {
               </div>
             ))}
             <div ref={bottomRef} />
+          </div>
+
+          {/* Quick Command Pills for Touch/Tablet */}
+          <div className="flex flex-wrap items-center gap-1.5 px-4 py-2 bg-zinc-900/50 border-t border-zinc-800/80 text-[11px] font-mono">
+            <span className="text-[10px] text-zinc-500 uppercase font-bold mr-1">ACCIONES RÁPIDAS:</span>
+            {[
+              { label: 'hfs-sentry', cmd: 'hfs-sentry' },
+              { label: 'iqsense', cmd: 'iqsense' },
+              { label: 'omnistream', cmd: 'omnistream' },
+              { label: 'projects', cmd: 'projects' },
+              { label: 'skills', cmd: 'skills' },
+              { label: 'hardware', cmd: 'hardware' },
+              { label: 'clear', cmd: 'clear' }
+            ].map((pill) => (
+              <button
+                key={pill.cmd}
+                onClick={() => handleCommand(pill.cmd)}
+                className="px-2 py-0.5 rounded bg-zinc-800 hover:bg-cyan-950 text-cyan-300 border border-zinc-700 hover:border-cyan-400 transition-colors cursor-pointer"
+              >
+                ${pill.label}
+              </button>
+            ))}
           </div>
 
           {/* Input Prompt */}
