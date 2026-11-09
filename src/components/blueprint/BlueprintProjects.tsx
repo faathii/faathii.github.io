@@ -6,19 +6,17 @@ import { Compass, ArrowRight, Search } from 'lucide-react';
 import { GithubIcon } from '../Icons';
 
 import iqsenseCadImg from '../../assets/projects/iqsense-cad-despiece.jpg';
-import cryptoImg from '../../assets/projects/crypto-monitor-dashboard.png';
-import pcbCableadoImg from '../../assets/projects/pcb-cableado.jpg';
 import godotImg from '../../assets/projects/godot-runner.png';
 import iqsenseRenderImg from '../../assets/projects/iqsense-render.png';
 import pcbEsp32Img from '../../assets/projects/pcb-esp32.png';
+import hfsSentryBanner from '../../assets/projects/hfs-sentry-banner.jpg';
 
 const projectImages: Record<string, string> = {
   'iqsense-cad-despiece': iqsenseCadImg,
   'iqsense-render': iqsenseRenderImg,
-  'crypto-monitor-dashboard': cryptoImg,
-  'pcb-cableado': pcbCableadoImg,
   'pcb-esp32': pcbEsp32Img,
   'godot-runner': godotImg,
+  'hfs-sentry-banner': hfsSentryBanner,
 };
 
 export const BlueprintProjects: React.FC = () => {

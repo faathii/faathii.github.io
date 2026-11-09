@@ -68,7 +68,7 @@ export const BlueprintHero: React.FC<BlueprintHeroProps> = ({ onOpenCv }) => {
             </div>
             <div className="p-3 bg-cyan-950/40 border border-cyan-500/20 rounded">
               <span className="block text-[10px] text-cyan-500/80 font-mono">NIVEL 4: CIBERSEGURIDAD</span>
-              <span className="text-amber-400 font-bold font-mono">Cisco Sec + Pentavigil</span>
+              <span className="text-amber-400 font-bold font-mono">Cisco Sec + HFS-Sentry</span>
             </div>
           </div>
 

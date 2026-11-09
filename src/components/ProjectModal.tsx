@@ -1,22 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Project } from '../types';
-import { X, CheckCircle2, Target, Lightbulb, BarChart3, Image as ImageIcon, Activity } from 'lucide-react';
+import { X, CheckCircle2, Target, Lightbulb, BarChart3, Image as ImageIcon, Activity, Layers } from 'lucide-react';
 import { GithubIcon } from './Icons';
 
 import iqsenseCadImg from '../assets/projects/iqsense-cad-despiece.jpg';
-import cryptoImg from '../assets/projects/crypto-monitor-dashboard.png';
-import pcbCableadoImg from '../assets/projects/pcb-cableado.jpg';
-import godotImg from '../assets/projects/godot-runner.png';
+import iqsenseDashboardImg from '../assets/projects/iqsense-view-dashboard.png';
+import iqsenseCableadoImg from '../assets/projects/iqsense-cableado.jpg';
+import iqsenseCocinaImg from '../assets/projects/iqsense-real.jpg';
 import iqsenseRenderImg from '../assets/projects/iqsense-render.png';
 import pcbEsp32Img from '../assets/projects/pcb-esp32.png';
+import godotImg from '../assets/projects/godot-runner.png';
+import hfsSentryBanner from '../assets/projects/hfs-sentry-banner.jpg';
 
 const projectImages: Record<string, string> = {
   'iqsense-cad-despiece': iqsenseCadImg,
   'iqsense-render': iqsenseRenderImg,
-  'crypto-monitor-dashboard': cryptoImg,
-  'pcb-cableado': pcbCableadoImg,
+  'iqsense-real': iqsenseCocinaImg,
+  'iqsense-dashboard': iqsenseDashboardImg,
   'pcb-esp32': pcbEsp32Img,
   'godot-runner': godotImg,
+  'hfs-sentry-banner': hfsSentryBanner,
+};
+
+type IqsenseTab = 'cad' | 'dashboard' | 'cableado' | 'cocina' | 'render';
+
+const iqsenseGallery: Record<IqsenseTab, { src: string; label: string; desc: string }> = {
+  cad: {
+    src: iqsenseCadImg,
+    label: 'Plano CAD Despiece',
+    desc: 'Especificaciones técnicas, cotas de alzado y corte de ingeniería',
+  },
+  dashboard: {
+    src: iqsenseDashboardImg,
+    label: 'Software iQsense View (IA)',
+    desc: 'Dashboard con Super-IA Edge ONNX y telemetría de cultivo',
+  },
+  cableado: {
+    src: iqsenseCableadoImg,
+    label: 'Diagrama Isométrico',
+    desc: 'Corte técnico con electrónica, Carrier Board y actuadores',
+  },
+  cocina: {
+    src: iqsenseCocinaImg,
+    label: 'Prototipo Físico',
+    desc: 'Unidad de sobremesa operativa en entorno real',
+  },
+  render: {
+    src: iqsenseRenderImg,
+    label: 'Render 3D Envolvente',
+    desc: 'Diseño paramétrico modelado con la API de Python en Blender',
+  },
 };
 
 interface ProjectModalProps {
@@ -25,9 +58,13 @@ interface ProjectModalProps {
 }
 
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
+  const [iqsenseTab, setIqsenseTab] = useState<'cad' | 'dashboard' | 'cableado' | 'cocina' | 'render'>('cad');
+
   if (!project) return null;
 
-  const hasImage = project.imageUrl && projectImages[project.imageUrl];
+  const isIqsense = project.id === 'iqsense-iot';
+  const hasImage = isIqsense || (project.imageUrl && projectImages[project.imageUrl]);
+  const activeImageSrc = isIqsense ? iqsenseGallery[iqsenseTab].src : projectImages[project.imageUrl!];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
@@ -38,16 +75,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl p-6 sm:p-8 z-10 max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl p-6 sm:p-8 z-10 max-h-[90vh] overflow-y-auto font-sans">
         {/* Header */}
         <div className="flex items-start justify-between gap-4 mb-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="px-2.5 py-1 text-xs font-semibold rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              <span className="px-2.5 py-1 text-xs font-semibold rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-mono">
                 {project.category}
               </span>
               {project.badge && (
-                <span className="px-2 py-0.5 text-xs rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300">
+                <span className="px-2 py-0.5 text-xs rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 font-mono">
                   {project.badge}
                 </span>
               )}
@@ -69,15 +106,47 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
         {/* Real Image Showcase in Modal */}
         {hasImage && (
-          <div className="mb-6 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950 max-h-72 flex items-center justify-center relative">
-            <img
-              src={projectImages[project.imageUrl!]}
-              alt={project.title}
-              className="w-full h-full object-contain max-h-72"
-            />
-            <div className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-zinc-950/80 backdrop-blur-sm border border-zinc-700 text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
-              <ImageIcon className="w-3 h-3" />
-              <span>Evidencia Visual & Física</span>
+          <div className="mb-6 space-y-2">
+            {/* Multi-view Selector for iQsense */}
+            {isIqsense && (
+              <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-lg bg-zinc-950 border border-zinc-800 text-xs font-mono">
+                <span className="text-[10px] text-zinc-500 uppercase px-2 font-bold flex items-center gap-1">
+                  <Layers className="w-3 h-3 text-cyan-400" /> VISTAS:
+                </span>
+                {(Object.keys(iqsenseGallery) as IqsenseTab[]).map((key) => (
+                  <button
+                    key={key}
+                    onClick={() => setIqsenseTab(key)}
+                    className={`px-2.5 py-1 rounded text-[11px] transition-all cursor-pointer ${
+                      iqsenseTab === key
+                        ? 'bg-cyan-500 text-black font-bold shadow-sm'
+                        : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800'
+                    }`}
+                  >
+                    {iqsenseGallery[key].label}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Displayed Image Frame */}
+            <div className="rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950 max-h-80 flex items-center justify-center relative">
+              <img
+                src={activeImageSrc}
+                alt={project.title}
+                className="w-full h-full object-contain max-h-80"
+              />
+              <div className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-zinc-950/80 backdrop-blur-sm border border-zinc-700 text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
+                <ImageIcon className="w-3 h-3" />
+                <span>
+                  {isIqsense ? iqsenseGallery[iqsenseTab].label : 'Evidencia Visual & Física'}
+                </span>
+              </div>
+              {isIqsense && (
+                <div className="absolute bottom-2 left-2 right-2 px-3 py-1.5 rounded bg-zinc-950/85 backdrop-blur-sm border border-zinc-800 text-[11px] font-mono text-zinc-300">
+                  {iqsenseGallery[iqsenseTab].desc}
+                </div>
+              )}
             </div>
           </div>
         )}

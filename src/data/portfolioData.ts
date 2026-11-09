@@ -135,31 +135,34 @@ export const PROJECTS_DATA: Project[] = [
     demoUrl: 'https://github.com'
   },
   {
-    id: 'pentavigil-security-suite',
-    title: 'Pentavigil Suite — Diagnóstico Perimetral & Hardening Modular',
-    subtitle: 'Framework de auditoría de red, análisis forense de logs y verificación criptográfica',
+    id: 'hfs-sentry',
+    title: 'HFS-Sentry — Suite Modular de Ciberseguridad & Diagnóstico',
+    subtitle: 'Ecosistema de 7 herramientas de auditoría perimetral, análisis forense y criptografía',
     category: 'Ciberseguridad',
     iconName: 'ShieldCheck',
-    badge: 'Ciberseguridad Defensiva & Python',
-    description: 'Suite de 5 utilidades en Python puro para escaneo concurrente de puertos, auditoría de cabeceras HTTP de OWASP, análisis forense de intrusiones y monitoreo de integridad SHA-256.',
-    longDescription: 'Pentavigil Suite es un framework modular de ciberseguridad desarrollado sin librerías externas para máxima portabilidad en servidores Linux y Windows. Integra sondeo TCP multihilo (<1s), auditoría de cabeceras web según directrices CIS/OWASP, detección de ataques de fuerza bruta SSH en logs con generación automática de reglas UFW, y monitor de integridad de archivos críticos (FIM).',
-    challenge: 'Ejecutar diagnósticos exhaustivos de superficie de ataque y análisis de registros sin instalar pesadas dependencias de terceros en servidores de producción y sin generar sobrecarga de paquetes en la red.',
-    solution: 'Implementación de sockets TCP no bloqueantes con ThreadPoolExecutor, motor de expresiones regulares para parseo forense de eventos de autenticación, y verificación criptográfica X.509/SHA-256 nativa.',
-    tags: ['Python 3 Concurrente', 'Sockets TCP/IP', 'ThreadPoolExecutor', 'Cisco Hardening', 'Análisis Forense Logs', 'OWASP Security Headers', 'SHA-256 FIM', 'UFW / iptables'],
+    badge: 'Pure Python 3 • Zero Dependencies',
+    imageUrl: 'hfs-sentry-banner',
+    description: 'Suite modular de ciberseguridad defensiva y auditoría perimetral desarrollada sin dependencias externas (100% Python estándar). Integra escaneo concurrente de puertos, análisis forense de logs con bloqueo activo, auditoría TLS/SSL, sweep de subredes, monitor FIM y CLI extensible.',
+    longDescription: 'HFS-Sentry es un ecosistema de seguridad defensiva, auditoría perimetral y análisis forense diseñado para entornos reales y de misión crítica. Opera con cero dependencias externas sobre la biblioteca estándar de Python 3 para máxima portabilidad en servidores aislados (air-gapped) y sistemas embebidos. Su arquitectura desacoplada basada en el patrón de registro dinámico BaseTool + @register_tool permite ejecutar 7 módulos tácticos desde una CLI unificada o como herramientas independientes.',
+    challenge: 'Ejecutar diagnósticos exhaustivos de superficie de ataque, auditoría criptográfica y análisis de registros sin instalar pesadas dependencias de terceros en servidores de producción y sin generar sobrecarga en la red.',
+    solution: 'Implementación de sockets TCP no bloqueantes con ThreadPoolExecutor, motor de expresiones regulares para parseo forense de eventos de autenticación con scripts ufw/iptables automáticos, verificación criptográfica X.509/SHA-256 nativa y arquitectura extensible orientada a objetos.',
+    tags: ['Python 3 Estándar', 'Zero Dependencies', 'Arquitectura Modular (@register_tool)', 'ThreadPoolExecutor', 'Cisco Hardening', 'Análisis Forense Logs', 'OWASP Security Headers', 'SHA-256 FIM', 'UFW / iptables', 'Docker'],
     features: [
-      'pentavigil-scan (NetSentry): Escaneo multihilo de puertos y calificación automatizada de cabeceras HTTP (HSTS, CSP, X-Frame-Options)',
-      'pentavigil-log (LogSentinel): Detección de patrones de fuerza bruta SSH y Directory Traversal con generación de scripts de bloqueo',
-      'pentavigil-tls (CertSentry): Auditoría de ciclo de vida de certificados X.509 y detección de cifrados obsoletos',
-      'pentavigil-sweep (SubnetSweep): Descubrimiento concurrente de activos en subred (/24) y resolución OUI MAC',
-      'pentavigil-fim (IntegrityGuard): Verificación de integridad de archivos críticos mediante firmas SHA-256'
+      'CLI Centralizada & Scripts Independientes: Invocación unificada (sentry.py <tool>) o modular',
+      'NetSentry: Escaneo TCP concurrente con banner grabbing y verificación de 6 cabeceras OWASP',
+      'LogSentinel: Ingesta forense de logs con detección de ataques SSH y script bloqueador block_threats.sh',
+      'CertSentry: Inspección preventiva de ciclo de vida de certificados X.509 y cifrados obsoletos',
+      'SubnetSweep: Descubrimiento de activos en subred (/24) y resolución OUI IEEE de fabricantes',
+      'IntegrityGuard: Monitor de integridad de archivos críticos (FIM) con firmas criptográficas SHA-256',
+      'DNSProbe & TrafficSentry: Análisis de registros DNS y captura/inspección de tráfico de red'
     ],
     metrics: [
-      { label: 'Velocidad de Escaneo', value: '1.02s / 14 Puertos' },
       { label: 'Dependencias Externas', value: '0 (100% Python Std)' },
-      { label: 'Metodología', value: 'CIS Controls / Cisco' }
+      { label: 'Herramientas Integradas', value: '7 Módulos' },
+      { label: 'Arquitectura', value: 'Dynamic Registry' }
     ],
-    githubUrl: 'https://github.com',
-    demoUrl: 'https://github.com'
+    githubUrl: 'https://github.com/faathii/HFS-Sentry',
+    demoUrl: 'https://github.com/faathii/HFS-Sentry'
   }
 ];
 
