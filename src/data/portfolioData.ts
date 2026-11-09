@@ -173,8 +173,11 @@ export const PROJECTS_DATA: Project[] = [
     category: 'Ciberseguridad',
     iconName: 'ShieldCheck',
     badge: 'Pure Python 3 • Zero Dependencies',
-    imageUrl: 'hfs-sentry-banner',
+    imageUrl: 'sentry-hub-gui',
     images: [
+      'sentry-hub-gui',
+      'sentry-netsentry-gui',
+      'sentry-trafficsentry-gui',
       'hfs-sentry-banner',
       'sentry-netsentry',
       'sentry-logsentinel',

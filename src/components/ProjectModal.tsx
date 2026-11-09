@@ -20,6 +20,9 @@ import pcbTop5Img from '../assets/projects/pcb-top-5.png';
 import godotImg from '../assets/projects/godot-runner.png';
 
 import hfsSentryBanner from '../assets/projects/hfs-sentry-banner.jpg';
+import sentryHubGui from '../assets/projects/sentry-hub-gui.png';
+import sentryNetsentryGui from '../assets/projects/sentry-netsentry-gui.png';
+import sentryTrafficsentryGui from '../assets/projects/sentry-trafficsentry-gui.png';
 import sentryNetsentry from '../assets/projects/sentry-netsentry.png';
 import sentryLogsentinel from '../assets/projects/sentry-logsentinel.png';
 import sentryCertsentry from '../assets/projects/sentry-certsentry.png';
@@ -47,6 +50,9 @@ const projectImages: Record<string, string> = {
   'godot-runner': godotImg,
 
   // HFS-Sentry
+  'sentry-hub-gui': sentryHubGui,
+  'sentry-netsentry-gui': sentryNetsentryGui,
+  'sentry-trafficsentry-gui': sentryTrafficsentryGui,
   'hfs-sentry-banner': hfsSentryBanner,
   'sentry-netsentry': sentryNetsentry,
   'sentry-logsentinel': sentryLogsentinel,
