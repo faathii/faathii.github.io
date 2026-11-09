@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
 =============================================================================
-  NETSENTRY v1.0 — Fast Concurrent Port Scanner & HTTP Hardening Auditor
+  PENTAVIGIL :: NETSENTRY v1.0 — Concurrent Port Scanner & HTTP Auditor
   Autor: Hamza El Fathi Sofyani
   Acreditación: Certificado en Ciberseguridad | Cisco Networking Academy
-  Descripción: Herramienta de auditoría perimetral de red desarrollada en
-               Python puro (sin dependencias externas). Utiliza hilos
-               concurrentes para descubrimiento de servicios y análisis
-               estático de cabeceras de seguridad web.
+  Descripción: Módulo 01 de la suite Pentavigil. Auditoría perimetral de
+               red desarrollada en Python puro (sin dependencias externas).
+               Utiliza hilos concurrentes para descubrimiento de servicios
+               y análisis estático de cabeceras de seguridad web OWASP.
 =============================================================================
 """
 
@@ -202,3 +202,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

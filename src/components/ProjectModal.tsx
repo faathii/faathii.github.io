@@ -3,13 +3,19 @@ import type { Project } from '../types';
 import { X, CheckCircle2, Target, Lightbulb, BarChart3, Image as ImageIcon, Activity } from 'lucide-react';
 import { GithubIcon } from './Icons';
 
-import iqsenseImg from '../assets/projects/iqsense-render.png';
-import pcbImg from '../assets/projects/pcb-esp32.png';
+import iqsenseCadImg from '../assets/projects/iqsense-cad-despiece.jpg';
+import cryptoImg from '../assets/projects/crypto-monitor-dashboard.png';
+import pcbCableadoImg from '../assets/projects/pcb-cableado.jpg';
 import godotImg from '../assets/projects/godot-runner.png';
+import iqsenseRenderImg from '../assets/projects/iqsense-render.png';
+import pcbEsp32Img from '../assets/projects/pcb-esp32.png';
 
 const projectImages: Record<string, string> = {
-  'iqsense-render': iqsenseImg,
-  'pcb-esp32': pcbImg,
+  'iqsense-cad-despiece': iqsenseCadImg,
+  'iqsense-render': iqsenseRenderImg,
+  'crypto-monitor-dashboard': cryptoImg,
+  'pcb-cableado': pcbCableadoImg,
+  'pcb-esp32': pcbEsp32Img,
   'godot-runner': godotImg,
 };
 

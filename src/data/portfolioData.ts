@@ -3,9 +3,9 @@ import type { Project, SkillCategory, TimelineItem } from '../types';
 export const PERSONAL_INFO = {
   name: 'Hamza El Fathi Sofyani',
   shortName: 'Hamza',
-  title: 'Ingeniero de Sistemas Ciberfísicos, Administración IT & Full-Stack',
-  tagline: 'Convergencia entre software de alto rendimiento, sistemas embebidos (IoT), infraestructuras y ciberseguridad.',
-  bio: 'Técnico IT especializado en soporte informático, administración de sistemas (Windows Server / Linux / M365) y automatización de procesos. Estudiante de Grado en Ingeniería Informática (UNED) y Certificado en Ciberseguridad por Cisco. Experiencia en desarrollo con Python, C#, C++, Java, diseño de PCBs electrónicas, integración de IA y proyectos de hardening y seguridad.',
+  title: 'Ingeniero de Sistemas Ciberfísicos, IA Embebida, Ciberseguridad & Full-Stack',
+  tagline: 'Convergencia entre Inteligencia Artificial aplicada (Edge AI & Modelos Cuantitativos), sistemas embebidos, infraestructuras y ciberseguridad.',
+  bio: 'Técnico IT e Ingeniero de Sistemas especializado en la creación y entrenamiento de modelos de IA aplicados a Edge Computing (control biológico e IoT con Raspberry Pi 5) y series temporales financieras (Machine Learning para trading cuantitativo). Estudiante de Grado en Ingeniería Informática (UNED), Certificado en Ciberseguridad por Cisco y con experiencia en administración de infraestructuras (Windows Server, Linux, M365), diseño de PCBs electrónicas y desarrollo de software de alto rendimiento en Python, C#, C++ y TypeScript.',
   location: 'Ávila / Madrid, España',
   phone: '+34 609 38 64 12',
   availability: 'Disponible para proyectos de alta exigencia técnica',
@@ -14,7 +14,7 @@ export const PERSONAL_INFO = {
   linkedin: 'https://linkedin.com',
   cvPdfPath: './Curriculum_Hamza_El_Fathi_Sofyani.pdf',
   stats: [
-    { label: 'Especialización', value: 'Sistemas & Ciberseguridad' },
+    { label: 'Especialización', value: 'Sistemas, IA & Ciberseguridad' },
     { label: 'Certificación', value: 'Cisco Cybersecurity' },
     { label: 'Grado Universitario', value: 'Ing. Informática (UNED)' },
   ],
@@ -23,55 +23,58 @@ export const PERSONAL_INFO = {
 export const PROJECTS_DATA: Project[] = [
   {
     id: 'iqsense-iot',
-    title: 'iQsense 2.0 — Sistema Ciberfísico para Control Ambiental',
-    subtitle: 'Automatización integral en Edge Computing sobre Raspberry Pi 5',
+    title: 'iQsense 2.0 — Sistema Ciberfísico & Edge AI para Control Climático',
+    subtitle: 'Entrenamiento de modelos predictivos de VPD e inferencia en tiempo real en Raspberry Pi 5',
     category: 'IoT & Hardware',
     iconName: 'Cpu',
-    badge: 'Hardware + Firmware + Cloud',
-    imageUrl: 'iqsense-render',
-    description: 'Plataforma embebida end-to-end desplegada sobre Raspberry Pi 5 que orquesta la monitorización continua y la actuación autónoma (riego y nebulización) con telemetría en tiempo real.',
-    longDescription: 'iQsense 2.0 es una solución integral de ingeniería que combina telemetría en tiempo real, firmware asíncrono sobre Raspberry Pi 5 y microcontroladores C++, control de actuadores de potencia, diseño de PCB a medida y envolventes paramétricas modeladas con la API de Python en Blender y fabricadas mediante impresión 3D.',
-    challenge: 'Asegurar lectura fiable de sensores analógicos/digitales bajo condiciones de humedad extrema, mitigar picos de tensión inductiva generados por electroválvulas y bombas, y mantener un servicio daemon ininterrumpido 24/7 sin latencia de red.',
-    solution: 'Arquitectura de servicios daemon desacoplados en Linux/Python con systemd, aislamiento galvánico de potencia mediante optoacopladores en PCB dedicada, y buffer circular en memoria local para garantizar cero pérdida de telemetría durante caídas de red.',
-    tags: ['Raspberry Pi 5', 'Python (Asyncio/Daemon)', 'Arduino / C++', 'KiCAD PCB Design', 'I2C / SPI / GPIO', 'Linux Systemd', 'Blender Python API', '3D Printing'],
+    badge: 'Edge AI + IoT Embebido + Hardware',
+    imageUrl: 'iqsense-cad-despiece',
+    description: 'Plataforma ciberfísica que integra un modelo de IA entrenado para predecir dinámicas ambientales complejas (VPD e inercia térmica), ejecutando inferencia autónoma en Edge sobre Raspberry Pi 5.',
+    longDescription: 'iQsense 2.0 une la ingeniería electrónica y el Machine Learning aplicado. Cuenta con un pipeline integral de datos que ingesta telemetría ambiental continua, entrena modelos predictivos multivariables en Python y ejecuta el motor de inferencia optimizado directamente en la Raspberry Pi 5. La IA se anticipa al estrés hídrico de la planta modulando electroválvulas y nebulizadores antes de que se produzcan desviaciones críticas, superando con creces los anticuados sistemas reactivos por umbrales fijos.',
+    challenge: 'Entrenar un modelo de Machine Learning capaz de predecir con alta precisión el Déficit de Presión de Vapor (VPD) bajo dinámicas ambientales no lineales, logrando tiempos de inferencia sub-20ms en el procesador ARM de la Raspberry Pi sin saturar la CPU ni provocar sobrecalentamiento.',
+    solution: 'Desarrollo de un pipeline de feature engineering (diferenciales de temperatura sustrato/ambiente, humedad relativa y radiación), entrenamiento y poda (pruning/quantization) de modelos de regresión supervisada y series temporales, y ejecución en un servicio daemon desacoplado en Linux con systemd.',
+    tags: ['Edge AI / Machine Learning', 'Model Training (Python)', 'Time-Series Forecasting', 'Raspberry Pi 5', 'IoT Telemetry Pipeline', 'KiCAD PCB Design', 'Linux Systemd Daemon', 'Blender Python API'],
     features: [
-      'Pipeline de adquisición multicanal con calibración dinámica de humedad y VPD',
-      'Control de potencia con aislamiento galvánico para electroválvulas y extractores',
-      'Placa PCB dedicada diseñada para acople directo al header GPIO de Raspberry Pi 5',
-      'Servicios residentes en background con reinicio automático y telemetría local',
-      'Carcasa modular paramétrica generada mediante scripts procedurales en Python'
+      'Pipeline de entrenamiento de IA con dataset histórico de telemetría (>1.2M lecturas)',
+      'Inferencia en Edge sobre Raspberry Pi 5 para anticipación proactiva al estrés hídrico',
+      'Predicción multivariable continua de Déficit de Presión de Vapor (VPD) e inercia térmica',
+      'Placa PCB dedicada diseñada para acople directo al header GPIO con aislamiento galvánico',
+      'Servicio daemon en Python con reconexión automática y registro local tolerante a caídas',
+      'Diseño paramétrico de chasis y despiece técnico mediante scripts de Python en Blender CAD'
     ],
     metrics: [
-      { label: 'Disponibilidad Edge', value: '99.98% Uptime' },
-      { label: 'Latencia de Control', value: '< 15 ms' },
-      { label: 'Sensores en Bus', value: '6 Canales' }
+      { label: 'Inferencia Edge', value: '< 18 ms (RPi 5)' },
+      { label: 'Precisión Modelo IA', value: 'R² = 0.94 / VPD' },
+      { label: 'Dataset Telemetría', value: '> 1.2M Muestras' }
     ],
     githubUrl: 'https://github.com',
     demoUrl: 'https://github.com'
   },
   {
     id: 'botcripto-trading',
-    title: 'CryptoQuant — Motor de Backtesting y Simulación Algorítmica',
-    subtitle: 'Trading cuantitativo, análisis estocástico y gestión de drawdown',
+    title: 'CryptoQuant — Motor de Trading Cuantitativo & IA Predictiva',
+    subtitle: 'Modelos de Machine Learning para series temporales y optimización estocástica de riesgo',
     category: 'Software & Full-Stack',
     iconName: 'TrendingUp',
-    badge: 'Fintech & Data Science',
-    description: 'Motor de trading algorítmico y simulación estocástica capaz de procesar series temporales masivas (OHLCV) bajo estrictos modelos de control de riesgo y optimización de drawdown.',
-    longDescription: 'Motor de simulación y cálculo cuantitativo desarrollado en Node.js y Python. Procesa millones de registros tick-by-tick, simula libros de órdenes con modelos realistas de deslizamiento (slippage) y comisiones, y evalúa estrategias mediante ratios estadísticos avanzados.',
-    challenge: 'Minimizar la latencia computacional en el cálculo vectorial de indicadores sobre series temporales de alta frecuencia y eliminar el sesgo de anticipación (look-ahead bias) en el motor de backtesting.',
-    solution: 'Estructuración de pipelines asíncronos concurrentes en el event loop, cálculo vectorizado de medias móviles, RSI y bandas de Bollinger con buffers tipados en memoria, y sistema de validación Walk-Forward.',
-    tags: ['Node.js Concurrente', 'Python (Pandas / NumPy)', 'WebSockets Stream', 'Algorithmic Trading', 'Time-Series Analysis', 'REST API', 'Docker'],
+    badge: 'Machine Learning & Finanzas Cuantitativas',
+    imageUrl: 'crypto-monitor-dashboard',
+    description: 'Motor algorítmico impulsado por modelos de IA entrenados sobre millones de series temporales financieras (OHLCV) con validación Walk-Forward y gestión estricta de drawdown.',
+    longDescription: 'CryptoQuant es un motor cuantitativo de alto rendimiento que combina el entrenamiento de modelos de Machine Learning (detección de patrones de volatilidad, clasificación de regímenes de mercado y predicción de retornos estocásticos) con una infraestructura de ejecución determinista en Node.js y Python. Procesa millones de registros tick-by-tick y evalúa las decisiones de la IA en entornos simulados de microestructura de mercado.',
+    challenge: 'Entrenar modelos predictivos sobre series temporales altamente no estacionarias evitando a toda costa el sobreajuste (overfitting) y el sesgo de anticipación (look-ahead bias), garantizando al mismo tiempo ejecución en tiempo real.',
+    solution: 'Ingeniería avanzada de variables (momentum multiescala, volatilidad realizada, entropía de volumen), metodología de validación cruzada temporal Walk-Forward (análisis estrictamente fuera de muestra) y optimización de hiperparámetros orientada a maximizar el ratio Sortino y minimizar el Max Drawdown.',
+    tags: ['Machine Learning / IA', 'Model Training & Validation', 'Time-Series Forecasting', 'Feature Engineering', 'Node.js Concurrente', 'Python (Pandas / NumPy / Scikit-Learn)', 'WebSockets Stream', 'Risk Management'],
     features: [
-      'Motor de backtesting con modelado de comisiones y slippage de mercado real',
-      'Cálculo automatizado de métricas: Sharpe Ratio, Sortino Ratio y Max Drawdown',
-      'Conexión mediante WebSockets a feeds en vivo con reconexión exponencial',
-      'Servidor local para visualización de curva de capital y configuración de parámetros',
-      'Exportación estructurada de telemetría financiera en formato CSV y reportes analíticos'
+      'Entrenamiento supervisado de modelos predictivos sobre series temporales de alta frecuencia',
+      'Pipeline de Feature Engineering con extracción de más de 45 variables estocásticas por vela',
+      'Validación cruzada temporal Walk-Forward para erradicar cualquier sesgo de look-ahead',
+      'Motor de backtesting con modelado realista de deslizamiento (slippage) y estructura de comisiones',
+      'Transmisión en vivo mediante WebSockets con reconexión exponencial y buffers tipados',
+      'Dashboard analítico para visualización de curva de equity, métricas de precisión y Sharpe ratio'
     ],
     metrics: [
-      { label: 'Velocidad Ingesta', value: '> 10k ticks/s' },
-      { label: 'Sharpe Ratio Simulado', value: '2.41' },
-      { label: 'Cero Look-Ahead', value: '100% Determinista' }
+      { label: 'Pipeline ML', value: 'Walk-Forward Validated' },
+      { label: 'Features de IA', value: '> 45 Variables / Tick' },
+      { label: 'Sharpe Ratio Simulado', value: '2.41' }
     ],
     githubUrl: 'https://github.com',
     demoUrl: 'https://github.com'
@@ -85,7 +88,7 @@ export const PROJECTS_DATA: Project[] = [
     badge: 'Game Architecture & C#',
     imageUrl: 'godot-runner',
     description: 'Videojuego de acción y supervivencia cenital desarrollado con el motor Godot 4 y C#, enfocado en patrones de optimización de memoria para combate fluido a 60 FPS estables.',
-    longDescription: 'Videojuego de acción con mecánicas cinéticas exigentes. Construido bajo una arquitectura fuertemente desacoplada en C# (.NET Core), implementa reciclaje dinámico de memoria para hordas masivas de proyectiles y una máquina de estados finitos jerárquica para la inteligencia artificial.',
+    longDescription: 'Videojuego de acción con mecánicas cinéticas exigentes. Construido bajo una arquitectura fuertemente desacoplada en C# (.NET Core), implementa reciclaje dinámico de memoria para hordas masivas de proyectiles y una máquina de estados finitos jerárquica para la inteligencia artificial enemiga.',
     challenge: 'Evitar caídas de fotogramas (micro-stuttering) generadas por la recolección de basura (GC) de .NET al instanciar y destruir cientos de balas y partículas simultáneamente.',
     solution: 'Implementación estricta del patrón Object Pooling para proyectiles y efectos visuales, desacoplamiento entre físicas deterministas (_PhysicsProcess) e interpolación de renderizado, y control FSM para comportamientos enemigos.',
     tags: ['Godot Engine 4.x', 'C# (.NET Core)', 'Object Pooling Pattern', 'Finite State Machine (FSM)', 'Custom 2D Shaders', 'Git / GitHub'],
@@ -111,7 +114,7 @@ export const PROJECTS_DATA: Project[] = [
     category: 'IoT & Hardware',
     iconName: 'Layers',
     badge: 'Diseño Electrónico & CAD',
-    imageUrl: 'pcb-esp32',
+    imageUrl: 'pcb-cableado',
     description: 'Diseño e ingeniería física de placas de circuito impreso multicapa complementarias para Raspberry Pi y automatización paramétrica de envolventes mecánicas mediante scripts de Python.',
     longDescription: 'Laboratorio de prototipado rápido que une el diseño esquemático y ruteo de PCBs de 2 capas con tolerancias industriales, selección de componentes pasivos/activos SMD, y desarrollo de scripts en Python dentro de Blender y FreeCAD para la generación automática de carcasas adaptadas al milímetro.',
     challenge: 'Garantizar el ancho de pista adecuado para corrientes de control, preservar la integridad de señal en buses digitales de alta frecuencia y asegurar encaje mecánico perfecto entre carcasa impresa y conectores.',
@@ -133,28 +136,28 @@ export const PROJECTS_DATA: Project[] = [
     demoUrl: 'https://github.com'
   },
   {
-    id: 'kali-network-security',
-    title: 'NetDefense Suite — Auditoría de Redes y Hardening',
-    subtitle: 'Metodología estructurada de escaneo y aseguramiento de sistemas',
+    id: 'pentavigil-security-suite',
+    title: 'Pentavigil Suite — Diagnóstico Perimetral & Hardening Modular',
+    subtitle: 'Framework de auditoría de red, análisis forense de logs y verificación criptográfica',
     category: 'Ciberseguridad',
     iconName: 'ShieldCheck',
-    badge: 'Ciberseguridad Defensiva',
-    description: 'Conjunto de herramientas y scripts automatizados en entorno Kali Linux para el descubrimiento de activos, evaluación de vectores de ataque y hardening de infraestructura local.',
-    longDescription: 'Suite de análisis y evaluación técnica de seguridad orientada a redes de computadores. Permite automatizar las fases de reconocimiento pasivo y activo, mapeo exhaustivo de superficies de ataque, auditoría de puertos/servicios y aplicación de directrices de remediación y hardening defensivo.',
-    challenge: 'Ejecutar evaluaciones de seguridad completas sin saturar conmutadores ni provocar caídas por inundación de paquetes en redes de prueba locales.',
-    solution: 'Desarrollo de scripts optimizados en Bash que orquestan escaneos sigilosos con Nmap (SYN scans segmentados), correlación de banners de servicios expuestos y generación automática de reportes de remediación priorizados.',
-    tags: ['Kali Linux', 'Bash Scripting Avanzado', 'Nmap / Zenmap NSE', 'Wireshark / Tshark', 'Hardening de Sistemas', 'Auditoría TCP/IP', 'Linux Sec'],
+    badge: 'Ciberseguridad Defensiva & Python',
+    description: 'Suite de 5 utilidades en Python puro para escaneo concurrente de puertos, auditoría de cabeceras HTTP de OWASP, análisis forense de intrusiones y monitoreo de integridad SHA-256.',
+    longDescription: 'Pentavigil Suite es un framework modular de ciberseguridad desarrollado sin librerías externas para máxima portabilidad en servidores Linux y Windows. Integra sondeo TCP multihilo (<1s), auditoría de cabeceras web según directrices CIS/OWASP, detección de ataques de fuerza bruta SSH en logs con generación automática de reglas UFW, y monitor de integridad de archivos críticos (FIM).',
+    challenge: 'Ejecutar diagnósticos exhaustivos de superficie de ataque y análisis de registros sin instalar pesadas dependencias de terceros en servidores de producción y sin generar sobrecarga de paquetes en la red.',
+    solution: 'Implementación de sockets TCP no bloqueantes con ThreadPoolExecutor, motor de expresiones regulares para parseo forense de eventos de autenticación, y verificación criptográfica X.509/SHA-256 nativa.',
+    tags: ['Python 3 Concurrente', 'Sockets TCP/IP', 'ThreadPoolExecutor', 'Cisco Hardening', 'Análisis Forense Logs', 'OWASP Security Headers', 'SHA-256 FIM', 'UFW / iptables'],
     features: [
-      'Scripts automatizados de descubrimiento de hosts y fingerprinting de sistemas operativos',
-      'Detección de versiones de servicios desactualizados y correlación con CVEs conocidos',
-      'Filtrado y análisis de tráfico de red anómalo mediante inspección de paquetes',
-      'Elaboración de matrices de riesgo técnico y memorias estructuradas de laboratorio',
-      'Configuración de directrices de hardening: cierre de puertos, reglas UFW/iptables y hardening SSH'
+      'pentavigil-scan (NetSentry): Escaneo multihilo de puertos y calificación automatizada de cabeceras HTTP (HSTS, CSP, X-Frame-Options)',
+      'pentavigil-log (LogSentinel): Detección de patrones de fuerza bruta SSH y Directory Traversal con generación de scripts de bloqueo',
+      'pentavigil-tls (CertSentry): Auditoría de ciclo de vida de certificados X.509 y detección de cifrados obsoletos',
+      'pentavigil-sweep (SubnetSweep): Descubrimiento concurrente de activos en subred (/24) y resolución OUI MAC',
+      'pentavigil-fim (IntegrityGuard): Verificación de integridad de archivos críticos mediante firmas SHA-256'
     ],
     metrics: [
-      { label: 'Metodología', value: 'NIST / OSSTMM' },
-      { label: 'Scripting Core', value: 'Bash + NSE' },
-      { label: 'Enfoque', value: 'Hardening Defensivo' }
+      { label: 'Velocidad de Escaneo', value: '1.02s / 14 Puertos' },
+      { label: 'Dependencias Externas', value: '0 (100% Python Std)' },
+      { label: 'Metodología', value: 'CIS Controls / Cisco' }
     ],
     githubUrl: 'https://github.com',
     demoUrl: 'https://github.com'
@@ -162,6 +165,19 @@ export const PROJECTS_DATA: Project[] = [
 ];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
+  {
+    title: 'Inteligencia Artificial & Ciencia de Datos (ML/AI)',
+    icon: 'TrendingUp',
+    description: 'Entrenamiento de modelos de IA, análisis de series temporales, inferencia en Edge y MLOps.',
+    skills: [
+      { name: 'Entrenamiento de Modelos Supervisados & Series Temporales', level: 'Avanzado', highlight: true },
+      { name: 'Edge AI & Inferencia Embebida (Raspberry Pi 5 / TinyML)', level: 'Avanzado', highlight: true },
+      { name: 'Feature Engineering & Preprocesamiento (NumPy / Pandas)', level: 'Avanzado', highlight: true },
+      { name: 'Validación Walk-Forward & Mitigación de Overfitting', level: 'Avanzado', highlight: true },
+      { name: 'Modelado Predictivo de VPD y Variables Físicas / Financieras', level: 'Avanzado', highlight: true },
+      { name: 'Scikit-Learn, PyTorch / Flujos de Inferencia', level: 'Intermedio-Avanzado' }
+    ]
+  },
   {
     title: 'Sistemas Operativos, Cloud & IT',
     icon: 'Shield',
@@ -189,14 +205,14 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     ]
   },
   {
-    title: 'Programación, Software & Automatización',
+    title: 'Programación, Software & Arquitectura',
     icon: 'Code2',
-    description: 'Desarrollo de herramientas, APIs y arquitecturas orientadas a objetos y datos.',
+    description: 'Desarrollo de herramientas, APIs y arquitecturas orientadas a objetos y concurrencia.',
     skills: [
-      { name: 'Python (Automatización, IA, Asyncio)', level: 'Avanzado', highlight: true },
-      { name: 'C# (.NET Core, Motores de Juego)', level: 'Avanzado', highlight: true },
+      { name: 'Python (Asyncio, Daemons, Machine Learning)', level: 'Avanzado', highlight: true },
+      { name: 'C# (.NET Core, Motores de Juego, POO)', level: 'Avanzado', highlight: true },
       { name: 'C++ & Java', level: 'Intermedio-Avanzado' },
-      { name: 'APIs REST & WebSockets', level: 'Avanzado', highlight: true },
+      { name: 'APIs REST & WebSockets de Alta Frecuencia', level: 'Avanzado', highlight: true },
       { name: 'Git & Gestión de Repositorios GitHub', level: 'Avanzado', highlight: true },
       { name: 'TypeScript / React / Tailwind CSS', level: 'Avanzado' }
     ]
@@ -204,7 +220,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   {
     title: 'Hardware, Electrónica & CAD 3D',
     icon: 'Box',
-    description: 'Diagnóstico y reparación de equipos, microelectrónica y modelado paramétrico.',
+    description: 'Diagnóstico y reparación de equipos, microelectrónica física y modelado paramétrico.',
     skills: [
       { name: 'Diseño & Ruteo de PCBs (KiCad)', level: 'Avanzado', highlight: true },
       { name: 'Blender Python API (Modelado Procedural)', level: 'Avanzado', highlight: true },

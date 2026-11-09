@@ -1,4 +1,5 @@
-# Suite de Herramientas de Ciberseguridad & Diagnóstico de Infraestructuras
+# Pentavigil Suite — Herramientas de Ciberseguridad & Diagnóstico de Infraestructuras
+> **Nombre del Proyecto:** Pentavigil Suite  
 > **Autor:** Hamza El Fathi Sofyani  
 > **Acreditación:** Certificado en Ciberseguridad por Cisco Networking Academy | Grado en Ingeniería Informática (UNED)  
 > **Objetivo:** Colección de utilidades técnicas de alta densidad, bajo overhead y cero dependencias externas (Python 3 estándar) orientadas a la auditoría perimetral, análisis forense de logs y endurecimiento (*hardening*) de sistemas.

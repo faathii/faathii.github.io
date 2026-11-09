@@ -35,39 +35,40 @@ export const BlueprintHero: React.FC<BlueprintHeroProps> = ({ onOpenCv }) => {
 
           {/* Master Heading */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight mb-4">
-            INGENIERÍA DE SISTEMAS CIBERFÍSICOS &{' '}
+            INGENIERÍA CIBERFÍSICA,{' '}
             <span className="text-cyan-400 underline decoration-cyan-500/40 underline-offset-8">
-              DESARROLLO FULL-STACK
-            </span>
+              INTELIGENCIA ARTIFICIAL
+            </span>{' '}
+            & CIBERSEGURIDAD
           </h1>
 
           {/* Bio text as engineering manifesto */}
           <div className="max-w-3xl my-6 space-y-3 text-xs sm:text-sm text-cyan-100/90 leading-relaxed font-sans sm:font-mono">
             <p>
-              <strong className="text-cyan-400 font-mono">[ ALCANCE ]:</strong> Convergencia entre hardware físico, microelectrónica (ruteo de PCBs en KiCad), firmware embebido en Raspberry Pi 5 / microcontroladores, arquitecturas de software concurrente en C# y Python, y hardening en ciberseguridad defensiva.
+              <strong className="text-cyan-400 font-mono">[ ALCANCE ]:</strong> Convergencia entre hardware físico (PCBs KiCad y Raspberry Pi 5), creación y entrenamiento de modelos de Inteligencia Artificial (Edge AI en IoT y Machine Learning para series temporales), arquitecturas de software en C# / Python y hardening en ciberseguridad defensiva (Cisco Certified).
             </p>
             <p className="text-zinc-400 text-xs">
-              <strong className="text-emerald-400 font-mono">[ ACREDITACIONES ]:</strong> Estudiante de Grado en Ingeniería Informática (UNED) • Certificado en Ciberseguridad por Cisco Networking Academy • Técnico en Sistemas Microinformáticos y Redes.
+              <strong className="text-emerald-400 font-mono">[ ACREDITACIONES ]:</strong> Estudiante de Grado en Ingeniería Informática (UNED) • Certificado en Ciberseguridad por Cisco Networking Academy • Especialización Técnica Superior.
             </p>
           </div>
 
           {/* Blueprint Engineering Specs Bar */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 my-8 pt-6 border-t border-cyan-500/30 text-xs">
             <div className="p-3 bg-cyan-950/40 border border-cyan-500/20 rounded">
-              <span className="block text-[10px] text-cyan-500/80 font-mono">NIVEL 1: FÍSICO</span>
-              <span className="text-white font-bold font-mono">PCBs & Tolerancia ±0.15mm</span>
+              <span className="block text-[10px] text-cyan-500/80 font-mono">NIVEL 1: HARDWARE</span>
+              <span className="text-white font-bold font-mono">PCBs KiCad & RPi 5</span>
             </div>
             <div className="p-3 bg-cyan-950/40 border border-cyan-500/20 rounded">
-              <span className="block text-[10px] text-cyan-500/80 font-mono">NIVEL 2: EMBEBIDO</span>
-              <span className="text-cyan-300 font-bold font-mono">Raspberry Pi 5 + Systemd</span>
+              <span className="block text-[10px] text-cyan-500/80 font-mono">NIVEL 2: INTELIGENCIA ARTIFICIAL</span>
+              <span className="text-cyan-300 font-bold font-mono">Edge AI & ML Cuantitativo</span>
             </div>
             <div className="p-3 bg-cyan-950/40 border border-cyan-500/20 rounded">
-              <span className="block text-[10px] text-cyan-500/80 font-mono">NIVEL 3: SOFTWARE</span>
+              <span className="block text-[10px] text-cyan-500/80 font-mono">NIVEL 3: ARQUITECTURA</span>
               <span className="text-emerald-400 font-bold font-mono">C# (.NET) + Python Async</span>
             </div>
             <div className="p-3 bg-cyan-950/40 border border-cyan-500/20 rounded">
-              <span className="block text-[10px] text-cyan-500/80 font-mono">NIVEL 4: SEGURIDAD</span>
-              <span className="text-amber-400 font-bold font-mono">Cisco Sec + Kali Linux</span>
+              <span className="block text-[10px] text-cyan-500/80 font-mono">NIVEL 4: CIBERSEGURIDAD</span>
+              <span className="text-amber-400 font-bold font-mono">Cisco Sec + Pentavigil</span>
             </div>
           </div>
 
