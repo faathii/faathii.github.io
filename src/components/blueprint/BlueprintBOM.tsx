@@ -1,5 +1,7 @@
 import React from 'react';
 import { SKILL_CATEGORIES } from '../../data/portfolioData';
+import ciscoCyberOpsImg from '../../assets/certificates/cisco-cyberops-associate.png';
+import ciscoIntroImg from '../../assets/certificates/cisco-intro-cybersecurity.png';
 
 export const BlueprintBOM: React.FC = () => {
   return (
@@ -75,6 +77,37 @@ export const BlueprintBOM: React.FC = () => {
                   </div>
                 ))}
               </div>
+
+              {/* Cisco Verified Badges Footer for Cybersecurity Section */}
+              {cat.title.includes('Ciberseguridad') && (
+                <div className="mt-4 pt-4 border-t border-cyan-500/20 bg-cyan-950/40 p-3 rounded flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex -space-x-2 shrink-0">
+                      <img
+                        src={ciscoCyberOpsImg}
+                        alt="Cisco CyberOps Associate"
+                        className="w-10 h-10 object-contain drop-shadow"
+                      />
+                      <img
+                        src={ciscoIntroImg}
+                        alt="Cisco Introduction to Cybersecurity"
+                        className="w-10 h-10 object-contain drop-shadow"
+                      />
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-cyan-400 font-bold font-mono block">
+                        ACREDITACIONES OFICIALES CISCO
+                      </span>
+                      <span className="text-[11px] text-white font-mono block">
+                        CyberOps Associate + Intro to Cybersecurity
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 font-mono font-bold shrink-0">
+                    VERIFICADO
+                  </span>
+                </div>
+              )}
             </div>
           ))}
         </div>

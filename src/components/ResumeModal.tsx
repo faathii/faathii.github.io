@@ -2,6 +2,8 @@ import React from 'react';
 import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES } from '../data/portfolioData';
 import { X, Printer, MapPin, Mail, Phone, Download, Award, GraduationCap, Briefcase, Languages } from 'lucide-react';
 import { GithubIcon } from './Icons';
+import ciscoCyberOpsImg from '../assets/certificates/cisco-cyberops-associate.png';
+import ciscoIntroImg from '../assets/certificates/cisco-intro-cybersecurity.png';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -115,13 +117,44 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40">
               <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs uppercase tracking-wider mb-3">
                 <Award className="w-4 h-4 text-cyan-500" />
-                <span>Certificaciones & Idiomas</span>
+                <span>Certificaciones Oficiales Cisco & Idiomas</span>
               </div>
               <div className="space-y-3 text-xs">
-                <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                  <p className="font-bold text-emerald-600 dark:text-emerald-400">Certificado de Ciberseguridad | Cisco</p>
-                  <p className="text-zinc-600 dark:text-zinc-300 text-[11px] mt-0.5">Seguridad en redes, criptografía, hardening y mitigación de amenazas.</p>
+                {/* Official Cisco Badges */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="p-2.5 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center gap-2.5">
+                    <img
+                      src={ciscoCyberOpsImg}
+                      alt="Cisco CyberOps Associate"
+                      className="w-12 h-12 object-contain shrink-0 drop-shadow"
+                    />
+                    <div className="min-w-0">
+                      <p className="font-bold text-sky-600 dark:text-sky-400 text-[11px] leading-tight truncate">
+                        CyberOps Associate
+                      </p>
+                      <p className="text-zinc-500 dark:text-zinc-400 text-[10px] mt-0.5 font-mono">
+                        Cisco Networking Academy • Verified
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-2.5">
+                    <img
+                      src={ciscoIntroImg}
+                      alt="Cisco Introduction to Cybersecurity"
+                      className="w-12 h-12 object-contain shrink-0 drop-shadow"
+                    />
+                    <div className="min-w-0">
+                      <p className="font-bold text-emerald-600 dark:text-emerald-400 text-[11px] leading-tight truncate">
+                        Introduction to Cybersecurity
+                      </p>
+                      <p className="text-zinc-500 dark:text-zinc-400 text-[10px] mt-0.5 font-mono">
+                        Cisco Networking Academy • Verified
+                      </p>
+                    </div>
+                  </div>
                 </div>
+
                 <div>
                   <div className="flex items-center gap-2 font-semibold text-zinc-900 dark:text-white mb-1">
                     <Languages className="w-3.5 h-3.5 text-zinc-400" />

@@ -1,5 +1,7 @@
 import React from 'react';
 import { TIMELINE_DATA } from '../../data/portfolioData';
+import ciscoCyberOpsImg from '../../assets/certificates/cisco-cyberops-associate.png';
+import ciscoIntroImg from '../../assets/certificates/cisco-intro-cybersecurity.png';
 
 export const BlueprintHistory: React.FC = () => {
   return (
@@ -49,6 +51,51 @@ export const BlueprintHistory: React.FC = () => {
                   <p className="text-xs text-cyan-100/80 leading-relaxed font-sans sm:font-mono mb-3">
                     {item.description}
                   </p>
+
+                  {/* Verified Cisco Badges Showcase */}
+                  {item.institution.includes('Cisco') && (
+                    <div className="my-3 p-3.5 rounded bg-black/60 border border-cyan-500/30 flex flex-wrap items-center gap-4">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={ciscoCyberOpsImg}
+                          alt="Cisco CyberOps Associate"
+                          className="w-14 h-14 object-contain shrink-0 drop-shadow-[0_0_10px_rgba(56,189,248,0.35)]"
+                        />
+                        <div>
+                          <span className="text-[10px] text-cyan-400 font-mono uppercase font-bold block">
+                            Badge Oficial #1
+                          </span>
+                          <span className="text-xs font-bold text-white block">
+                            Cisco CyberOps Associate
+                          </span>
+                          <span className="text-[10px] text-zinc-400 font-mono block">
+                            Cisco Networking Academy • Verified
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="h-8 w-px bg-cyan-500/20 hidden sm:block" />
+
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={ciscoIntroImg}
+                          alt="Cisco Introduction to Cybersecurity"
+                          className="w-14 h-14 object-contain shrink-0 drop-shadow-[0_0_10px_rgba(74,222,128,0.35)]"
+                        />
+                        <div>
+                          <span className="text-[10px] text-emerald-400 font-mono uppercase font-bold block">
+                            Badge Oficial #2
+                          </span>
+                          <span className="text-xs font-bold text-white block">
+                            Introduction to Cybersecurity
+                          </span>
+                          <span className="text-[10px] text-zinc-400 font-mono block">
+                            Cisco Networking Academy • Verified
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="flex flex-wrap gap-1.5">
                     {item.skills.map((s, sIdx) => (

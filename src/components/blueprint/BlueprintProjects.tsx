@@ -8,6 +8,7 @@ import { BlueprintCarousel } from './BlueprintCarousel';
 
 import iqsenseCadImg from '../../assets/projects/iqsense-cad-despiece.jpg';
 import iqsenseDashboardImg from '../../assets/projects/iqsense-view-dashboard.png';
+import iqsenseMonitorProImg from '../../assets/projects/iqsense-monitor-pro.png';
 import iqsenseCableadoImg from '../../assets/projects/iqsense-cableado.jpg';
 import iqsenseCocinaImg from '../../assets/projects/iqsense-real.jpg';
 import iqsenseRenderImg from '../../assets/projects/iqsense-render.png';
@@ -39,6 +40,7 @@ const projectImages: Record<string, string> = {
   // iQsense 2.0
   'iqsense-cad-despiece': iqsenseCadImg,
   'iqsense-view-dashboard': iqsenseDashboardImg,
+  'iqsense-monitor-pro': iqsenseMonitorProImg,
   'iqsense-cableado': iqsenseCableadoImg,
   'iqsense-real': iqsenseCocinaImg,
   'iqsense-render': iqsenseRenderImg,

@@ -6,6 +6,7 @@ import { BlueprintCarousel } from './blueprint/BlueprintCarousel';
 
 import iqsenseCadImg from '../assets/projects/iqsense-cad-despiece.jpg';
 import iqsenseDashboardImg from '../assets/projects/iqsense-view-dashboard.png';
+import iqsenseMonitorProImg from '../assets/projects/iqsense-monitor-pro.png';
 import iqsenseCableadoImg from '../assets/projects/iqsense-cableado.jpg';
 import iqsenseCocinaImg from '../assets/projects/iqsense-real.jpg';
 import iqsenseRenderImg from '../assets/projects/iqsense-render.png';
@@ -37,6 +38,7 @@ const projectImages: Record<string, string> = {
   // iQsense
   'iqsense-cad-despiece': iqsenseCadImg,
   'iqsense-view-dashboard': iqsenseDashboardImg,
+  'iqsense-monitor-pro': iqsenseMonitorProImg,
   'iqsense-cableado': iqsenseCableadoImg,
   'iqsense-real': iqsenseCocinaImg,
   'iqsense-render': iqsenseRenderImg,
@@ -69,7 +71,7 @@ const projectImages: Record<string, string> = {
   'sentry-integrityguard': sentryIntegrityguard,
 };
 
-type IqsenseTab = 'cad' | 'dashboard' | 'cableado' | 'cocina' | 'render';
+type IqsenseTab = 'cad' | 'dashboard' | 'monitor' | 'cableado' | 'cocina' | 'render';
 
 const iqsenseGallery: Record<IqsenseTab, { src: string; label: string; desc: string }> = {
   cad: {
@@ -79,8 +81,13 @@ const iqsenseGallery: Record<IqsenseTab, { src: string; label: string; desc: str
   },
   dashboard: {
     src: iqsenseDashboardImg,
-    label: 'Software iQsense View (IA)',
-    desc: 'Dashboard con Super-IA Edge ONNX y telemetría de cultivo',
+    label: 'Ecosistema iQsense',
+    desc: 'Topología distribuida: RPi 5 (IA Edge), ESP32-S3 y Pico W',
+  },
+  monitor: {
+    src: iqsenseMonitorProImg,
+    label: 'Monitor Pro (Edge AI)',
+    desc: 'Telemetría radicular, control de 12 actuadores y Super-IA Autopilot',
   },
   cableado: {
     src: iqsenseCableadoImg,

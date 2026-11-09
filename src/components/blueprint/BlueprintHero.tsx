@@ -1,5 +1,7 @@
 import React from 'react';
-import { Cpu } from 'lucide-react';
+import { Cpu, ShieldCheck } from 'lucide-react';
+import ciscoCyberOpsImg from '../../assets/certificates/cisco-cyberops-associate.png';
+import ciscoIntroImg from '../../assets/certificates/cisco-intro-cybersecurity.png';
 
 interface BlueprintHeroProps {
   onOpenCv: () => void;
@@ -50,6 +52,48 @@ export const BlueprintHero: React.FC<BlueprintHeroProps> = ({ onOpenCv }) => {
             <p className="text-zinc-400 text-xs">
               <strong className="text-emerald-400 font-mono">[ ACREDITACIONES ]:</strong> Estudiante de Grado en Ingeniería Informática (UNED) • Certificado en Ciberseguridad por Cisco Networking Academy • Especialización Técnica Superior.
             </p>
+          </div>
+
+          {/* Cisco Verified Badges Showcase */}
+          <div className="my-6 p-4 rounded-lg bg-cyan-950/40 border border-cyan-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="flex items-center -space-x-3 sm:-space-x-2 shrink-0">
+                <img
+                  src={ciscoCyberOpsImg}
+                  alt="Cisco CyberOps Associate"
+                  className="w-14 h-14 sm:w-16 sm:h-16 object-contain drop-shadow-[0_0_12px_rgba(56,189,248,0.4)]"
+                />
+                <img
+                  src={ciscoIntroImg}
+                  alt="Cisco Introduction to Cybersecurity"
+                  className="w-14 h-14 sm:w-16 sm:h-16 object-contain drop-shadow-[0_0_12px_rgba(74,222,128,0.4)]"
+                />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 font-mono font-bold flex items-center gap-1">
+                    <ShieldCheck className="w-3 h-3" /> VERIFIED BADGES
+                  </span>
+                  <span className="text-[11px] text-cyan-400 font-mono font-bold">
+                    CISCO NETWORKING ACADEMY
+                  </span>
+                </div>
+                <h4 className="text-sm sm:text-base font-bold text-white mt-1">
+                  Cisco CyberOps Associate & Introduction to Cybersecurity
+                </h4>
+                <p className="text-[11px] text-cyan-200/70 font-sans sm:font-mono">
+                  Acreditación en monitorización de amenazas (SOC), análisis forense, hardening defensivo y criptografía.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={onOpenCv}
+              className="text-xs px-3.5 py-2 rounded bg-cyan-950 hover:bg-cyan-900 border border-cyan-500/50 text-cyan-300 font-mono flex items-center gap-1.5 transition-colors shrink-0 cursor-pointer"
+            >
+              <span>VER DATASHEET</span>
+              <span className="text-cyan-400">→</span>
+            </button>
           </div>
 
           {/* Blueprint Engineering Specs Bar */}

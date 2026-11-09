@@ -15,7 +15,7 @@ export const PERSONAL_INFO = {
   cvPdfPath: './Curriculum_Hamza_El_Fathi_Sofyani.pdf',
   stats: [
     { label: 'Especialización', value: 'Sistemas, IA & Ciberseguridad' },
-    { label: 'Certificación', value: 'Cisco Cybersecurity' },
+    { label: 'Certificaciones', value: 'Cisco CyberOps Associate' },
     { label: 'Grado Universitario', value: 'Ing. Informática (UNED)' },
   ],
 };
@@ -29,7 +29,7 @@ export const PROJECTS_DATA: Project[] = [
     iconName: 'Cpu',
     badge: 'Edge AI + IoT Embebido + Hardware',
     imageUrl: 'iqsense-cad-despiece',
-    images: ['iqsense-cad-despiece', 'iqsense-view-dashboard', 'iqsense-cableado', 'iqsense-real', 'iqsense-render'],
+    images: ['iqsense-cad-despiece', 'iqsense-view-dashboard', 'iqsense-monitor-pro', 'iqsense-cableado', 'iqsense-real', 'iqsense-render'],
     description: 'Plataforma ciberfísica que integra un modelo de IA entrenado para predecir dinámicas ambientales complejas (VPD e inercia térmica), ejecutando inferencia autónoma en Edge sobre Raspberry Pi 5.',
     longDescription: 'iQsense 2.0 une la ingeniería electrónica y el Machine Learning aplicado. Cuenta con un pipeline integral de datos que ingesta telemetría ambiental continua, entrena modelos predictivos multivariables en Python y ejecuta el motor de inferencia optimizado directamente en la Raspberry Pi 5. La IA se anticipa al estrés hídrico de la planta modulando electroválvulas y nebulizadores antes de que se produzcan desviaciones críticas, superando con creces los anticuados sistemas reactivos por umbrales fijos.',
     challenge: 'Entrenar un modelo de Machine Learning capaz de predecir con alta precisión el Déficit de Presión de Vapor (VPD) bajo dinámicas ambientales no lineales, logrando tiempos de inferencia sub-20ms en el procesador ARM de la Raspberry Pi sin saturar la CPU ni provocar sobrecalentamiento.',
@@ -248,7 +248,8 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     icon: 'ShieldCheck',
     description: 'Certificado Cisco. Hardening de sistemas, defensa perimetral y análisis de tráfico.',
     skills: [
-      { name: 'Ciberseguridad Cisco (Certificado)', level: 'Certificado', highlight: true },
+      { name: 'Cisco CyberOps Associate (Verificado)', level: 'Certificado', highlight: true },
+      { name: 'Cisco Introduction to Cybersecurity (Verificado)', level: 'Certificado', highlight: true },
       { name: 'Redes TCP/IP, DNS, DHCP, VPNs', level: 'Avanzado', highlight: true },
       { name: 'Switching & Routing Básico / VLANs', level: 'Avanzado' },
       { name: 'Hardening de Sistemas & Políticas de Acceso', level: 'Avanzado', highlight: true },
@@ -294,10 +295,10 @@ export const TIMELINE_DATA: TimelineItem[] = [
   },
   {
     period: '2024 - 2025',
-    role: 'Especialización en Seguridad Informática & Certificación Cisco',
+    role: 'Especialización en Ciberseguridad & Certificaciones Oficiales Cisco',
     institution: 'Formación Superior (540 Horas) + Cisco Networking Academy',
-    description: 'Certificación oficial de Ciberseguridad por Cisco. Análisis de vulnerabilidades, arquitectura de redes seguras, hardening de servidores y respuestas ante incidentes.',
-    skills: ['Ciberseguridad Cisco', 'Hardening', 'Redes TCP/IP', 'Linux Sec', 'VPNs']
+    description: 'Acreditación oficial verificada por Cisco: CyberOps Associate (operaciones SOC, monitorización de eventos, análisis forense y respuesta a incidentes) e Introduction to Cybersecurity. Hardening de sistemas Linux/Windows, defensa perimetral y criptografía.',
+    skills: ['Cisco CyberOps Associate', 'Cisco Intro to Cybersecurity', 'Hardening', 'Redes TCP/IP', 'Linux Sec', 'Análisis Forense']
   },
   {
     period: '2018 - 2024',
