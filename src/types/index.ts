@@ -15,6 +15,7 @@ export interface Project {
   badge?: string;
   iconName: string;
   imageUrl?: string;
+  images?: string[];
 }
 
 export interface SkillCategory {

@@ -4,21 +4,57 @@ import type { Project } from '../../types';
 import { ProjectModal } from '../ProjectModal';
 import { Compass, ArrowRight, Search } from 'lucide-react';
 import { GithubIcon } from '../Icons';
+import { BlueprintCarousel } from './BlueprintCarousel';
 
 import iqsenseCadImg from '../../assets/projects/iqsense-cad-despiece.jpg';
-import godotImg from '../../assets/projects/godot-runner.png';
+import iqsenseDashboardImg from '../../assets/projects/iqsense-view-dashboard.png';
+import iqsenseCableadoImg from '../../assets/projects/iqsense-cableado.jpg';
+import iqsenseCocinaImg from '../../assets/projects/iqsense-real.jpg';
 import iqsenseRenderImg from '../../assets/projects/iqsense-render.png';
-import pcbEsp32Img from '../../assets/projects/pcb-esp32.png';
-import hfsSentryBanner from '../../assets/projects/hfs-sentry-banner.jpg';
+
 import omnistreamBanner from '../../assets/projects/omnistream-banner.jpg';
+import omnistreamLogo from '../../assets/projects/omnistream-logo.png';
+
+import pcbEsp32Img from '../../assets/projects/pcb-esp32.png';
+import pcbAngle3Img from '../../assets/projects/pcb-angle-3.png';
+import pcbTop5Img from '../../assets/projects/pcb-top-5.png';
+
+import godotImg from '../../assets/projects/godot-runner.png';
+
+import hfsSentryBanner from '../../assets/projects/hfs-sentry-banner.jpg';
+import sentryNetsentry from '../../assets/projects/sentry-netsentry.png';
+import sentryLogsentinel from '../../assets/projects/sentry-logsentinel.png';
+import sentryCertsentry from '../../assets/projects/sentry-certsentry.png';
+import sentrySubnetsweep from '../../assets/projects/sentry-subnetsweep.png';
+import sentryIntegrityguard from '../../assets/projects/sentry-integrityguard.png';
 
 const projectImages: Record<string, string> = {
+  // iQsense 2.0
   'iqsense-cad-despiece': iqsenseCadImg,
+  'iqsense-view-dashboard': iqsenseDashboardImg,
+  'iqsense-cableado': iqsenseCableadoImg,
+  'iqsense-real': iqsenseCocinaImg,
   'iqsense-render': iqsenseRenderImg,
-  'pcb-esp32': pcbEsp32Img,
-  'godot-runner': godotImg,
-  'hfs-sentry-banner': hfsSentryBanner,
+
+  // OmniStream
   'omnistream-banner': omnistreamBanner,
+  'omnistream-logo': omnistreamLogo,
+
+  // MicroHardware Lab / PCBs
+  'pcb-esp32': pcbEsp32Img,
+  'pcb-angle-3': pcbAngle3Img,
+  'pcb-top-5': pcbTop5Img,
+
+  // Vanguard / Godot
+  'godot-runner': godotImg,
+
+  // HFS-Sentry
+  'hfs-sentry-banner': hfsSentryBanner,
+  'sentry-netsentry': sentryNetsentry,
+  'sentry-logsentinel': sentryLogsentinel,
+  'sentry-certsentry': sentryCertsentry,
+  'sentry-subnetsweep': sentrySubnetsweep,
+  'sentry-integrityguard': sentryIntegrityguard,
 };
 
 export const BlueprintProjects: React.FC = () => {
@@ -90,8 +126,16 @@ export const BlueprintProjects: React.FC = () => {
         {/* Blueprint Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filtered.map((project, idx) => {
-            const hasImg = project.imageUrl && projectImages[project.imageUrl];
             const specNumber = `SPEC-0${idx + 1}`;
+            const imgKeys = project.images && project.images.length > 0
+              ? project.images
+              : project.imageUrl
+                ? [project.imageUrl]
+                : [];
+            const projectImgUrls = imgKeys
+              .map((k) => projectImages[k])
+              .filter(Boolean);
+            const hasImgs = projectImgUrls.length > 0;
 
             return (
               <div
@@ -110,21 +154,14 @@ export const BlueprintProjects: React.FC = () => {
                     </span>
                   </div>
 
-                  {/* Visual Render or Technical Diagram Frame */}
-                  {hasImg ? (
-                    <div className="h-52 w-full rounded bg-black/60 border border-cyan-500/30 mb-4 overflow-hidden relative group/img">
-                      <img
-                        src={projectImages[project.imageUrl!]}
-                        alt={project.title}
-                        className="w-full h-full object-contain p-2 group-hover/img:scale-105 transition-transform duration-500"
+                  {/* Visual Render Carousel or Technical Diagram Frame */}
+                  {hasImgs ? (
+                    <div className="relative mb-4">
+                      <BlueprintCarousel
+                        images={projectImgUrls}
+                        title={project.title}
+                        aspectRatio="aspect-[16/10]"
                       />
-                      {/* Technical Blueprint Reticles */}
-                      <div className="absolute top-2 left-2 text-[9px] font-mono text-cyan-400 bg-black/80 px-1.5 py-0.5 border border-cyan-500/40">
-                        FIG. {specNumber} // RENDER 1:1
-                      </div>
-                      <div className="absolute bottom-2 right-2 text-[9px] font-mono text-emerald-400 bg-black/80 px-1.5 py-0.5 border border-emerald-500/40">
-                        {project.badge}
-                      </div>
                     </div>
                   ) : project.id === 'botcripto-trading' ? (
                     <div className="h-52 w-full rounded bg-black/70 border border-cyan-500/30 mb-4 p-4 flex flex-col justify-between font-mono text-xs relative">

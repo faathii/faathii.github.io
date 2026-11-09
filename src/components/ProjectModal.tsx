@@ -2,26 +2,57 @@ import React, { useState } from 'react';
 import type { Project } from '../types';
 import { X, CheckCircle2, Target, Lightbulb, BarChart3, Image as ImageIcon, Activity, Layers } from 'lucide-react';
 import { GithubIcon } from './Icons';
+import { BlueprintCarousel } from './blueprint/BlueprintCarousel';
 
 import iqsenseCadImg from '../assets/projects/iqsense-cad-despiece.jpg';
 import iqsenseDashboardImg from '../assets/projects/iqsense-view-dashboard.png';
 import iqsenseCableadoImg from '../assets/projects/iqsense-cableado.jpg';
 import iqsenseCocinaImg from '../assets/projects/iqsense-real.jpg';
 import iqsenseRenderImg from '../assets/projects/iqsense-render.png';
-import pcbEsp32Img from '../assets/projects/pcb-esp32.png';
-import godotImg from '../assets/projects/godot-runner.png';
-import hfsSentryBanner from '../assets/projects/hfs-sentry-banner.jpg';
+
 import omnistreamBanner from '../assets/projects/omnistream-banner.jpg';
+import omnistreamLogo from '../assets/projects/omnistream-logo.png';
+
+import pcbEsp32Img from '../assets/projects/pcb-esp32.png';
+import pcbAngle3Img from '../assets/projects/pcb-angle-3.png';
+import pcbTop5Img from '../assets/projects/pcb-top-5.png';
+
+import godotImg from '../assets/projects/godot-runner.png';
+
+import hfsSentryBanner from '../assets/projects/hfs-sentry-banner.jpg';
+import sentryNetsentry from '../assets/projects/sentry-netsentry.png';
+import sentryLogsentinel from '../assets/projects/sentry-logsentinel.png';
+import sentryCertsentry from '../assets/projects/sentry-certsentry.png';
+import sentrySubnetsweep from '../assets/projects/sentry-subnetsweep.png';
+import sentryIntegrityguard from '../assets/projects/sentry-integrityguard.png';
 
 const projectImages: Record<string, string> = {
+  // iQsense
   'iqsense-cad-despiece': iqsenseCadImg,
-  'iqsense-render': iqsenseRenderImg,
+  'iqsense-view-dashboard': iqsenseDashboardImg,
+  'iqsense-cableado': iqsenseCableadoImg,
   'iqsense-real': iqsenseCocinaImg,
-  'iqsense-dashboard': iqsenseDashboardImg,
-  'pcb-esp32': pcbEsp32Img,
-  'godot-runner': godotImg,
-  'hfs-sentry-banner': hfsSentryBanner,
+  'iqsense-render': iqsenseRenderImg,
+
+  // OmniStream
   'omnistream-banner': omnistreamBanner,
+  'omnistream-logo': omnistreamLogo,
+
+  // PCBs
+  'pcb-esp32': pcbEsp32Img,
+  'pcb-angle-3': pcbAngle3Img,
+  'pcb-top-5': pcbTop5Img,
+
+  // Godot
+  'godot-runner': godotImg,
+
+  // HFS-Sentry
+  'hfs-sentry-banner': hfsSentryBanner,
+  'sentry-netsentry': sentryNetsentry,
+  'sentry-logsentinel': sentryLogsentinel,
+  'sentry-certsentry': sentryCertsentry,
+  'sentry-subnetsweep': sentrySubnetsweep,
+  'sentry-integrityguard': sentryIntegrityguard,
 };
 
 type IqsenseTab = 'cad' | 'dashboard' | 'cableado' | 'cocina' | 'render';
@@ -60,13 +91,20 @@ interface ProjectModalProps {
 }
 
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
-  const [iqsenseTab, setIqsenseTab] = useState<'cad' | 'dashboard' | 'cableado' | 'cocina' | 'render'>('cad');
+  const [iqsenseTab, setIqsenseTab] = useState<IqsenseTab>('cad');
 
   if (!project) return null;
 
   const isIqsense = project.id === 'iqsense-iot';
-  const hasImage = isIqsense || (project.imageUrl && projectImages[project.imageUrl]);
-  const activeImageSrc = isIqsense ? iqsenseGallery[iqsenseTab].src : projectImages[project.imageUrl!];
+  const imgKeys = project.images && project.images.length > 0
+    ? project.images
+    : project.imageUrl
+      ? [project.imageUrl]
+      : [];
+  const modalImgUrls = imgKeys
+    .map((k) => projectImages[k])
+    .filter(Boolean);
+  const hasImages = isIqsense || modalImgUrls.length > 0;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
@@ -107,49 +145,63 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         </div>
 
         {/* Real Image Showcase in Modal */}
-        {hasImage && (
+        {hasImages && (
           <div className="mb-6 space-y-2">
-            {/* Multi-view Selector for iQsense */}
-            {isIqsense && (
-              <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-lg bg-zinc-950 border border-zinc-800 text-xs font-mono">
-                <span className="text-[10px] text-zinc-500 uppercase px-2 font-bold flex items-center gap-1">
-                  <Layers className="w-3 h-3 text-cyan-400" /> VISTAS:
-                </span>
-                {(Object.keys(iqsenseGallery) as IqsenseTab[]).map((key) => (
-                  <button
-                    key={key}
-                    onClick={() => setIqsenseTab(key)}
-                    className={`px-2.5 py-1 rounded text-[11px] transition-all cursor-pointer ${
-                      iqsenseTab === key
-                        ? 'bg-cyan-500 text-black font-bold shadow-sm'
-                        : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800'
-                    }`}
-                  >
-                    {iqsenseGallery[key].label}
-                  </button>
-                ))}
+            {isIqsense ? (
+              <>
+                <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-lg bg-zinc-950 border border-zinc-800 text-xs font-mono">
+                  <span className="text-[10px] text-zinc-500 uppercase px-2 font-bold flex items-center gap-1">
+                    <Layers className="w-3 h-3 text-cyan-400" /> VISTAS:
+                  </span>
+                  {(Object.keys(iqsenseGallery) as IqsenseTab[]).map((key) => (
+                    <button
+                      key={key}
+                      onClick={() => setIqsenseTab(key)}
+                      className={`px-2.5 py-1 rounded text-[11px] transition-all cursor-pointer ${
+                        iqsenseTab === key
+                          ? 'bg-cyan-500 text-black font-bold shadow-sm'
+                          : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800'
+                      }`}
+                    >
+                      {iqsenseGallery[key].label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950 max-h-80 flex items-center justify-center relative">
+                  <img
+                    src={iqsenseGallery[iqsenseTab].src}
+                    alt={project.title}
+                    className="w-full h-full object-contain max-h-80"
+                  />
+                  <div className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-zinc-950/80 backdrop-blur-sm border border-zinc-700 text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
+                    <ImageIcon className="w-3 h-3" />
+                    <span>{iqsenseGallery[iqsenseTab].label}</span>
+                  </div>
+                  <div className="absolute bottom-2 left-2 right-2 px-3 py-1.5 rounded bg-zinc-950/85 backdrop-blur-sm border border-zinc-800 text-[11px] font-mono text-zinc-300">
+                    {iqsenseGallery[iqsenseTab].desc}
+                  </div>
+                </div>
+              </>
+            ) : modalImgUrls.length > 1 ? (
+              <BlueprintCarousel
+                images={modalImgUrls}
+                title={project.title}
+                aspectRatio="aspect-video"
+              />
+            ) : (
+              <div className="rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950 max-h-80 flex items-center justify-center relative">
+                <img
+                  src={modalImgUrls[0]}
+                  alt={project.title}
+                  className="w-full h-full object-contain max-h-80"
+                />
+                <div className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-zinc-950/80 backdrop-blur-sm border border-zinc-700 text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
+                  <ImageIcon className="w-3 h-3" />
+                  <span>Evidencia Visual & Física</span>
+                </div>
               </div>
             )}
-
-            {/* Displayed Image Frame */}
-            <div className="rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950 max-h-80 flex items-center justify-center relative">
-              <img
-                src={activeImageSrc}
-                alt={project.title}
-                className="w-full h-full object-contain max-h-80"
-              />
-              <div className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-zinc-950/80 backdrop-blur-sm border border-zinc-700 text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
-                <ImageIcon className="w-3 h-3" />
-                <span>
-                  {isIqsense ? iqsenseGallery[iqsenseTab].label : 'Evidencia Visual & Física'}
-                </span>
-              </div>
-              {isIqsense && (
-                <div className="absolute bottom-2 left-2 right-2 px-3 py-1.5 rounded bg-zinc-950/85 backdrop-blur-sm border border-zinc-800 text-[11px] font-mono text-zinc-300">
-                  {iqsenseGallery[iqsenseTab].desc}
-                </div>
-              )}
-            </div>
           </div>
         )}
 
