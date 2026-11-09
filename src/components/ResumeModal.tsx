@@ -46,7 +46,15 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Descargar PDF</span>
+              <span>PDF (1 Pág)</span>
+            </a>
+            <a
+              href="./Curriculum_Hamza_El_Fathi_Sofyani.docx"
+              download="Curriculum_Hamza_El_Fathi_Sofyani.docx"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 transition-colors"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Word (.docx)</span>
             </a>
             <button
               onClick={handlePrint}
