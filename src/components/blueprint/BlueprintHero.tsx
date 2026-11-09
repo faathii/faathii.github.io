@@ -1,5 +1,6 @@
 import React from 'react';
 import { Cpu, ShieldCheck } from 'lucide-react';
+import { PROJECTS_DATA } from '../../data/portfolioData';
 import hamzaImg from '../../assets/hamza.jpg';
 import ciscoCyberOpsImg from '../../assets/certificates/cisco-cyberops-associate.png';
 import ciscoIntroImg from '../../assets/certificates/cisco-intro-cybersecurity.png';
@@ -197,7 +198,7 @@ export const BlueprintHero: React.FC<BlueprintHeroProps> = ({ onOpenCv }) => {
               className="px-5 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-xs tracking-wider uppercase rounded transition-all shadow-[0_0_15px_rgba(34,211,238,0.3)] flex items-center gap-2 cursor-pointer"
             >
               <Cpu className="w-4 h-4" />
-              <span>EXPLORAR PLANOS DE PROYECTOS (5)</span>
+              <span>EXPLORAR PLANOS DE PROYECTOS ({PROJECTS_DATA.length})</span>
             </a>
 
             <button
