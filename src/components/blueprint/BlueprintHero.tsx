@@ -2,6 +2,11 @@ import React from 'react';
 import { Cpu, ShieldCheck } from 'lucide-react';
 import ciscoCyberOpsImg from '../../assets/certificates/cisco-cyberops-associate.png';
 import ciscoIntroImg from '../../assets/certificates/cisco-intro-cybersecurity.png';
+import ciscoEnterpriseImg from '../../assets/certificates/cisco-module-enterprise-protection.png';
+import ciscoThreatsImg from '../../assets/certificates/cisco-module-threats-vulnerabilities.png';
+import ciscoCryptoImg from '../../assets/certificates/cisco-module-cryptography.png';
+import ciscoFirewallImg from '../../assets/certificates/cisco-module-firewall-defense.png';
+import ciscoNetSecImg from '../../assets/certificates/cisco-module-network-security.png';
 
 interface BlueprintHeroProps {
   onOpenCv: () => void;
@@ -55,8 +60,8 @@ export const BlueprintHero: React.FC<BlueprintHeroProps> = ({ onOpenCv }) => {
           </div>
 
           {/* Cisco Verified Badges Showcase */}
-          <div className="my-6 p-4 rounded-lg bg-cyan-950/40 border border-cyan-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5">
+          <div className="my-6 p-4 rounded-lg bg-cyan-950/40 border border-cyan-500/30 flex flex-col lg:flex-row items-center justify-between gap-4">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
               <div className="flex items-center -space-x-3 sm:-space-x-2 shrink-0">
                 <img
                   src={ciscoCyberOpsImg}
@@ -70,7 +75,7 @@ export const BlueprintHero: React.FC<BlueprintHeroProps> = ({ onOpenCv }) => {
                 />
               </div>
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
                   <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 font-mono font-bold flex items-center gap-1">
                     <ShieldCheck className="w-3 h-3" /> VERIFIED BADGES
                   </span>
@@ -82,8 +87,25 @@ export const BlueprintHero: React.FC<BlueprintHeroProps> = ({ onOpenCv }) => {
                   Cisco CyberOps Associate & Introduction to Cybersecurity
                 </h4>
                 <p className="text-[11px] text-cyan-200/70 font-sans sm:font-mono">
-                  Acreditación en monitorización de amenazas (SOC), análisis forense, hardening defensivo y criptografía.
+                  Acreditación oficial en operaciones de seguridad (SOC), análisis forense, defensa perimetral y criptografía.
                 </p>
+
+                {/* 5 Modular Skill Badges Mini Row */}
+                <div className="flex items-center justify-center sm:justify-start gap-2 mt-2.5 pt-2 border-t border-cyan-500/20">
+                  <span className="text-[9px] text-cyan-400/90 font-mono font-bold uppercase hidden md:inline">
+                    Módulos:
+                  </span>
+                  <div className="flex items-center gap-1.5" title="Módulos Oficiales de Especialización Cisco Superados">
+                    <img src={ciscoFirewallImg} alt="Firewalls" className="w-5 h-5 object-contain opacity-90 hover:opacity-100 transition-opacity" title="Defensa Perimetral & Firewalls" />
+                    <img src={ciscoThreatsImg} alt="Amenazas" className="w-5 h-5 object-contain opacity-90 hover:opacity-100 transition-opacity" title="Ataques, Amenazas & Malware" />
+                    <img src={ciscoCryptoImg} alt="Criptografía" className="w-5 h-5 object-contain opacity-90 hover:opacity-100 transition-opacity" title="Criptografía & Claves" />
+                    <img src={ciscoNetSecImg} alt="Seguridad de Red" className="w-5 h-5 object-contain opacity-90 hover:opacity-100 transition-opacity" title="Seguridad de Red & Infraestructura" />
+                    <img src={ciscoEnterpriseImg} alt="Protección Activos" className="w-5 h-5 object-contain opacity-90 hover:opacity-100 transition-opacity" title="Gobernanza & Protección de Activos" />
+                  </div>
+                  <span className="text-[9px] text-emerald-400 font-mono">
+                    [ 5 Módulos Acreditados ]
+                  </span>
+                </div>
               </div>
             </div>
 

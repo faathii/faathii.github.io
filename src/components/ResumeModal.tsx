@@ -4,6 +4,11 @@ import { X, Printer, MapPin, Mail, Phone, Download, Award, GraduationCap, Briefc
 import { GithubIcon } from './Icons';
 import ciscoCyberOpsImg from '../assets/certificates/cisco-cyberops-associate.png';
 import ciscoIntroImg from '../assets/certificates/cisco-intro-cybersecurity.png';
+import ciscoEnterpriseImg from '../assets/certificates/cisco-module-enterprise-protection.png';
+import ciscoThreatsImg from '../assets/certificates/cisco-module-threats-vulnerabilities.png';
+import ciscoCryptoImg from '../assets/certificates/cisco-module-cryptography.png';
+import ciscoFirewallImg from '../assets/certificates/cisco-module-firewall-defense.png';
+import ciscoNetSecImg from '../assets/certificates/cisco-module-network-security.png';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -151,6 +156,35 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                       <p className="text-zinc-500 dark:text-zinc-400 text-[10px] mt-0.5 font-mono">
                         Cisco Networking Academy • Verified
                       </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 5 Cisco Modular Skill Badges */}
+                <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800">
+                  <p className="text-[10px] uppercase tracking-wider font-bold text-zinc-500 dark:text-zinc-400 font-mono mb-2">
+                    Módulos Especializados Cisco Acreditados (5/5):
+                  </p>
+                  <div className="grid grid-cols-5 gap-1.5">
+                    <div className="flex flex-col items-center text-center p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700/60">
+                      <img src={ciscoFirewallImg} alt="Firewalls & Perímetro" className="w-8 h-8 object-contain" />
+                      <span className="text-[9px] font-mono text-zinc-600 dark:text-zinc-300 mt-1 leading-tight">Firewalls & Perímetro</span>
+                    </div>
+                    <div className="flex flex-col items-center text-center p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700/60">
+                      <img src={ciscoThreatsImg} alt="Amenazas & Malware" className="w-8 h-8 object-contain" />
+                      <span className="text-[9px] font-mono text-zinc-600 dark:text-zinc-300 mt-1 leading-tight">Amenazas & Malware</span>
+                    </div>
+                    <div className="flex flex-col items-center text-center p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700/60">
+                      <img src={ciscoCryptoImg} alt="Criptografía & Claves" className="w-8 h-8 object-contain" />
+                      <span className="text-[9px] font-mono text-zinc-600 dark:text-zinc-300 mt-1 leading-tight">Criptografía & Claves</span>
+                    </div>
+                    <div className="flex flex-col items-center text-center p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700/60">
+                      <img src={ciscoNetSecImg} alt="Seguridad de Red" className="w-8 h-8 object-contain" />
+                      <span className="text-[9px] font-mono text-zinc-600 dark:text-zinc-300 mt-1 leading-tight">Seguridad de Red</span>
+                    </div>
+                    <div className="flex flex-col items-center text-center p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700/60">
+                      <img src={ciscoEnterpriseImg} alt="Protección de Activos" className="w-8 h-8 object-contain" />
+                      <span className="text-[9px] font-mono text-zinc-600 dark:text-zinc-300 mt-1 leading-tight">Protección de Activos</span>
                     </div>
                   </div>
                 </div>

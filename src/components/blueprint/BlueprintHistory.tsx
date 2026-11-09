@@ -2,6 +2,11 @@ import React from 'react';
 import { TIMELINE_DATA } from '../../data/portfolioData';
 import ciscoCyberOpsImg from '../../assets/certificates/cisco-cyberops-associate.png';
 import ciscoIntroImg from '../../assets/certificates/cisco-intro-cybersecurity.png';
+import ciscoEnterpriseImg from '../../assets/certificates/cisco-module-enterprise-protection.png';
+import ciscoThreatsImg from '../../assets/certificates/cisco-module-threats-vulnerabilities.png';
+import ciscoCryptoImg from '../../assets/certificates/cisco-module-cryptography.png';
+import ciscoFirewallImg from '../../assets/certificates/cisco-module-firewall-defense.png';
+import ciscoNetSecImg from '../../assets/certificates/cisco-module-network-security.png';
 
 export const BlueprintHistory: React.FC = () => {
   return (
@@ -54,44 +59,75 @@ export const BlueprintHistory: React.FC = () => {
 
                   {/* Verified Cisco Badges Showcase */}
                   {item.institution.includes('Cisco') && (
-                    <div className="my-3 p-3.5 rounded bg-black/60 border border-cyan-500/30 flex flex-wrap items-center gap-4">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={ciscoCyberOpsImg}
-                          alt="Cisco CyberOps Associate"
-                          className="w-14 h-14 object-contain shrink-0 drop-shadow-[0_0_10px_rgba(56,189,248,0.35)]"
-                        />
-                        <div>
-                          <span className="text-[10px] text-cyan-400 font-mono uppercase font-bold block">
-                            Badge Oficial #1
-                          </span>
-                          <span className="text-xs font-bold text-white block">
-                            Cisco CyberOps Associate
-                          </span>
-                          <span className="text-[10px] text-zinc-400 font-mono block">
-                            Cisco Networking Academy • Verified
-                          </span>
+                    <div className="my-3.5 p-4 rounded-lg bg-black/60 border border-cyan-500/30 space-y-4">
+                      <div className="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-cyan-500/20">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={ciscoCyberOpsImg}
+                            alt="Cisco CyberOps Associate"
+                            className="w-14 h-14 object-contain shrink-0 drop-shadow-[0_0_10px_rgba(56,189,248,0.35)]"
+                          />
+                          <div>
+                            <span className="text-[10px] text-cyan-400 font-mono uppercase font-bold block">
+                              Badge Oficial #1
+                            </span>
+                            <span className="text-xs font-bold text-white block">
+                              Cisco CyberOps Associate
+                            </span>
+                            <span className="text-[10px] text-zinc-400 font-mono block">
+                              Cisco Networking Academy • Verified
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="h-8 w-px bg-cyan-500/20 hidden sm:block" />
+
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={ciscoIntroImg}
+                            alt="Cisco Introduction to Cybersecurity"
+                            className="w-14 h-14 object-contain shrink-0 drop-shadow-[0_0_10px_rgba(74,222,128,0.35)]"
+                          />
+                          <div>
+                            <span className="text-[10px] text-emerald-400 font-mono uppercase font-bold block">
+                              Badge Oficial #2
+                            </span>
+                            <span className="text-xs font-bold text-white block">
+                              Introduction to Cybersecurity
+                            </span>
+                            <span className="text-[10px] text-zinc-400 font-mono block">
+                              Cisco Networking Academy • Verified
+                            </span>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="h-8 w-px bg-cyan-500/20 hidden sm:block" />
-
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={ciscoIntroImg}
-                          alt="Cisco Introduction to Cybersecurity"
-                          className="w-14 h-14 object-contain shrink-0 drop-shadow-[0_0_10px_rgba(74,222,128,0.35)]"
-                        />
-                        <div>
-                          <span className="text-[10px] text-emerald-400 font-mono uppercase font-bold block">
-                            Badge Oficial #2
-                          </span>
-                          <span className="text-xs font-bold text-white block">
-                            Introduction to Cybersecurity
-                          </span>
-                          <span className="text-[10px] text-zinc-400 font-mono block">
-                            Cisco Networking Academy • Verified
-                          </span>
+                      {/* 5 Modular Skill Badges */}
+                      <div>
+                        <span className="text-[10px] text-cyan-400 font-mono uppercase font-bold block mb-2">
+                          MÓDULOS DE ESPECIALIZACIÓN CISCO ACREDITADOS (5/5):
+                        </span>
+                        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                          <div className="flex items-center gap-2 p-2 rounded bg-cyan-950/40 border border-cyan-500/20">
+                            <img src={ciscoFirewallImg} alt="Firewalls" className="w-8 h-8 object-contain shrink-0" />
+                            <span className="text-[10px] text-zinc-300 font-mono leading-tight">Defensa Perimetral</span>
+                          </div>
+                          <div className="flex items-center gap-2 p-2 rounded bg-cyan-950/40 border border-cyan-500/20">
+                            <img src={ciscoThreatsImg} alt="Amenazas" className="w-8 h-8 object-contain shrink-0" />
+                            <span className="text-[10px] text-zinc-300 font-mono leading-tight">Amenazas & Malware</span>
+                          </div>
+                          <div className="flex items-center gap-2 p-2 rounded bg-cyan-950/40 border border-cyan-500/20">
+                            <img src={ciscoCryptoImg} alt="Criptografía" className="w-8 h-8 object-contain shrink-0" />
+                            <span className="text-[10px] text-zinc-300 font-mono leading-tight">Criptografía PKI</span>
+                          </div>
+                          <div className="flex items-center gap-2 p-2 rounded bg-cyan-950/40 border border-cyan-500/20">
+                            <img src={ciscoNetSecImg} alt="Seguridad de Red" className="w-8 h-8 object-contain shrink-0" />
+                            <span className="text-[10px] text-zinc-300 font-mono leading-tight">Seguridad de Red</span>
+                          </div>
+                          <div className="flex items-center gap-2 p-2 rounded bg-cyan-950/40 border border-cyan-500/20">
+                            <img src={ciscoEnterpriseImg} alt="Protección Activos" className="w-8 h-8 object-contain shrink-0" />
+                            <span className="text-[10px] text-zinc-300 font-mono leading-tight">Gestión Activos</span>
+                          </div>
                         </div>
                       </div>
                     </div>
