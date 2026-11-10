@@ -410,3 +410,24 @@
   animation: stageFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Industrial Minimalist (Teenage Engineering / Apple Pro) Precision Styles */
+.industrial-dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.industrial-machined-border {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.industrial-metal-bevel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.2) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tactile-key-active {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7), 0 0 15px rgba(249, 115, 22, 0.4);
+}
+
+

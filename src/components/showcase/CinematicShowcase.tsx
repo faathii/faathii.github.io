@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
-  ShieldCheck, Download, 
-  Layers, ExternalLink, Mail, Phone, MapPin,
-  Send, Check, Volume2, VolumeX,
-  ChevronLeft, ChevronRight,
-  ArrowRight, Eye, FileText, GraduationCap, BookOpen
+  ShieldCheck, Download, Layers, ExternalLink, Mail, Phone, MapPin,
+  Send, Check, Volume2, VolumeX, ChevronLeft, ChevronRight,
+  ArrowRight, Eye, FileText, GraduationCap, BookOpen,
+  User, Sliders, Radio, Tv, CircuitBoard, TrendingUp, Terminal
 } from 'lucide-react';
 import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES } from '../../data/portfolioData';
-import { BlueprintCarousel } from '../blueprint/BlueprintCarousel';
 import { ProjectModal } from '../ProjectModal';
 import type { Project } from '../../types';
 
@@ -91,25 +89,25 @@ const projectImages: Record<string, string> = {
   'crypto-list-market': cryptoListMarket,
 };
 
-// Play subtle UI sci-fi click
-const playSciFiClick = (freq = 800) => {
+// Teenage Engineering / Mechanical Tactile Click Sound
+const playTactileClick = (freq = 900) => {
   try {
     const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof window.AudioContext }).webkitAudioContext;
     if (!AudioCtx) return;
     const ctx = new AudioCtx();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-    osc.type = 'sine';
+    osc.type = 'triangle';
     osc.frequency.setValueAtTime(freq, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(freq * 0.4, ctx.currentTime + 0.05);
-    gain.gain.setValueAtTime(0.04, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+    osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.03);
+    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.03);
     osc.connect(gain);
     gain.connect(ctx.destination);
     osc.start();
-    osc.stop(ctx.currentTime + 0.05);
+    osc.stop(ctx.currentTime + 0.03);
   } catch {
-    // Ignore audio policy
+    // Audio policy ignore
   }
 };
 
@@ -117,21 +115,23 @@ interface CinematicShowcaseProps {
   onOpenBook: () => void;
 }
 
+// 8 Industrial Modules: Profile, Skills (before projects), and 5 Projects, ending with Contact/CV
 const STAGES = [
-  { id: 'profile', label: '01. PERFIL & CISCO', subtitle: 'Presentación & Acreditaciones' },
-  { id: 'skills', label: '02. DOMINIOS & STACK', subtitle: 'Competencias & Tecnologías' },
-  { id: 'iqsense', label: '03. iQsense 2.0', subtitle: 'Edge AI & Hardware RPi5' },
-  { id: 'omnistream', label: '04. OmniStream', subtitle: 'Desktop Hub & Streaming' },
-  { id: 'pcb', label: '05. KiCad PCBs', subtitle: 'Hardware SMD & CAD' },
-  { id: 'sentry', label: '06. HFS-Sentry', subtitle: 'Ciberseguridad Defensiva' },
-  { id: 'crypto', label: '07. CryptoQuant', subtitle: 'Machine Learning 111M+' },
-  { id: 'contact', label: '08. CONTACTO & CV', subtitle: 'Canal Directo & Descargas' },
+  { id: 'profile', code: '01', title: 'PERFIL // CREDENCIAL', tag: 'ID & CISCO', icon: User },
+  { id: 'skills', code: '02', title: 'MATRIZ DE INGENIERÍA', tag: '5 PILARES & STACK', icon: Sliders },
+  { id: 'iqsense', code: '03', title: 'iQsense 2.0', tag: 'EDGE AI & RPi 5', icon: Radio },
+  { id: 'omnistream', code: '04', title: 'OmniStream', tag: 'DESKTOP HUB', icon: Tv },
+  { id: 'pcb', code: '05', title: 'KiCad PCBs', tag: 'HARDWARE & CAD', icon: CircuitBoard },
+  { id: 'sentry', code: '06', title: 'HFS-Sentry', tag: 'SOC DEFENSIVO', icon: ShieldCheck },
+  { id: 'crypto', code: '07', title: 'CryptoQuant', tag: 'MACHINE LEARNING', icon: TrendingUp },
+  { id: 'contact', code: '08', title: 'TERMINAL DE CONTACTO', tag: 'DESPACHO & CV', icon: Terminal },
 ];
 
 export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook }) => {
   const [currentStageIdx, setCurrentStageIdx] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [modalProject, setModalProject] = useState<Project | null>(null);
+  const [selectedPhotoIdx, setSelectedPhotoIdx] = useState<Record<string, number>>({});
   const [contactSent, setContactSent] = useState(false);
   const [contactData, setContactData] = useState({ name: '', email: '', message: '' });
 
@@ -140,7 +140,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
 
   const goToStage = useCallback((idx: number) => {
     if (idx < 0 || idx >= totalStages) return;
-    if (soundEnabled) playSciFiClick(600 + idx * 75);
+    if (soundEnabled) playTactileClick(750 + idx * 60);
     setCurrentStageIdx(idx);
   }, [totalStages, soundEnabled]);
 
@@ -152,7 +152,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
     goToStage((currentStageIdx - 1 + totalStages) % totalStages);
   }, [currentStageIdx, totalStages, goToStage]);
 
-  // Keyboard navigation: arrows, space, and direct numbers 1-8
+  // Keyboard navigation: arrows, space, numbers 1-8
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (modalProject) return;
@@ -191,848 +191,695 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden bg-[#04060a] text-slate-100 flex flex-col justify-between relative select-none font-sans">
-      {/* Sci-Fi Atmospheric Background */}
+    <div className="h-screen w-screen overflow-hidden bg-[#0c0d12] text-neutral-200 flex flex-col justify-between relative select-none font-sans industrial-dot-grid">
+      
+      {/* Precision Hairline Background Guides */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_100%_at_50%_0%,rgba(14,165,233,0.18),transparent_60%)]" />
-        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]" />
-        
-        {/* Animated Cyber Grid */}
-        <div 
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `linear-gradient(to right, #38bdf8 1px, transparent 1px), linear-gradient(to bottom, #38bdf8 1px, transparent 1px)`,
-            backgroundSize: '48px 48px'
-          }}
-        />
-        
-        {/* Horizon glowing laser line */}
-        <div className="absolute top-16 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+        <div className="absolute top-14 inset-x-0 h-[1px] bg-neutral-800/80" />
+        <div className="absolute bottom-20 inset-x-0 h-[1px] bg-neutral-800/80" />
+        <div className="absolute inset-y-0 left-12 w-[1px] bg-neutral-800/30 hidden lg:block" />
+        <div className="absolute inset-y-0 right-12 w-[1px] bg-neutral-800/30 hidden lg:block" />
       </div>
 
-      {/* Top Aerospace Master Header */}
-      <header className="h-16 px-4 sm:px-8 border-b border-slate-800/80 bg-[#07090e]/85 backdrop-blur-xl flex items-center justify-between z-30 shrink-0">
-        {/* Left Identity with Live Radar Indicator */}
+      {/* ========================================================================= */}
+      {/* TOP INDUSTRIAL HEADER (Fixed Precision Status Bar)                        */}
+      {/* ========================================================================= */}
+      <header className="h-14 px-4 sm:px-8 border-b border-neutral-800/90 bg-[#101218]/90 backdrop-blur-xl flex items-center justify-between z-30 shrink-0">
+        
+        {/* Left Identity Stamped Plate */}
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-10 h-10 rounded-xl overflow-hidden border border-cyan-400/60 shadow-lg shadow-cyan-950/60">
+            <div className="w-8 h-8 rounded-lg overflow-hidden border border-neutral-600 bg-neutral-900 shadow-sm">
               <img src={hamzaImg} alt="Hamza" className="w-full h-full object-cover object-top" />
             </div>
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#04060a] animate-pulse" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-orange-500 ring-2 ring-[#101218] animate-pulse" />
           </div>
 
-          <div>
+          <div className="text-left font-mono">
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-sm sm:text-base tracking-tight text-white">
-                {PERSONAL_INFO.name}
-              </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/40 font-bold hidden sm:inline-block">
-                UNED Ing. Informática
+              <span className="text-xs font-black tracking-wider text-white uppercase">{PERSONAL_INFO.name}</span>
+              <span className="text-[9px] px-1.5 py-0.2 rounded bg-neutral-800 text-orange-400 font-bold border border-neutral-700">
+                ES-2026
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 font-mono hidden md:block">
-              Sistemas Ciberfísicos, Edge AI & Ciberseguridad Defensiva
+            <p className="text-[10px] text-neutral-400 tracking-tight hidden sm:block">
+              Ingeniería Ciberfísica • UNED Grado Informática
             </p>
           </div>
         </div>
 
-        {/* Center Kinetic Stage Selector Dots */}
-        <div className="hidden lg:flex items-center gap-1.5 p-1 rounded-full bg-slate-900/90 border border-slate-800">
-          {STAGES.map((st, idx) => (
-            <button
-              key={st.id}
-              onClick={() => goToStage(idx)}
-              className={`px-3 py-1 rounded-full text-xs font-mono transition-all cursor-pointer ${
-                currentStageIdx === idx
-                  ? 'bg-gradient-to-r from-cyan-500 to-sky-400 text-slate-950 font-bold shadow-md shadow-cyan-950'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-              }`}
-            >
-              {st.label.split('. ')[1]}
-            </button>
-          ))}
+        {/* Center Active Module Indicator Pill */}
+        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-700/80 font-mono text-xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-ping" />
+          <span className="text-orange-400 font-bold tracking-wider">{currentStage.code}</span>
+          <span className="text-neutral-600">//</span>
+          <span className="text-neutral-200 font-semibold tracking-wide uppercase">{currentStage.title}</span>
         </div>
 
-        {/* Right Tools & Sound Switcher */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
-          <button
-            onClick={onOpenBook}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-mono font-bold transition-all cursor-pointer"
-            title="Abrir Monografía Técnica en Libro Físico 3D (Atajo: tecla B)"
-          >
-            <BookOpen className="w-3.5 h-3.5 text-amber-400" />
-            <span>Libro 3D</span>
-            <span className="text-[9px] px-1 py-0.2 rounded bg-amber-400/20 text-amber-300 font-mono">EXTRA</span>
-          </button>
-
+        {/* Right Tools: Audio Switcher & Release CV */}
+        <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => setSoundEnabled(!soundEnabled)}
-            className={`p-2 rounded-xl border transition-colors cursor-pointer ${
+            className={`p-1.5 rounded-lg border font-mono text-xs transition-colors cursor-pointer ${
               soundEnabled
-                ? 'border-cyan-500/40 text-cyan-400 bg-cyan-950/30'
-                : 'border-slate-800 text-slate-600 hover:text-slate-400'
+                ? 'border-orange-500/40 text-orange-400 bg-orange-500/10'
+                : 'border-neutral-800 text-neutral-600 hover:text-neutral-400'
             }`}
-            title={soundEnabled ? 'Efectos de audio activados' : 'Audio silenciado'}
+            title={soundEnabled ? 'Interruptor de audio: ACTIVO' : 'Audio silenciado'}
           >
-            {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+            {soundEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
           </button>
 
           <a
             href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
             download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-black uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(6,182,212,0.35)] cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 text-xs font-mono font-black uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(249,115,22,0.35)] cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Descargar CV</span>
+            <span className="hidden sm:inline">Descargar CV (PDF)</span>
             <span className="sm:hidden">CV</span>
           </a>
         </div>
       </header>
 
-      {/* Main Kinetic Full-Screen Stage (Fitted 100% in viewport, ZERO window scroll) */}
-      <main className="flex-1 w-full max-w-7xl mx-auto p-3 sm:p-6 flex flex-col justify-center relative z-10 overflow-hidden">
+      {/* ========================================================================= */}
+      {/* MAIN IMMERSIVE INDUSTRIAL STAGE (100% Viewport, Zero Window Scroll)       */}
+      {/* ========================================================================= */}
+      <main className="flex-1 w-full max-w-7xl mx-auto p-2 sm:p-5 flex flex-col justify-center relative z-10 overflow-hidden">
         
-        {/* Stage Content Frame with Smooth CSS Transition */}
-        <div className="w-full h-full max-h-[760px] rounded-3xl bg-slate-950/80 border border-slate-800/90 shadow-[0_25px_60px_rgba(0,0,0,0.95)] backdrop-blur-2xl relative overflow-hidden flex flex-col justify-between p-4 sm:p-8">
+        {/* Anodized Aluminum Machined Chassis */}
+        <div className="w-full h-full max-h-[760px] rounded-2xl bg-[#12141c]/95 border border-neutral-800 shadow-[0_20px_60px_rgba(0,0,0,0.85)] relative overflow-hidden flex flex-col justify-between p-3.5 sm:p-6">
           
-          {/* Stage Header Info Pill */}
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800/80 text-xs font-mono shrink-0">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-              <span className="text-cyan-400 font-bold uppercase tracking-wider">{currentStage.label}</span>
-              <span className="text-slate-600">•</span>
-              <span className="text-slate-400">{currentStage.subtitle}</span>
+          {/* Top Chassis Metadata Strip */}
+          <div className="flex items-center justify-between pb-2.5 border-b border-neutral-800/80 text-[11px] font-mono shrink-0">
+            <div className="flex items-center gap-2 text-neutral-400">
+              <span className="text-orange-400 font-bold">● REF: HFS-ENG-2026</span>
+              <span>//</span>
+              <span className="uppercase text-neutral-300">{currentStage.tag}</span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="text-slate-500 hidden sm:inline">MÓDULO {currentStageIdx + 1} DE {totalStages}</span>
+            <div className="flex items-center gap-3 text-neutral-500">
+              <span className="hidden sm:inline font-mono">ESTACIÓN 0{currentStageIdx + 1} / 0{totalStages}</span>
               <div className="flex items-center gap-1">
                 <button
                   onClick={handlePrev}
-                  className="p-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 cursor-pointer"
-                  title="Módulo anterior"
+                  className="p-1 rounded bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-700 cursor-pointer"
+                  title="Módulo anterior (Flecha Izq)"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={handleNext}
-                  className="p-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 cursor-pointer"
-                  title="Siguiente módulo"
+                  className="p-1 rounded bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-700 cursor-pointer"
+                  title="Siguiente módulo (Flecha Der)"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
           </div>
 
-          {/* ========================================================================= */}
-          {/* DYNAMIC STAGE RENDERING                                                   */}
-          {/* ========================================================================= */}
-          <div className="flex-1 w-full overflow-y-auto real-paper-scroll py-3 sm:py-5">
+          {/* Dynamic Stage Canvas with Smooth Tactile Fade */}
+          <div className="flex-1 w-full overflow-y-auto real-paper-scroll py-3">
             <div key={currentStage.id} className="stage-fade-enter h-full">
-            
-            {/* STAGE 0: Master Profile, Portrait & Cisco Credentials */}
-            {currentStage.id === 'profile' && (
-              <div className="h-full flex flex-col lg:flex-row items-center gap-6 sm:gap-10">
-                {/* Hamza's High-Tech Beveled Portrait */}
-                <div className="shrink-0 relative group">
-                  <div className="absolute -inset-1.5 rounded-3xl bg-gradient-to-r from-cyan-500 via-sky-400 to-emerald-400 opacity-30 blur-lg group-hover:opacity-60 transition duration-500" />
-                  <div className="w-52 h-64 sm:w-60 sm:h-76 rounded-2xl overflow-hidden border-2 border-slate-700 relative z-10 shadow-2xl bg-black">
-                    <img src={hamzaImg} alt={PERSONAL_INFO.name} className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" />
-                    <div className="absolute inset-x-0 bottom-0 py-2 px-3 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 flex items-center justify-between">
-                      <span className="text-xs font-bold text-white font-mono">{PERSONAL_INFO.name}</span>
-                      <span className="text-[10px] text-cyan-400 font-mono">UNED</span>
+
+              {/* ================================================================= */}
+              {/* STAGE 01: CREDENCIAL DE INGENIERÍA & CISCO CERTIFICATIONS          */}
+              {/* ================================================================= */}
+              {currentStage.id === 'profile' && (
+                <div className="h-full flex flex-col lg:flex-row items-center gap-6 sm:gap-8 text-left">
+                  
+                  {/* Heavy-duty Industrial Badge ID Card */}
+                  <div className="shrink-0 w-full sm:w-64 rounded-2xl bg-[#171a23] border border-neutral-700/80 p-3.5 shadow-xl relative overflow-hidden">
+                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-800 text-[10px] font-mono text-neutral-400">
+                      <span>DOC ID: #8924-ENG</span>
+                      <span className="text-orange-400 font-bold">VERIFICADO</span>
+                    </div>
+
+                    <div className="w-full h-56 rounded-xl overflow-hidden border border-neutral-700 relative bg-black shadow-inner">
+                      <img src={hamzaImg} alt={PERSONAL_INFO.name} className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" />
+                      <div className="absolute inset-x-0 bottom-0 py-1.5 px-2 bg-neutral-950/90 backdrop-blur-md border-t border-neutral-800 flex items-center justify-between text-[10px] font-mono">
+                        <span className="font-bold text-white">{PERSONAL_INFO.name}</span>
+                        <span className="text-orange-400 font-bold">UNED</span>
+                      </div>
+                    </div>
+
+                    {/* Metadata tags */}
+                    <div className="mt-3 space-y-1.5 font-mono text-[10px]">
+                      <div className="flex justify-between py-1 px-2 rounded bg-neutral-900/90 border border-neutral-800">
+                        <span className="text-neutral-500">DISCIPLINA:</span>
+                        <span className="text-neutral-200 font-bold">SISTEMAS CIBERFÍSICOS</span>
+                      </div>
+                      <div className="flex justify-between py-1 px-2 rounded bg-neutral-900/90 border border-neutral-800">
+                        <span className="text-neutral-500">ESTADO:</span>
+                        <span className="text-emerald-400 font-bold">DISPONIBLE 2026</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Profile Data & Cisco Verified Badges */}
-                <div className="flex-1 space-y-3.5 text-left">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-cyan-500/30 text-xs font-mono text-cyan-300">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>EXPEDIENTE TÉCNICO 2026 • ÁVILA / MADRID, ESPAÑA</span>
-                  </div>
-
-                  <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight">
-                    Ingeniería Ciberfísica, Hardware & Seguridad Defensiva
-                  </h1>
-
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed text-justify">
-                    {PERSONAL_INFO.bio}
-                  </p>
-
-                  {/* Direct Contact & Credential Chips */}
-                  <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
-                    <a
-                      href={`mailto:${PERSONAL_INFO.email}`}
-                      className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-cyan-400 flex items-center gap-1.5 transition-colors"
-                    >
-                      <Mail className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>{PERSONAL_INFO.email}</span>
-                    </a>
-                    <a
-                      href={`tel:${PERSONAL_INFO.phone}`}
-                      className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-cyan-400 flex items-center gap-1.5 transition-colors"
-                    >
-                      <Phone className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>{PERSONAL_INFO.phone}</span>
-                    </a>
-                    <span className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>{PERSONAL_INFO.location}</span>
-                    </span>
-                    <span className="px-2.5 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 flex items-center gap-1.5">
-                      <GraduationCap className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>UNED • Grado en Ingeniería Informática</span>
-                    </span>
-                  </div>
-
-                  {/* Complete 7 Cisco Badges Display */}
-                  <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-                    <div className="flex items-center justify-between pb-1.5 border-b border-slate-800">
-                      <span className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wide flex items-center gap-1.5">
-                        <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                        <span>Acreditaciones Oficiales Cisco Networking Academy</span>
+                  {/* Right Dossier & 7 Cisco Badges Plate */}
+                  <div className="flex-1 space-y-3">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs font-mono font-bold">
+                        EXPEDIENTE TÉCNICO OFICIAL
                       </span>
-                      <span className="text-[9px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 font-bold font-mono">
-                        VERIFICADO
+                      <span className="text-xs font-mono text-neutral-400">
+                        ÁVILA / MADRID • DISPONIBILIDAD INMEDIATA
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 text-center">
-                      <div className="p-2 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                        <img src={ciscoCyberOpsImg} alt="CyberOps" className="w-9 h-9 object-contain mb-1 drop-shadow" />
-                        <span className="text-[10px] font-bold text-white leading-tight">CyberOps</span>
-                        <span className="text-[8px] text-slate-400 font-mono">Associate</span>
+                    <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
+                      Ingeniería de Hardware, Software Distribuido & Seguridad Defensiva
+                    </h1>
+
+                    <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed text-justify">
+                      {PERSONAL_INFO.bio}
+                    </p>
+
+                    {/* Contact metadata pills */}
+                    <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
+                      <a href={`mailto:${PERSONAL_INFO.email}`} className="px-2.5 py-1 rounded bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-neutral-300 hover:text-orange-400 flex items-center gap-1.5 transition-colors">
+                        <Mail className="w-3.5 h-3.5 text-orange-400" />
+                        <span>{PERSONAL_INFO.email}</span>
+                      </a>
+                      <a href={`tel:${PERSONAL_INFO.phone}`} className="px-2.5 py-1 rounded bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-neutral-300 hover:text-orange-400 flex items-center gap-1.5 transition-colors">
+                        <Phone className="w-3.5 h-3.5 text-orange-400" />
+                        <span>{PERSONAL_INFO.phone}</span>
+                      </a>
+                      <span className="px-2.5 py-1 rounded bg-neutral-900 border border-neutral-700 text-neutral-400 flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-orange-400" />
+                        <span>{PERSONAL_INFO.location}</span>
+                      </span>
+                      <span className="px-2.5 py-1 rounded bg-neutral-900 border border-neutral-700 text-neutral-300 flex items-center gap-1.5">
+                        <GraduationCap className="w-3.5 h-3.5 text-orange-400" />
+                        <span>UNED: Grado en Ingeniería Informática</span>
+                      </span>
+                    </div>
+
+                    {/* 7 Cisco Networking Academy Certification Rack */}
+                    <div className="p-3 rounded-xl bg-neutral-950/90 border border-neutral-800 space-y-2">
+                      <div className="flex items-center justify-between pb-1.5 border-b border-neutral-800 text-xs font-mono">
+                        <span className="font-bold text-neutral-200 flex items-center gap-1.5">
+                          <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                          <span>ACREDITACIONES OFICIALES CISCO NETWORKING ACADEMY</span>
+                        </span>
+                        <span className="text-[9px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 font-bold">
+                          7 INSIGNIAS VERIFICADAS
+                        </span>
                       </div>
-                      <div className="p-2 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                        <img src={ciscoIntroImg} alt="Intro" className="w-9 h-9 object-contain mb-1 drop-shadow" />
-                        <span className="text-[10px] font-bold text-white leading-tight">Intro Cyber</span>
-                        <span className="text-[8px] text-slate-400 font-mono">Security</span>
-                      </div>
-                      <div className="p-2 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                        <img src={ciscoEnterpriseImg} alt="Enterprise" className="w-8 h-8 object-contain mb-1" />
-                        <span className="text-[9px] font-bold text-slate-200 leading-tight">Empresas</span>
-                        <span className="text-[8px] text-slate-400 font-mono">Protección</span>
-                      </div>
-                      <div className="p-2 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                        <img src={ciscoThreatsImg} alt="Threats" className="w-8 h-8 object-contain mb-1" />
-                        <span className="text-[9px] font-bold text-slate-200 leading-tight">Amenazas</span>
-                        <span className="text-[8px] text-slate-400 font-mono">& SOC</span>
-                      </div>
-                      <div className="p-2 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                        <img src={ciscoCryptoImg} alt="Crypto" className="w-8 h-8 object-contain mb-1" />
-                        <span className="text-[9px] font-bold text-slate-200 leading-tight">Criptografía</span>
-                        <span className="text-[8px] text-slate-400 font-mono">& Claves</span>
-                      </div>
-                      <div className="p-2 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                        <img src={ciscoFirewallImg} alt="Firewall" className="w-8 h-8 object-contain mb-1" />
-                        <span className="text-[9px] font-bold text-slate-200 leading-tight">Firewalls</span>
-                        <span className="text-[8px] text-slate-400 font-mono">Perimetral</span>
-                      </div>
-                      <div className="p-2 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                        <img src={ciscoNetSecImg} alt="NetSec" className="w-8 h-8 object-contain mb-1" />
-                        <span className="text-[9px] font-bold text-slate-200 leading-tight">Seguridad Red</span>
-                        <span className="text-[8px] text-slate-400 font-mono">Infraestructura</span>
+
+                      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 text-center">
+                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
+                          <img src={ciscoCyberOpsImg} alt="CyberOps" className="w-8 h-8 object-contain mb-1" />
+                          <span className="text-[9px] font-bold text-white">CyberOps</span>
+                          <span className="text-[8px] text-neutral-500 font-mono">Associate</span>
+                        </div>
+                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
+                          <img src={ciscoIntroImg} alt="Intro" className="w-8 h-8 object-contain mb-1" />
+                          <span className="text-[9px] font-bold text-white">Intro Cyber</span>
+                          <span className="text-[8px] text-neutral-500 font-mono">Security</span>
+                        </div>
+                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
+                          <img src={ciscoEnterpriseImg} alt="Enterprise" className="w-7 h-7 object-contain mb-1" />
+                          <span className="text-[9px] font-bold text-neutral-300">Empresas</span>
+                          <span className="text-[8px] text-neutral-500 font-mono">Protección</span>
+                        </div>
+                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
+                          <img src={ciscoThreatsImg} alt="Threats" className="w-7 h-7 object-contain mb-1" />
+                          <span className="text-[9px] font-bold text-neutral-300">Amenazas</span>
+                          <span className="text-[8px] text-neutral-500 font-mono">& SOC</span>
+                        </div>
+                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
+                          <img src={ciscoCryptoImg} alt="Crypto" className="w-7 h-7 object-contain mb-1" />
+                          <span className="text-[9px] font-bold text-neutral-300">Criptografía</span>
+                          <span className="text-[8px] text-neutral-500 font-mono">& Claves</span>
+                        </div>
+                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
+                          <img src={ciscoFirewallImg} alt="Firewall" className="w-7 h-7 object-contain mb-1" />
+                          <span className="text-[9px] font-bold text-neutral-300">Firewalls</span>
+                          <span className="text-[8px] text-neutral-500 font-mono">Perimetral</span>
+                        </div>
+                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
+                          <img src={ciscoNetSecImg} alt="NetSec" className="w-7 h-7 object-contain mb-1" />
+                          <span className="text-[9px] font-bold text-neutral-300">Redes Sec</span>
+                          <span className="text-[8px] text-neutral-500 font-mono">Infraestructura</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Actions & Next Stage */}
-                  <div className="flex flex-wrap items-center gap-3 pt-1">
-                    <button
-                      onClick={handleNext}
-                      className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-cyan-950/50 cursor-pointer transition-all"
-                    >
-                      <span>Ver Dominios & Tecnologías ➔</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                    <a
-                      href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
-                      download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
-                      className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-bold transition-all flex items-center gap-2"
-                    >
-                      <Download className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>Descargar CV (1 Pág)</span>
-                    </a>
+                    {/* Action button to stage 02 */}
+                    <div className="pt-1">
+                      <button
+                        onClick={handleNext}
+                        className="px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-mono font-bold text-xs uppercase tracking-wider flex items-center gap-2 cursor-pointer shadow-md transition-all"
+                      >
+                        <span>Avanzar a Matriz de Tecnologías ➔</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* STAGE 1: Dominios de Ingeniería & Matriz de Tecnologías (Placed AFTER Presentation and BEFORE Projects) */}
-            {currentStage.id === 'skills' && (
-              <div className="h-full flex flex-col justify-between space-y-4 text-left">
-                <div>
-                  <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-800">
-                    <div>
-                      <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
-                        <Layers className="w-5 h-5 text-cyan-400" />
-                        <span>Dominios de Ingeniería & Matriz Tecnológica</span>
-                      </h2>
-                      <p className="text-xs text-slate-400 mt-0.5">
-                        Competencias evaluadas en microelectrónica, desarrollo de software, SOC defensivo y modelos predictivos.
-                      </p>
+              {/* ================================================================= */}
+              {/* STAGE 02: DOMINIOS DE INGENIERÍA & STACK (BEFORE PROJECTS)         */}
+              {/* ================================================================= */}
+              {currentStage.id === 'skills' && (
+                <div className="h-full flex flex-col justify-between space-y-3 text-left font-mono">
+                  <div>
+                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-800">
+                      <div>
+                        <h2 className="text-lg sm:text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+                          <Layers className="w-4 h-4 text-orange-400" />
+                          <span>Matriz de Dominios Técnicos & Pilares de Ingeniería</span>
+                        </h2>
+                        <p className="text-[11px] text-neutral-400 font-sans mt-0.5">
+                          Evaluación técnica rigurosa desde la microelectrónica y el diseño físico de hardware hasta arquitecturas distribuidas, SOC defensivo y modelos de IA predictiva.
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={handleNext}
+                        className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+                      >
+                        <span>Ver Proyectos ➔</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    {/* 5 Tactile Rack Panels */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2.5">
+                      {SKILL_CATEGORIES.map((cat, idx) => (
+                        <div key={idx} className="p-3 rounded-xl bg-neutral-900/90 border border-neutral-800 hover:border-neutral-700 transition-colors flex flex-col justify-between space-y-2">
+                          <div className="space-y-1">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[11px] font-bold text-white uppercase tracking-tight leading-tight">{cat.title}</span>
+                              <span className="text-[9px] px-1.5 py-0.2 rounded bg-neutral-800 text-orange-400 font-bold border border-neutral-700 shrink-0">
+                                PILAR 0{idx + 1}
+                              </span>
+                            </div>
+
+                            <p className="text-[10px] text-neutral-400 font-sans leading-relaxed line-clamp-2">
+                              {cat.description}
+                            </p>
+                          </div>
+
+                          <div className="flex flex-wrap gap-1 pt-1">
+                            {cat.skills.map((s, sIdx) => (
+                              <span
+                                key={sIdx}
+                                className={`text-[9px] px-1.5 py-0.5 rounded border ${
+                                  s.highlight
+                                    ? 'bg-neutral-800 text-orange-300 border-orange-500/40 font-bold'
+                                    : 'bg-neutral-950 text-neutral-400 border-neutral-800'
+                                }`}
+                              >
+                                {s.name}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Precision Engineering Telemetry Strip */}
+                  <div className="p-3 rounded-xl bg-neutral-950 border border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-4 w-full sm:w-auto text-center sm:text-left text-xs">
+                      <div>
+                        <span className="font-black text-orange-400 block">&lt; 18 ms</span>
+                        <span className="text-[9px] text-neutral-500 uppercase">Inferencia Edge AI</span>
+                      </div>
+                      <div>
+                        <span className="font-black text-emerald-400 block">111M+</span>
+                        <span className="text-[9px] text-neutral-500 uppercase">Dataset ML Financiero</span>
+                      </div>
+                      <div>
+                        <span className="font-black text-sky-400 block">0 Deps</span>
+                        <span className="text-[9px] text-neutral-500 uppercase">Python SOC Puro</span>
+                      </div>
+                      <div>
+                        <span className="font-black text-amber-400 block">±0.15 mm</span>
+                        <span className="text-[9px] text-neutral-500 uppercase">Tolerancia CAD / PCB</span>
+                      </div>
+                      <div>
+                        <span className="font-black text-purple-400 block">540 Horas</span>
+                        <span className="text-[9px] text-neutral-500 uppercase">Oficial Cisco SOC</span>
+                      </div>
                     </div>
 
                     <button
                       onClick={handleNext}
-                      className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider transition-all cursor-pointer shadow-md"
+                      className="w-full sm:w-auto px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer shadow-md transition-all shrink-0"
                     >
-                      <span>Avanzar a Proyectos ➔</span>
+                      <span>Explorar iQsense 2.0 (RPi 5)</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
+                </div>
+              )}
 
-                  {/* 5 Core Pillars Responsive Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
-                    {SKILL_CATEGORIES.map((cat, idx) => (
-                      <div key={idx} className="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition-colors shadow-lg flex flex-col justify-between space-y-2">
-                        <div className="space-y-1.5">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-white font-mono leading-tight">{cat.title}</span>
-                            <span className="text-[9px] font-mono font-bold text-cyan-400 bg-cyan-950/60 px-1.5 py-0.5 rounded border border-cyan-500/30 shrink-0">
-                              0{idx + 1}
-                            </span>
-                          </div>
+              {/* ================================================================= */}
+              {/* STAGES 03 - 07: TECHNICAL PROJECTS (HERO FOCUS ON REAL HARDWARE)  */}
+              {/* ================================================================= */}
+              {['iqsense', 'omnistream', 'pcb', 'sentry', 'crypto'].includes(currentStage.id) && (() => {
+                const projectMapping: Record<string, string> = {
+                  'iqsense': 'iqsense-iot',
+                  'omnistream': 'omnistream-app',
+                  'pcb': 'pcb-design',
+                  'sentry': 'hfs-sentry-soc',
+                  'crypto': 'botcripto-trading',
+                };
+                const pId = projectMapping[currentStage.id];
+                const project = PROJECTS_DATA.find((p) => p.id === pId);
+                if (!project) return null;
 
-                          <p className="text-[10px] text-slate-400 leading-relaxed">
-                            {cat.description}
-                          </p>
+                const images = getProjectImages(pId);
+                const activeImgIdx = selectedPhotoIdx[pId] || 0;
+                const activeImg = images[activeImgIdx] || images[0];
+
+                return (
+                  <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-center text-left">
+                    
+                    {/* Left 60%: High-Precision Hardware Visualizer */}
+                    <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-2">
+                      <div className="w-full h-[280px] sm:h-[360px] rounded-xl overflow-hidden border border-neutral-700 bg-black relative group shadow-xl">
+                        <img
+                          src={activeImg}
+                          alt={project.title}
+                          className="w-full h-full object-contain p-2 hover:scale-[1.02] transition-transform duration-300"
+                        />
+
+                        {/* Top Watermark Overlay */}
+                        <div className="absolute top-2 left-2 px-2 py-1 rounded bg-neutral-950/80 backdrop-blur border border-neutral-800 text-[10px] font-mono text-neutral-300 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                          <span>REGISTRO: {project.id.toUpperCase()}</span>
+                          <span className="text-neutral-500">[{activeImgIdx + 1}/{images.length}]</span>
                         </div>
 
-                        <div className="flex flex-wrap gap-1 pt-1">
-                          {cat.skills.map((s, sIdx) => (
-                            <span
-                              key={sIdx}
-                              className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ${
-                                s.highlight
-                                  ? 'bg-cyan-950/70 text-cyan-300 border-cyan-500/40 font-bold'
-                                  : 'bg-slate-950 text-slate-300 border-slate-800'
+                        {/* Direct Modal Magnifier Button */}
+                        <button
+                          onClick={() => setModalProject(project)}
+                          className="absolute bottom-2 right-2 px-3 py-1.5 rounded-lg bg-neutral-900/90 hover:bg-neutral-800 text-white border border-neutral-700 text-xs font-mono font-bold flex items-center gap-1.5 shadow-lg cursor-pointer"
+                        >
+                          <Eye className="w-3.5 h-3.5 text-orange-400" />
+                          <span>Ficha Completa</span>
+                        </button>
+                      </div>
+
+                      {/* Tactile Hardware Photo Selector Strip */}
+                      {images.length > 1 && (
+                        <div className="flex items-center gap-1.5 overflow-x-auto py-1">
+                          {images.map((img, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => {
+                                if (soundEnabled) playTactileClick(850 + idx * 40);
+                                setSelectedPhotoIdx((prev) => ({ ...prev, [pId]: idx }));
+                              }}
+                              className={`h-12 w-16 sm:w-20 rounded-lg overflow-hidden border transition-all shrink-0 cursor-pointer ${
+                                activeImgIdx === idx
+                                  ? 'border-orange-500 ring-2 ring-orange-500/30 scale-105'
+                                  : 'border-neutral-800 opacity-60 hover:opacity-100 hover:border-neutral-600'
                               }`}
                             >
-                              {s.name}
+                              <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right 40%: Machined Technical Specification Plate */}
+                    <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-3 font-mono">
+                      <div>
+                        <div className="flex items-center gap-2 text-[10px] text-orange-400 font-bold uppercase tracking-wider">
+                          <span>{project.badge}</span>
+                        </div>
+
+                        <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight uppercase mt-0.5">
+                          {project.title}
+                        </h3>
+
+                        <p className="text-xs text-neutral-300 font-sans leading-relaxed mt-2 text-justify">
+                          {project.description}
+                        </p>
+
+                        {/* Engineering Challenge & Solution Box */}
+                        <div className="mt-3 p-2.5 rounded-xl bg-neutral-950 border border-neutral-800 space-y-1.5 text-[11px] font-sans">
+                          <div>
+                            <span className="text-orange-400 font-mono font-bold text-[10px] uppercase block">Desafío Técnico:</span>
+                            <p className="text-neutral-400 leading-tight">{project.challenge}</p>
+                          </div>
+                          <div>
+                            <span className="text-emerald-400 font-mono font-bold text-[10px] uppercase block">Solución de Ingeniería:</span>
+                            <p className="text-neutral-300 leading-tight">{project.solution}</p>
+                          </div>
+                        </div>
+
+                        {/* Machine Metrics Chips */}
+                        {project.metrics && project.metrics.length > 0 && (
+                          <div className="grid grid-cols-3 gap-1.5 mt-2.5 text-center">
+                            {project.metrics.map((m, mIdx) => (
+                              <div key={mIdx} className="p-1.5 rounded-lg bg-neutral-900 border border-neutral-800">
+                                <span className="text-xs font-black text-white block">{m.value}</span>
+                                <span className="text-[8px] text-neutral-500 uppercase">{m.label}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Tags as tactile key caps */}
+                        <div className="flex flex-wrap gap-1 mt-2.5">
+                          {project.tags.slice(0, 5).map((t, tIdx) => (
+                            <span key={tIdx} className="text-[9px] px-2 py-0.5 rounded bg-neutral-900 border border-neutral-700 text-neutral-300">
+                              {t}
                             </span>
                           ))}
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
 
-                {/* Performance Metrics Bar & Transition to Projects */}
-                <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 w-full sm:w-auto font-mono text-center sm:text-left">
-                    <div>
-                      <span className="text-sm font-black text-cyan-400 block">&lt; 18 ms</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Inferencia Edge</span>
-                    </div>
-                    <div>
-                      <span className="text-sm font-black text-emerald-400 block">111M+</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Dataset ML</span>
-                    </div>
-                    <div>
-                      <span className="text-sm font-black text-amber-400 block">0 Deps</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Python SOC</span>
-                    </div>
-                    <div>
-                      <span className="text-sm font-black text-rose-400 block">±0.15 mm</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Tolerancia CAD</span>
-                    </div>
-                    <div>
-                      <span className="text-sm font-black text-purple-400 block">540 h</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Oficial Cisco</span>
+                      {/* Action buttons */}
+                      <div className="flex items-center gap-2 pt-2 border-t border-neutral-800">
+                        <button
+                          onClick={() => setModalProject(project)}
+                          className="flex-1 py-2 px-3 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer shadow-md transition-all"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>Ficha Técnica Completa</span>
+                        </button>
+                        {project.githubUrl && (
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="py-2 px-3 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-700 text-xs font-bold flex items-center gap-1.5 transition-all"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5 text-orange-400" />
+                            <span>GitHub</span>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
+                );
+              })()}
 
-                  <button
-                    onClick={handleNext}
-                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-cyan-950/50 cursor-pointer transition-all shrink-0"
-                  >
-                    <span>Explorar Proyecto Insignia: iQsense 2.0</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* STAGE 2: iQsense 2.0 (Edge AI + IoT Embebido + RPi 5) */}
-            {currentStage.id === 'iqsense' && (
-              <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                <div className="lg:col-span-7">
-                  <BlueprintCarousel
-                    images={getProjectImages('iqsense-iot')}
-                    title="iQsense 2.0"
-                    aspectRatio="aspect-[16/10]"
-                  />
-                  <p className="text-[10px] text-slate-400 font-mono text-center pt-2">
-                    LÁMINA TÉCNICA: Prototipo funcional, cableado, corte CAD y telemetría de inferencia
-                  </p>
-                </div>
-                <div className="lg:col-span-5 space-y-3 text-left">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 text-xs font-mono font-bold">
-                    ★ PROYECTO INSIGNIA CIBERFÍSICO
-                  </div>
-                  <h2 className="text-xl sm:text-2xl font-black text-white">
-                    iQsense 2.0 — Sistema Ciberfísico & Edge AI
-                  </h2>
-                  <p className="text-xs text-slate-300 leading-relaxed text-justify">
-                    Plataforma que entrena modelos predictivos de VPD e inercia térmica, ejecutando inferencia autónoma sub-18ms en Raspberry Pi 5 con placa PCB dedicada y aislamiento galvánico.
-                  </p>
-
-                  <div className="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-center font-mono">
+              {/* ================================================================= */}
+              {/* STAGE 08: DESPACHO DIRECTO & DESCARGAS OFICIALES DEL CV           */}
+              {/* ================================================================= */}
+              {currentStage.id === 'contact' && (
+                <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center text-left">
+                  
+                  {/* Left Column: Direct Downloads & Communication Channels */}
+                  <div className="lg:col-span-6 space-y-4">
                     <div>
-                      <span className="text-xs sm:text-sm font-black text-cyan-400 block">&lt; 18 ms</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Inferencia RPi5</span>
-                    </div>
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-emerald-400 block">R² = 0.94</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Precisión VPD</span>
-                    </div>
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-amber-400 block">&gt; 1.2M</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Dataset ML</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-2 flex items-center gap-3">
-                    <button
-                      onClick={() => setModalProject(PROJECTS_DATA.find((p) => p.id === 'iqsense-iot') || null)}
-                      className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-1.5 cursor-pointer shadow-md"
-                    >
-                      <Eye className="w-3.5 h-3.5" />
-                      <span>Ficha Técnica Completa</span>
-                    </button>
-                    <button
-                      onClick={handleNext}
-                      className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-bold cursor-pointer"
-                    >
-                      Siguiente ➔ OmniStream
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* STAGE 3: OmniStream (Desktop Streaming Hub) */}
-            {currentStage.id === 'omnistream' && (
-              <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                <div className="lg:col-span-7">
-                  <BlueprintCarousel
-                    images={getProjectImages('omnistream-hub')}
-                    title="OmniStream"
-                    aspectRatio="aspect-[16/10]"
-                  />
-                  <p className="text-[10px] text-slate-400 font-mono text-center pt-2">
-                    LÁMINA TÉCNICA: Catálogo legal unificado, filtros de suscripción y resolución de deep links
-                  </p>
-                </div>
-                <div className="lg:col-span-5 space-y-3 text-left">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-xs font-mono font-bold">
-                    DESKTOP APP HYBRID
-                  </div>
-                  <h2 className="text-xl sm:text-2xl font-black text-white">
-                    OmniStream — Agregador de Streaming & Deep Linking
-                  </h2>
-                  <p className="text-xs text-slate-300 leading-relaxed text-justify">
-                    Aplicación de escritorio híbrida en Python + pywebview con catálogo legal unificado de 9 plataformas en España (Netflix, Prime, Disney+, Max) y resolución nativa de protocolos URI en Windows.
-                  </p>
-
-                  <div className="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-center font-mono">
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-indigo-400 block">9 Apps</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Plataformas ES</span>
-                    </div>
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-cyan-400 block">&lt; 250 ms</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Deep Link</span>
-                    </div>
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-emerald-400 block">pywebview</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Async RPC</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-2 flex items-center gap-3">
-                    <button
-                      onClick={() => setModalProject(PROJECTS_DATA.find((p) => p.id === 'omnistream-hub') || null)}
-                      className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-1.5 cursor-pointer shadow-md"
-                    >
-                      <Eye className="w-3.5 h-3.5" />
-                      <span>Ficha Técnica Completa</span>
-                    </button>
-                    <button
-                      onClick={handleNext}
-                      className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-bold cursor-pointer"
-                    >
-                      Siguiente ➔ KiCad PCBs
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* STAGE 4: KiCad PCB Laboratory */}
-            {currentStage.id === 'pcb' && (
-              <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                <div className="lg:col-span-7">
-                  <BlueprintCarousel
-                    images={getProjectImages('pcb-kicad-lab')}
-                    title="KiCad PCBs"
-                    aspectRatio="aspect-[16/10]"
-                  />
-                  <p className="text-[10px] text-slate-400 font-mono text-center pt-2">
-                    LÁMINA TÉCNICA: Ruteo de 2 capas SMD, cálculo de disipación y modelado CAD paramétrico
-                  </p>
-                </div>
-                <div className="lg:col-span-5 space-y-3 text-left">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-mono font-bold">
-                    MICROELECTRÓNICA FÍSICA
-                  </div>
-                  <h2 className="text-xl sm:text-2xl font-black text-white">
-                    Laboratorio de Diseño PCB & CAD Paramétrico
-                  </h2>
-                  <p className="text-xs text-slate-300 leading-relaxed text-justify">
-                    Diseño esquemático y ruteo de 2 capas para microcontroladores (ESP32/RPi), cálculo de disipación térmica y automatización paramétrica de envolventes mecánicas en Blender con Python.
-                  </p>
-
-                  <div className="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-center font-mono">
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-rose-400 block">±0.15 mm</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Tolerancia FDM</span>
-                    </div>
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-cyan-400 block">2 Layers</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Topología SMD</span>
-                    </div>
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-emerald-400 block">Python CAD</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Automatización</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-2 flex items-center gap-3">
-                    <button
-                      onClick={() => setModalProject(PROJECTS_DATA.find((p) => p.id === 'pcb-kicad-lab') || null)}
-                      className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-1.5 cursor-pointer shadow-md"
-                    >
-                      <Eye className="w-3.5 h-3.5" />
-                      <span>Ficha Técnica Completa</span>
-                    </button>
-                    <button
-                      onClick={handleNext}
-                      className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-bold cursor-pointer"
-                    >
-                      Siguiente ➔ HFS-Sentry
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* STAGE 5: HFS-Sentry (Defensive Cybersecurity Suite) */}
-            {currentStage.id === 'sentry' && (
-              <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                <div className="lg:col-span-7">
-                  <BlueprintCarousel
-                    images={getProjectImages('hfs-sentry')}
-                    title="HFS-Sentry"
-                    aspectRatio="aspect-[16/10]"
-                  />
-                  <p className="text-[10px] text-slate-400 font-mono text-center pt-2">
-                    LÁMINA TÉCNICA: Escáner concurrente, monitor de integridad FIM y análisis forense de logs
-                  </p>
-                </div>
-                <div className="lg:col-span-5 space-y-3 text-left">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-mono font-bold">
-                    ZERO DEPENDENCIES • PYTHON 3
-                  </div>
-                  <h2 className="text-xl sm:text-2xl font-black text-white">
-                    HFS-Sentry — Suite Modular de Diagnóstico SOC
-                  </h2>
-                  <p className="text-xs text-slate-300 leading-relaxed text-justify">
-                    Ecosistema táctico de 7 herramientas de seguridad en 100% Python estándar: escaneo TCP concurrente, ingesta forense de logs con bloqueo activo en firewall UFW y auditoría TLS/SSL.
-                  </p>
-
-                  <div className="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-center font-mono">
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-emerald-400 block">0 Deps</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Pure Python</span>
-                    </div>
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-cyan-400 block">7 Módulos</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Herramientas SOC</span>
-                    </div>
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-sky-400 block">OWASP</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Cabeceras Sec</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-2 flex items-center gap-3">
-                    <button
-                      onClick={() => setModalProject(PROJECTS_DATA.find((p) => p.id === 'hfs-sentry') || null)}
-                      className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-1.5 cursor-pointer shadow-md"
-                    >
-                      <Eye className="w-3.5 h-3.5" />
-                      <span>Ficha Técnica Completa</span>
-                    </button>
-                    <a
-                      href="https://github.com/faathii/HFS-Sentry"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-bold flex items-center gap-1.5"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      <span>GitHub Repo</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* STAGE 6: CryptoQuant (Machine Learning & Financial Engineering) */}
-            {currentStage.id === 'crypto' && (
-              <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                <div className="lg:col-span-7">
-                  <BlueprintCarousel
-                    images={getProjectImages('botcripto-trading')}
-                    title="CryptoQuant ML Bot"
-                    aspectRatio="aspect-[16/10]"
-                  />
-                  <p className="text-[10px] text-slate-400 font-mono text-center pt-2">
-                    LÁMINA TÉCNICA: Pipeline de entrenamiento XGBoost, validación Walk-Forward y gestión Kelly
-                  </p>
-                </div>
-                <div className="lg:col-span-5 space-y-3 text-left">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/40 text-xs font-mono font-bold">
-                    QUANTITATIVE MACHINE LEARNING
-                  </div>
-                  <h2 className="text-xl sm:text-2xl font-black text-white">
-                    CryptoQuant — Motor Predictivo sobre Series Temporales
-                  </h2>
-                  <p className="text-xs text-slate-300 leading-relaxed text-justify">
-                    Modelado predictivo sobre series temporales con XGBoost, validación Walk-Forward para mitigar sobreajuste y dimensionamiento de posición bajo criterio estocástico de Kelly.
-                  </p>
-
-                  <div className="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-center font-mono">
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-sky-400 block">2.41</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Sharpe Ratio</span>
-                    </div>
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-emerald-400 block">111M+</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Muestras ML</span>
-                    </div>
-                    <div>
-                      <span className="text-xs sm:text-sm font-black text-amber-400 block">Kelly</span>
-                      <span className="text-[9px] text-slate-400 uppercase">Risk Management</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-2 flex items-center gap-3">
-                    <button
-                      onClick={() => setModalProject(PROJECTS_DATA.find((p) => p.id === 'botcripto-trading') || null)}
-                      className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-1.5 cursor-pointer shadow-md"
-                    >
-                      <Eye className="w-3.5 h-3.5" />
-                      <span>Ficha Técnica Completa</span>
-                    </button>
-                    <button
-                      onClick={handleNext}
-                      className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-bold cursor-pointer"
-                    >
-                      Siguiente ➔ Contacto & CV
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* STAGE 7: Dedicated Contact & Official 1-Page CV Download */}
-            {currentStage.id === 'contact' && (
-              <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch text-left">
-                {/* Contact Data & CV Downloads (6 cols) */}
-                <div className="lg:col-span-6 space-y-4 flex flex-col justify-between">
-                  <div className="space-y-3">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-cyan-500/30 text-xs font-mono text-cyan-300 font-bold">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>EXPEDIENTE FINAL • HAMZA EL FATHI SOFYANI</span>
+                      <span className="text-xs font-mono text-orange-400 uppercase tracking-wider block font-bold">
+                        CANAL DE COMUNICACIÓN & CONTRATACIÓN
+                      </span>
+                      <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                        Contacto Directo & Expediente Oficial
+                      </h2>
+                      <p className="text-xs text-neutral-400 font-sans mt-1">
+                        Descarga el currículum técnico en formato oficial o transmite un mensaje cifrado para concertar entrevista técnica.
+                      </p>
                     </div>
 
-                    <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                      ¿Hablamos de un reto técnico?
-                    </h2>
-
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      Disponible para incorporación y desarrollo de proyectos ciberfísicos, arquitectura de software e infraestructuras.
-                    </p>
-
-                    <div className="space-y-2 pt-1">
-                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3 text-xs">
-                        <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
-                        <a href={`mailto:${PERSONAL_INFO.email}`} className="text-slate-200 hover:text-cyan-400 font-semibold transition-colors">
+                    {/* Contact items */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-xs">
+                      <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center gap-2.5">
+                        <Mail className="w-4 h-4 text-orange-400 shrink-0" />
+                        <a href={`mailto:${PERSONAL_INFO.email}`} className="text-neutral-200 hover:text-orange-400 font-bold transition-colors truncate">
                           {PERSONAL_INFO.email}
                         </a>
                       </div>
-                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3 text-xs">
-                        <Phone className="w-4 h-4 text-cyan-400 shrink-0" />
-                        <a href={`tel:${PERSONAL_INFO.phone}`} className="text-slate-200 hover:text-cyan-400 font-semibold transition-colors">
+                      <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center gap-2.5">
+                        <Phone className="w-4 h-4 text-orange-400 shrink-0" />
+                        <a href={`tel:${PERSONAL_INFO.phone}`} className="text-neutral-200 hover:text-orange-400 font-bold transition-colors">
                           {PERSONAL_INFO.phone}
                         </a>
                       </div>
-                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3 text-xs">
-                        <MapPin className="w-4 h-4 text-cyan-400 shrink-0" />
-                        <span className="text-slate-200">{PERSONAL_INFO.location}</span>
+                      <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center gap-2.5">
+                        <MapPin className="w-4 h-4 text-orange-400 shrink-0" />
+                        <span className="text-neutral-300">{PERSONAL_INFO.location}</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center gap-2.5">
+                        <ExternalLink className="w-4 h-4 text-orange-400 shrink-0" />
+                        <a href="https://github.com/faathii" target="_blank" rel="noreferrer" className="text-neutral-200 hover:text-orange-400 font-bold transition-colors">
+                          github.com/faathii
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Dual CV Downloads Heavy-Duty Panel */}
+                    <div className="p-3.5 rounded-2xl bg-neutral-950 border border-orange-500/40 space-y-2">
+                      <span className="text-xs font-mono text-orange-400 uppercase tracking-wider block font-bold text-center">
+                        CURRÍCULUM VITAE 2026 (1 PÁGINA CON FOTO)
+                      </span>
+                      <div className="grid grid-cols-2 gap-2">
+                        <a
+                          href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
+                          download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
+                          className="py-2.5 px-3 rounded-xl bg-orange-500 hover:bg-orange-400 text-neutral-950 font-mono font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md text-center cursor-pointer"
+                        >
+                          <Download className="w-4 h-4 shrink-0" />
+                          <span>Descargar PDF</span>
+                        </a>
+                        <a
+                          href="./Curriculum_Hamza_El_Fathi_Sofyani.docx"
+                          download="Curriculum_Hamza_El_Fathi_Sofyani.docx"
+                          className="py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-700 font-mono font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center cursor-pointer"
+                        >
+                          <FileText className="w-4 h-4 text-orange-400 shrink-0" />
+                          <span>Descargar Word</span>
+                        </a>
                       </div>
                     </div>
                   </div>
 
-                  {/* Dual CV Downloads */}
-                  <div className="p-3.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 space-y-2.5">
-                    <span className="text-xs font-mono text-cyan-300 uppercase tracking-wider block font-bold text-center">
-                      CURRÍCULUM VITAE OFICIAL (1 PÁGINA CON FOTO)
-                    </span>
-                    <div className="grid grid-cols-2 gap-2.5">
-                      <a
-                        href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
-                        download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
-                        className="py-2.5 px-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md text-center"
-                      >
-                        <Download className="w-4 h-4 shrink-0" />
-                        <span>CV en PDF</span>
-                      </a>
-                      <a
-                        href="./Curriculum_Hamza_El_Fathi_Sofyani.docx"
-                        download="Curriculum_Hamza_El_Fathi_Sofyani.docx"
-                        className="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center"
-                      >
-                        <FileText className="w-4 h-4 text-cyan-400 shrink-0" />
-                        <span>CV en Word</span>
-                      </a>
+                  {/* Right Column: Direct Dispatch Transmission Form */}
+                  <div className="lg:col-span-6 p-4 rounded-2xl bg-neutral-900/90 border border-neutral-800 flex flex-col justify-between space-y-3">
+                    <div>
+                      <h3 className="text-xs font-mono uppercase tracking-wider text-orange-400 font-bold flex items-center gap-2">
+                        <Send className="w-3.5 h-3.5" />
+                        <span>Despacho Inmediato de Mensaje</span>
+                      </h3>
+                      <p className="text-[11px] text-neutral-400 font-sans mt-0.5">
+                        Transmisión directa al buzón de Hamza para ofertas técnicas, colaboraciones o entrevistas.
+                      </p>
                     </div>
-                  </div>
-                </div>
 
-                {/* Direct Contact Form (6 cols) */}
-                <div className="lg:col-span-6 p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between space-y-3">
-                  <div>
-                    <h3 className="text-sm font-mono uppercase tracking-wider text-emerald-400 font-bold flex items-center gap-2">
-                      <Send className="w-4 h-4" />
-                      <span>Despachar Mensaje Directo</span>
-                    </h3>
-                    <p className="text-xs text-slate-400 mt-1">
-                      Envía un mensaje instantáneo para concertar entrevista o revisar disponibilidad técnica.
-                    </p>
-                  </div>
+                    <form onSubmit={handleContactSubmit} className="space-y-2.5 text-xs font-mono">
+                      {contactSent && (
+                        <div className="p-2.5 rounded-lg bg-emerald-950 border border-emerald-500 text-emerald-300 text-xs flex items-center gap-2">
+                          <Check className="w-4 h-4 shrink-0" />
+                          <span>Mensaje despachado correctamente. Respuesta en menos de 24 horas.</span>
+                        </div>
+                      )}
 
-                  <form onSubmit={handleContactSubmit} className="space-y-3 text-xs">
-                    {contactSent && (
-                      <div className="p-2.5 rounded-xl bg-emerald-950 border border-emerald-500 text-emerald-300 text-xs flex items-center gap-2">
-                        <Check className="w-4 h-4 shrink-0" />
-                        <span>Mensaje despachado con éxito. Me pondré en contacto de inmediato.</span>
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="text"
+                          required
+                          value={contactData.name}
+                          onChange={(e) => setContactData({ ...contactData, name: e.target.value })}
+                          placeholder="Nombre / Empresa"
+                          className="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-orange-500"
+                        />
+                        <input
+                          type="email"
+                          required
+                          value={contactData.email}
+                          onChange={(e) => setContactData({ ...contactData, email: e.target.value })}
+                          placeholder="Correo electrónico"
+                          className="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-orange-500"
+                        />
                       </div>
-                    )}
 
-                    <div className="grid grid-cols-2 gap-2.5">
-                      <input
-                        type="text"
+                      <textarea
                         required
-                        value={contactData.name}
-                        onChange={(e) => setContactData({ ...contactData, name: e.target.value })}
-                        placeholder="Nombre / Empresa"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 shadow-sm"
+                        rows={3}
+                        value={contactData.message}
+                        onChange={(e) => setContactData({ ...contactData, message: e.target.value })}
+                        placeholder="Detalles de la propuesta técnica, rol o vacante..."
+                        className="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-orange-500 resize-none"
                       />
-                      <input
-                        type="email"
-                        required
-                        value={contactData.email}
-                        onChange={(e) => setContactData({ ...contactData, email: e.target.value })}
-                        placeholder="Correo electrónico"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 shadow-sm"
-                      />
-                    </div>
 
-                    <textarea
-                      required
-                      rows={3}
-                      value={contactData.message}
-                      onChange={(e) => setContactData({ ...contactData, message: e.target.value })}
-                      placeholder="Detalles sobre la propuesta, proyecto o vacante técnica..."
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 resize-none shadow-sm"
-                    />
-
-                    <button
-                      type="submit"
-                      className="w-full py-3 px-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-cyan-950/50"
-                    >
-                      <Send className="w-3.5 h-3.5" />
-                      <span>Despachar Mensaje</span>
-                    </button>
-                  </form>
+                      <button
+                        type="submit"
+                        className="w-full py-2.5 px-4 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
+                      >
+                        <Send className="w-3.5 h-3.5" />
+                        <span>Transmitir Mensaje</span>
+                      </button>
+                    </form>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+
             </div>
           </div>
 
-          {/* Stage Footer Navigation Bar */}
-          <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono shrink-0">
-            <div className="flex items-center gap-3">
-              <span className="text-slate-400 hidden sm:inline">NAVEGACIÓN: Usa las flechas o los botones</span>
-              <div className="flex items-center gap-1">
-                {STAGES.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => goToStage(idx)}
-                    className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                      currentStageIdx === idx
-                        ? 'w-6 bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]'
-                        : 'w-2 bg-slate-700 hover:bg-slate-500'
-                    }`}
-                    title={STAGES[idx].label}
-                  />
-                ))}
-              </div>
-            </div>
-
+          {/* Bottom Chassis Technical Indicators Strip */}
+          <div className="pt-2 border-t border-neutral-800/80 flex items-center justify-between text-[11px] font-mono text-neutral-500 shrink-0">
             <div className="flex items-center gap-2">
-              <button
-                onClick={handlePrev}
-                className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-bold transition-all flex items-center gap-1 cursor-pointer"
-              >
-                <ChevronLeft className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Anterior</span>
-              </button>
-              <button
-                onClick={handleNext}
-                className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-cyan-300 hover:text-white border border-cyan-500/40 font-bold transition-all flex items-center gap-1 cursor-pointer"
-              >
-                <span className="hidden sm:inline">Siguiente</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+              <span>SISTEMA INDUSTRIAL v3.0 // HAMZA EL FATHI SOFYANI</span>
+            </div>
+            <div className="hidden sm:flex items-center gap-3">
+              <span>ATAJOS: [1 - 8] MODS</span>
+              <span>•</span>
+              <span>[B] LIBRO 3D</span>
+              <span>•</span>
+              <span>[← →] NAV</span>
             </div>
           </div>
         </div>
       </main>
 
-      {/* Subtle Terminal Status Bar Footer */}
-      <footer className="h-10 px-4 sm:px-8 border-t border-slate-800/80 bg-[#07090e]/90 flex items-center justify-between text-[11px] font-mono text-slate-500 shrink-0 z-20">
-        <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          <span>SISTEMA CIBERFÍSICO v2.6 • HAMZA EL FATHI SOFYANI</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <a href="https://github.com/faathii" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
-            github.com/faathii
-          </a>
-          <span>•</span>
-          <span>ÁVILA / MADRID</span>
-        </div>
-      </footer>
+      {/* ========================================================================= */}
+      {/* FIXED FLOATING INDUSTRIAL CONTROL DOCK (Teenage Engineering / Apple Pro)   */}
+      {/* ========================================================================= */}
+      <nav className="fixed bottom-3 inset-x-0 mx-auto w-fit z-40 max-w-[96vw] px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-2xl bg-[#14161f]/95 backdrop-blur-2xl border border-neutral-700/80 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex items-center gap-1 sm:gap-2 overflow-x-auto">
+        
+        {STAGES.map((st, idx) => {
+          const IconComp = st.icon;
+          const isActive = currentStageIdx === idx;
+          return (
+            <button
+              key={st.id}
+              onClick={() => goToStage(idx)}
+              className={`px-2.5 py-1.5 rounded-xl text-xs font-mono transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
+                isActive
+                  ? 'bg-neutral-900 text-white font-bold border border-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.3)]'
+                  : 'text-neutral-400 hover:text-white hover:bg-neutral-800/70 border border-transparent'
+              }`}
+              title={`${st.code} — ${st.title}`}
+            >
+              <IconComp className={`w-3.5 h-3.5 ${isActive ? 'text-orange-400' : 'text-neutral-500'}`} />
+              <span className="hidden md:inline">{st.tag}</span>
+              <span className="md:hidden">{st.code}</span>
+              {isActive && <span className="w-1 h-1 rounded-full bg-orange-500" />}
+            </button>
+          );
+        })}
 
-      {/* Project Deep Dive Modal */}
+        {/* Separator Pipe */}
+        <div className="h-5 w-[1px] bg-neutral-700 shrink-0 mx-0.5" />
+
+        {/* Extra 3D Book Industrial Switch Button */}
+        <button
+          onClick={onOpenBook}
+          className="px-2.5 py-1.5 rounded-xl bg-orange-500/15 hover:bg-orange-500/25 text-orange-400 border border-orange-500/40 text-xs font-mono font-bold transition-all flex items-center gap-1.5 shrink-0 cursor-pointer"
+          title="Abrir Monografía Técnica en Libro Físico 3D (Atajo: tecla B)"
+        >
+          <BookOpen className="w-3.5 h-3.5 text-orange-400" />
+          <span className="hidden sm:inline">Libro 3D</span>
+          <span className="text-[9px] px-1 py-0.2 rounded bg-orange-500/20 text-orange-300 font-mono">EXTRA</span>
+        </button>
+      </nav>
+
+      {/* Project Deep Dive Technical Modal */}
       {modalProject && (
         <ProjectModal
           project={modalProject}
