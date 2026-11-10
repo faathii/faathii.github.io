@@ -134,6 +134,8 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
   const [selectedPhotoIdx, setSelectedPhotoIdx] = useState<Record<string, number>>({});
   const [contactSent, setContactSent] = useState(false);
   const [contactData, setContactData] = useState({ name: '', email: '', message: '' });
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
   const totalStages = STAGES.length;
   const currentStage = STAGES[currentStageIdx];
@@ -151,6 +153,30 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
   const handlePrev = useCallback(() => {
     goToStage((currentStageIdx - 1 + totalStages) % totalStages);
   }, [currentStageIdx, totalStages, goToStage]);
+
+  // Tablet Touch Swipe Gesture Handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (modalProject) return;
+    setTouchStartX(e.touches[0].clientX);
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null || touchStartY === null || modalProject) return;
+    const diffX = touchStartX - e.changedTouches[0].clientX;
+    const diffY = touchStartY - e.changedTouches[0].clientY;
+
+    // Detect dominant horizontal swipe with 45px threshold
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
+      if (diffX > 0) {
+        handleNext(); // Swiped left -> next module
+      } else {
+        handlePrev(); // Swiped right -> previous module
+      }
+    }
+    setTouchStartX(null);
+    setTouchStartY(null);
+  };
 
   // Keyboard navigation: arrows, space, numbers 1-8
   useEffect(() => {
@@ -265,10 +291,14 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
       {/* ========================================================================= */}
       {/* MAIN IMMERSIVE INDUSTRIAL STAGE (100% Viewport, Zero Window Scroll)       */}
       {/* ========================================================================= */}
-      <main className="flex-1 w-full max-w-7xl mx-auto p-2 sm:p-5 flex flex-col justify-center relative z-10 overflow-hidden">
+      <main 
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="flex-1 w-full max-w-7xl mx-auto p-2 sm:p-4 lg:p-5 flex flex-col justify-center relative z-10 overflow-hidden touch-pan-y"
+      >
         
         {/* Anodized Aluminum Machined Chassis */}
-        <div className="w-full h-full max-h-[760px] rounded-2xl bg-[#12141c]/95 border border-neutral-800 shadow-[0_20px_60px_rgba(0,0,0,0.85)] relative overflow-hidden flex flex-col justify-between p-3.5 sm:p-6">
+        <div className="w-full h-full max-h-[calc(100vh-130px)] sm:max-h-[760px] rounded-2xl bg-[#12141c]/95 border border-neutral-800 shadow-[0_20px_60px_rgba(0,0,0,0.85)] relative overflow-hidden flex flex-col justify-between p-3 sm:p-5 lg:p-6">
           
           {/* Top Chassis Metadata Strip */}
           <div className="flex items-center justify-between pb-2.5 border-b border-neutral-800/80 text-[11px] font-mono shrink-0">
@@ -589,7 +619,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
 
                       {/* Tactile Hardware Photo Selector Strip */}
                       {images.length > 1 && (
-                        <div className="flex items-center gap-1.5 overflow-x-auto py-1">
+                        <div className="flex items-center gap-1.5 overflow-x-auto py-1 no-scrollbar touch-pan-x">
                           {images.map((img, idx) => (
                             <button
                               key={idx}
@@ -840,7 +870,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
       {/* ========================================================================= */}
       {/* FIXED FLOATING INDUSTRIAL CONTROL DOCK (Teenage Engineering / Apple Pro)   */}
       {/* ========================================================================= */}
-      <nav className="fixed bottom-3 inset-x-0 mx-auto w-fit z-40 max-w-[96vw] px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-2xl bg-[#14161f]/95 backdrop-blur-2xl border border-neutral-700/80 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex items-center gap-1 sm:gap-2 overflow-x-auto">
+      <nav className="fixed bottom-3 inset-x-0 mx-auto w-fit z-40 max-w-[96vw] px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-2xl bg-[#14161f]/95 backdrop-blur-2xl border border-neutral-700/80 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar touch-pan-x">
         
         {STAGES.map((st, idx) => {
           const IconComp = st.icon;
