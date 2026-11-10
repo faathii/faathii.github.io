@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
   ShieldCheck, Download, 
-  Layers, ExternalLink, Mail, 
+  Layers, ExternalLink, Mail, Phone, MapPin,
   Send, Check, Volume2, VolumeX,
   ChevronLeft, ChevronRight,
-  ArrowRight, Eye, FileText
+  ArrowRight, Eye, FileText, GraduationCap, BookOpen
 } from 'lucide-react';
 import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES } from '../../data/portfolioData';
 import { BlueprintCarousel } from '../blueprint/BlueprintCarousel';
@@ -118,16 +118,17 @@ interface CinematicShowcaseProps {
 }
 
 const STAGES = [
-  { id: 'profile', label: '01. PERFIL & CISCO', subtitle: 'Acreditaciones & UNED' },
-  { id: 'iqsense', label: '02. iQsense 2.0', subtitle: 'Edge AI & Hardware RPi5' },
-  { id: 'omnistream', label: '03. OmniStream', subtitle: 'Desktop Hub & Streaming' },
-  { id: 'pcb', label: '04. KiCad PCBs', subtitle: 'Hardware SMD & CAD' },
-  { id: 'sentry', label: '05. HFS-Sentry', subtitle: 'Ciberseguridad Defensiva' },
-  { id: 'crypto', label: '06. CryptoQuant', subtitle: 'Machine Learning 111M+' },
-  { id: 'skills', label: '07. MATRIX & CONTACTO', subtitle: 'Skills & Descarga CV' },
+  { id: 'profile', label: '01. PERFIL & CISCO', subtitle: 'Presentación & Acreditaciones' },
+  { id: 'skills', label: '02. DOMINIOS & STACK', subtitle: 'Competencias & Tecnologías' },
+  { id: 'iqsense', label: '03. iQsense 2.0', subtitle: 'Edge AI & Hardware RPi5' },
+  { id: 'omnistream', label: '04. OmniStream', subtitle: 'Desktop Hub & Streaming' },
+  { id: 'pcb', label: '05. KiCad PCBs', subtitle: 'Hardware SMD & CAD' },
+  { id: 'sentry', label: '06. HFS-Sentry', subtitle: 'Ciberseguridad Defensiva' },
+  { id: 'crypto', label: '07. CryptoQuant', subtitle: 'Machine Learning 111M+' },
+  { id: 'contact', label: '08. CONTACTO & CV', subtitle: 'Canal Directo & Descargas' },
 ];
 
-export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook: _onOpenBook }) => {
+export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook }) => {
   const [currentStageIdx, setCurrentStageIdx] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [modalProject, setModalProject] = useState<Project | null>(null);
@@ -139,7 +140,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
 
   const goToStage = useCallback((idx: number) => {
     if (idx < 0 || idx >= totalStages) return;
-    if (soundEnabled) playSciFiClick(600 + idx * 80);
+    if (soundEnabled) playSciFiClick(600 + idx * 75);
     setCurrentStageIdx(idx);
   }, [totalStages, soundEnabled]);
 
@@ -151,7 +152,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
     goToStage((currentStageIdx - 1 + totalStages) % totalStages);
   }, [currentStageIdx, totalStages, goToStage]);
 
-  // Keyboard navigation
+  // Keyboard navigation: arrows, space, and direct numbers 1-8
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (modalProject) return;
@@ -162,11 +163,16 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
         handlePrev();
+      } else if (['1', '2', '3', '4', '5', '6', '7', '8'].includes(e.key)) {
+        const targetIdx = parseInt(e.key, 10) - 1;
+        if (targetIdx >= 0 && targetIdx < totalStages) {
+          goToStage(targetIdx);
+        }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleNext, handlePrev, modalProject]);
+  }, [handleNext, handlePrev, modalProject, totalStages, goToStage]);
 
   const getProjectImages = (pId: string): string[] => {
     const p = PROJECTS_DATA.find((item) => item.id === pId);
@@ -249,7 +255,17 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
         </div>
 
         {/* Right Tools & Sound Switcher */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <button
+            onClick={onOpenBook}
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-mono font-bold transition-all cursor-pointer"
+            title="Abrir Monografía Técnica en Libro Físico 3D (Atajo: tecla B)"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+            <span>Libro 3D</span>
+            <span className="text-[9px] px-1 py-0.2 rounded bg-amber-400/20 text-amber-300 font-mono">EXTRA</span>
+          </button>
+
           <button
             onClick={() => setSoundEnabled(!soundEnabled)}
             className={`p-2 rounded-xl border transition-colors cursor-pointer ${
@@ -314,6 +330,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
           {/* DYNAMIC STAGE RENDERING                                                   */}
           {/* ========================================================================= */}
           <div className="flex-1 w-full overflow-y-auto real-paper-scroll py-3 sm:py-5">
+            <div key={currentStage.id} className="stage-fade-enter h-full">
             
             {/* STAGE 0: Master Profile, Portrait & Cisco Credentials */}
             {currentStage.id === 'profile' && (
@@ -345,8 +362,34 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                     {PERSONAL_INFO.bio}
                   </p>
 
+                  {/* Direct Contact & Credential Chips */}
+                  <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
+                    <a
+                      href={`mailto:${PERSONAL_INFO.email}`}
+                      className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-cyan-400 flex items-center gap-1.5 transition-colors"
+                    >
+                      <Mail className="w-3.5 h-3.5 text-cyan-400" />
+                      <span>{PERSONAL_INFO.email}</span>
+                    </a>
+                    <a
+                      href={`tel:${PERSONAL_INFO.phone}`}
+                      className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-cyan-400 flex items-center gap-1.5 transition-colors"
+                    >
+                      <Phone className="w-3.5 h-3.5 text-cyan-400" />
+                      <span>{PERSONAL_INFO.phone}</span>
+                    </a>
+                    <span className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-cyan-400" />
+                      <span>{PERSONAL_INFO.location}</span>
+                    </span>
+                    <span className="px-2.5 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-cyan-300 flex items-center gap-1.5">
+                      <GraduationCap className="w-3.5 h-3.5 text-cyan-400" />
+                      <span>UNED • Grado en Ingeniería Informática</span>
+                    </span>
+                  </div>
+
                   {/* Complete 7 Cisco Badges Display */}
-                  <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2.5">
+                  <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
                     <div className="flex items-center justify-between pb-1.5 border-b border-slate-800">
                       <span className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wide flex items-center gap-1.5">
                         <ShieldCheck className="w-4 h-4 text-emerald-400" />
@@ -359,12 +402,12 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 text-center">
                       <div className="p-2 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                        <img src={ciscoCyberOpsImg} alt="CyberOps" className="w-10 h-10 object-contain mb-1 drop-shadow" />
+                        <img src={ciscoCyberOpsImg} alt="CyberOps" className="w-9 h-9 object-contain mb-1 drop-shadow" />
                         <span className="text-[10px] font-bold text-white leading-tight">CyberOps</span>
                         <span className="text-[8px] text-slate-400 font-mono">Associate</span>
                       </div>
                       <div className="p-2 rounded-xl bg-slate-950 border border-slate-800 flex flex-col items-center">
-                        <img src={ciscoIntroImg} alt="Intro" className="w-10 h-10 object-contain mb-1 drop-shadow" />
+                        <img src={ciscoIntroImg} alt="Intro" className="w-9 h-9 object-contain mb-1 drop-shadow" />
                         <span className="text-[10px] font-bold text-white leading-tight">Intro Cyber</span>
                         <span className="text-[8px] text-slate-400 font-mono">Security</span>
                       </div>
@@ -402,7 +445,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                       onClick={handleNext}
                       className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-cyan-950/50 cursor-pointer transition-all"
                     >
-                      <span>Explorar Proyectos ➔ iQsense 2.0</span>
+                      <span>Ver Dominios & Tecnologías ➔</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                     <a
@@ -418,7 +461,103 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
               </div>
             )}
 
-            {/* STAGE 1: iQsense 2.0 (Edge AI + IoT Embebido + RPi 5) */}
+            {/* STAGE 1: Dominios de Ingeniería & Matriz de Tecnologías (Placed AFTER Presentation and BEFORE Projects) */}
+            {currentStage.id === 'skills' && (
+              <div className="h-full flex flex-col justify-between space-y-4 text-left">
+                <div>
+                  <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-800">
+                    <div>
+                      <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                        <Layers className="w-5 h-5 text-cyan-400" />
+                        <span>Dominios de Ingeniería & Matriz Tecnológica</span>
+                      </h2>
+                      <p className="text-xs text-slate-400 mt-0.5">
+                        Competencias evaluadas en microelectrónica, desarrollo de software, SOC defensivo y modelos predictivos.
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={handleNext}
+                      className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider transition-all cursor-pointer shadow-md"
+                    >
+                      <span>Avanzar a Proyectos ➔</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  {/* 5 Core Pillars Responsive Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
+                    {SKILL_CATEGORIES.map((cat, idx) => (
+                      <div key={idx} className="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition-colors shadow-lg flex flex-col justify-between space-y-2">
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-bold text-white font-mono leading-tight">{cat.title}</span>
+                            <span className="text-[9px] font-mono font-bold text-cyan-400 bg-cyan-950/60 px-1.5 py-0.5 rounded border border-cyan-500/30 shrink-0">
+                              0{idx + 1}
+                            </span>
+                          </div>
+
+                          <p className="text-[10px] text-slate-400 leading-relaxed">
+                            {cat.description}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-wrap gap-1 pt-1">
+                          {cat.skills.map((s, sIdx) => (
+                            <span
+                              key={sIdx}
+                              className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ${
+                                s.highlight
+                                  ? 'bg-cyan-950/70 text-cyan-300 border-cyan-500/40 font-bold'
+                                  : 'bg-slate-950 text-slate-300 border-slate-800'
+                              }`}
+                            >
+                              {s.name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Performance Metrics Bar & Transition to Projects */}
+                <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 w-full sm:w-auto font-mono text-center sm:text-left">
+                    <div>
+                      <span className="text-sm font-black text-cyan-400 block">&lt; 18 ms</span>
+                      <span className="text-[9px] text-slate-400 uppercase">Inferencia Edge</span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-black text-emerald-400 block">111M+</span>
+                      <span className="text-[9px] text-slate-400 uppercase">Dataset ML</span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-black text-amber-400 block">0 Deps</span>
+                      <span className="text-[9px] text-slate-400 uppercase">Python SOC</span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-black text-rose-400 block">±0.15 mm</span>
+                      <span className="text-[9px] text-slate-400 uppercase">Tolerancia CAD</span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-black text-purple-400 block">540 h</span>
+                      <span className="text-[9px] text-slate-400 uppercase">Oficial Cisco</span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={handleNext}
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-cyan-950/50 cursor-pointer transition-all shrink-0"
+                  >
+                    <span>Explorar Proyecto Insignia: iQsense 2.0</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* STAGE 2: iQsense 2.0 (Edge AI + IoT Embebido + RPi 5) */}
             {currentStage.id === 'iqsense' && (
               <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 <div className="lg:col-span-7">
@@ -476,7 +615,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
               </div>
             )}
 
-            {/* STAGE 2: OmniStream (Desktop Streaming Hub) */}
+            {/* STAGE 3: OmniStream (Desktop Streaming Hub) */}
             {currentStage.id === 'omnistream' && (
               <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 <div className="lg:col-span-7">
@@ -534,7 +673,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
               </div>
             )}
 
-            {/* STAGE 3: KiCad PCB Laboratory */}
+            {/* STAGE 4: KiCad PCB Laboratory */}
             {currentStage.id === 'pcb' && (
               <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 <div className="lg:col-span-7">
@@ -592,7 +731,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
               </div>
             )}
 
-            {/* STAGE 4: HFS-Sentry (Defensive Cybersecurity Suite) */}
+            {/* STAGE 5: HFS-Sentry (Defensive Cybersecurity Suite) */}
             {currentStage.id === 'sentry' && (
               <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 <div className="lg:col-span-7">
@@ -653,7 +792,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
               </div>
             )}
 
-            {/* STAGE 5: CryptoQuant (Machine Learning & Financial Engineering) */}
+            {/* STAGE 6: CryptoQuant (Machine Learning & Financial Engineering) */}
             {currentStage.id === 'crypto' && (
               <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 <div className="lg:col-span-7">
@@ -704,92 +843,106 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                       onClick={handleNext}
                       className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs font-bold cursor-pointer"
                     >
-                      Siguiente ➔ Skills & Contacto
+                      Siguiente ➔ Contacto & CV
                     </button>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* STAGE 6: Skills Matrix & Direct Dispatch Contact */}
-            {currentStage.id === 'skills' && (
+            {/* STAGE 7: Dedicated Contact & Official 1-Page CV Download */}
+            {currentStage.id === 'contact' && (
               <div className="h-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch text-left">
-                {/* Skills Breakdown (6 cols) */}
-                <div className="lg:col-span-6 space-y-3">
-                  <h3 className="text-sm font-mono uppercase tracking-wider text-cyan-400 font-bold flex items-center gap-2">
-                    <Layers className="w-4 h-4" />
-                    <span>Dominios de Ingeniería & Stack Evaluado</span>
-                  </h3>
+                {/* Contact Data & CV Downloads (6 cols) */}
+                <div className="lg:col-span-6 space-y-4 flex flex-col justify-between">
+                  <div className="space-y-3">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-cyan-500/30 text-xs font-mono text-cyan-300 font-bold">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span>EXPEDIENTE FINAL • HAMZA EL FATHI SOFYANI</span>
+                    </div>
 
-                  <div className="grid grid-cols-2 gap-2.5">
-                    {SKILL_CATEGORIES.map((cat, idx) => (
-                      <div key={idx} className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                        <span className="text-xs font-bold text-white block">{cat.title}</span>
-                        <div className="flex flex-wrap gap-1">
-                          {cat.skills.slice(0, 4).map((s, sIdx) => (
-                            <span key={sIdx} className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-950 text-slate-300 border border-slate-800">
-                              {s.name}
-                            </span>
-                          ))}
-                        </div>
+                    <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                      ¿Hablamos de un reto técnico?
+                    </h2>
+
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Disponible para incorporación y desarrollo de proyectos ciberfísicos, arquitectura de software e infraestructuras.
+                    </p>
+
+                    <div className="space-y-2 pt-1">
+                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3 text-xs">
+                        <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
+                        <a href={`mailto:${PERSONAL_INFO.email}`} className="text-slate-200 hover:text-cyan-400 font-semibold transition-colors">
+                          {PERSONAL_INFO.email}
+                        </a>
                       </div>
-                    ))}
+                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3 text-xs">
+                        <Phone className="w-4 h-4 text-cyan-400 shrink-0" />
+                        <a href={`tel:${PERSONAL_INFO.phone}`} className="text-slate-200 hover:text-cyan-400 font-semibold transition-colors">
+                          {PERSONAL_INFO.phone}
+                        </a>
+                      </div>
+                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3 text-xs">
+                        <MapPin className="w-4 h-4 text-cyan-400 shrink-0" />
+                        <span className="text-slate-200">{PERSONAL_INFO.location}</span>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Dual CV Downloads */}
-                  <div className="p-3 rounded-xl bg-slate-900/90 border border-cyan-500/30 space-y-2">
-                    <span className="text-[10px] font-mono text-cyan-300 uppercase tracking-wider block font-bold">
-                      CURRÍCULUM OFICIAL OPTIMIZADO (1 PÁGINA CON FOTO)
+                  <div className="p-3.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 space-y-2.5">
+                    <span className="text-xs font-mono text-cyan-300 uppercase tracking-wider block font-bold text-center">
+                      CURRÍCULUM VITAE OFICIAL (1 PÁGINA CON FOTO)
                     </span>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-2.5">
                       <a
                         href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
                         download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
-                        className="py-2 px-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md text-center"
+                        className="py-2.5 px-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md text-center"
                       >
-                        <Download className="w-3.5 h-3.5" />
+                        <Download className="w-4 h-4 shrink-0" />
                         <span>CV en PDF</span>
                       </a>
                       <a
                         href="./Curriculum_Hamza_El_Fathi_Sofyani.docx"
                         download="Curriculum_Hamza_El_Fathi_Sofyani.docx"
-                        className="py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center"
+                        className="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center"
                       >
-                        <FileText className="w-3.5 h-3.5 text-cyan-400" />
-                        <span>CV en Word (.docx)</span>
+                        <FileText className="w-4 h-4 text-cyan-400 shrink-0" />
+                        <span>CV en Word</span>
                       </a>
                     </div>
                   </div>
                 </div>
 
                 {/* Direct Contact Form (6 cols) */}
-                <div className="lg:col-span-6 p-4 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between space-y-3">
+                <div className="lg:col-span-6 p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between space-y-3">
                   <div>
                     <h3 className="text-sm font-mono uppercase tracking-wider text-emerald-400 font-bold flex items-center gap-2">
-                      <Mail className="w-4 h-4" />
-                      <span>Canal de Comunicación Directo</span>
+                      <Send className="w-4 h-4" />
+                      <span>Despachar Mensaje Directo</span>
                     </h3>
-                    <p className="text-[11px] text-slate-400 mt-1">
-                      {PERSONAL_INFO.email} • {PERSONAL_INFO.phone} • {PERSONAL_INFO.location}
+                    <p className="text-xs text-slate-400 mt-1">
+                      Envía un mensaje instantáneo para concertar entrevista o revisar disponibilidad técnica.
                     </p>
                   </div>
 
-                  <form onSubmit={handleContactSubmit} className="space-y-2.5 text-xs">
+                  <form onSubmit={handleContactSubmit} className="space-y-3 text-xs">
                     {contactSent && (
-                      <div className="p-2 rounded-lg bg-emerald-950 border border-emerald-500 text-emerald-300 text-xs flex items-center gap-2">
+                      <div className="p-2.5 rounded-xl bg-emerald-950 border border-emerald-500 text-emerald-300 text-xs flex items-center gap-2">
                         <Check className="w-4 h-4 shrink-0" />
                         <span>Mensaje despachado con éxito. Me pondré en contacto de inmediato.</span>
                       </div>
                     )}
 
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-2.5">
                       <input
                         type="text"
                         required
                         value={contactData.name}
                         onChange={(e) => setContactData({ ...contactData, name: e.target.value })}
                         placeholder="Nombre / Empresa"
-                        className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 shadow-sm"
                       />
                       <input
                         type="email"
@@ -797,30 +950,31 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                         value={contactData.email}
                         onChange={(e) => setContactData({ ...contactData, email: e.target.value })}
                         placeholder="Correo electrónico"
-                        className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 shadow-sm"
                       />
                     </div>
 
                     <textarea
                       required
-                      rows={2}
+                      rows={3}
                       value={contactData.message}
                       onChange={(e) => setContactData({ ...contactData, message: e.target.value })}
-                      placeholder="Detalles sobre el proyecto o propuesta técnica..."
-                      className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 resize-none"
+                      placeholder="Detalles sobre la propuesta, proyecto o vacante técnica..."
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 resize-none shadow-sm"
                     />
 
                     <button
                       type="submit"
-                      className="w-full py-2.5 px-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
+                      className="w-full py-3 px-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-cyan-950/50"
                     >
                       <Send className="w-3.5 h-3.5" />
-                      <span>Despachar Mensaje Directo</span>
+                      <span>Despachar Mensaje</span>
                     </button>
                   </form>
                 </div>
               </div>
             )}
+            </div>
           </div>
 
           {/* Stage Footer Navigation Bar */}
