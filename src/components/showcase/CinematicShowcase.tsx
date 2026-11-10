@@ -545,9 +545,9 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
               {['iqsense', 'omnistream', 'pcb', 'sentry', 'crypto'].includes(currentStage.id) && (() => {
                 const projectMapping: Record<string, string> = {
                   'iqsense': 'iqsense-iot',
-                  'omnistream': 'omnistream-app',
-                  'pcb': 'pcb-design',
-                  'sentry': 'hfs-sentry-soc',
+                  'omnistream': 'omnistream-hub',
+                  'pcb': 'hardware-pcb-cad',
+                  'sentry': 'hfs-sentry',
                   'crypto': 'botcripto-trading',
                 };
                 const pId = projectMapping[currentStage.id];
