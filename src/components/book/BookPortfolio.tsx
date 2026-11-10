@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
   ChevronLeft, ChevronRight, BookOpen, Volume2, VolumeX, 
-  FileText, ArrowRight, ShieldCheck, Award, GraduationCap, 
+  FileText, ArrowRight, ArrowLeft, ShieldCheck, Award, GraduationCap, 
   Download, Send, Check, Mail, Phone, MapPin, 
   ExternalLink, RefreshCw, Terminal
 } from 'lucide-react';
@@ -100,7 +100,11 @@ const CHAPTERS = [
   { spread: 5, title: 'Contacto & CV Oficial', pageLabel: 'PÁGS. 09 - 10' },
 ];
 
-export const BookPortfolio: React.FC = () => {
+interface BookPortfolioProps {
+  onBackToDeck?: () => void;
+}
+
+export const BookPortfolio: React.FC<BookPortfolioProps> = ({ onBackToDeck }) => {
   const [currentSpread, setCurrentSpread] = useState(0);
   const [mobileSide, setMobileSide] = useState<'left' | 'right'>('left');
   const [isFlipping, setIsFlipping] = useState(false);
@@ -1054,6 +1058,18 @@ export const BookPortfolio: React.FC = () => {
       <header className="h-14 px-4 sm:px-8 border-b border-amber-950/40 bg-[#090705]/85 backdrop-blur-md flex items-center justify-between z-30 shrink-0 text-slate-300">
         {/* Left Monograph Identity */}
         <div className="flex items-center gap-3">
+          {onBackToDeck && (
+            <button
+              onClick={onBackToDeck}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 hover:text-white border border-amber-400/40 text-xs font-bold transition-all cursor-pointer shadow-sm active:scale-95"
+              title="Volver a la vista del panel principal"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-amber-400" />
+              <span className="hidden sm:inline">Panel Principal</span>
+              <span className="sm:hidden">Salir</span>
+            </button>
+          )}
+
           <button 
             onClick={() => goToSpread(0, 'prev')} 
             className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
