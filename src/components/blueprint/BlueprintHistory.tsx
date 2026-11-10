@@ -10,7 +10,7 @@ import ciscoNetSecImg from '../../assets/certificates/cisco-module-network-secur
 
 export const BlueprintHistory: React.FC = () => {
   return (
-    <section id="historial" className="py-16 sm:py-24 border-b border-cyan-500/20 font-sans">
+    <section id="trayectoria" className="py-16 sm:py-24 border-b border-cyan-500/20 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Title Block */}
         <div className="mb-10 pb-6 border-b border-cyan-500/20">

@@ -31,7 +31,7 @@ export const FloatingDock: React.FC<FloatingDockProps> = ({ onOpenResume }) => {
         </a>
 
         <a
-          href="#bom"
+          href="#habilidades"
           aria-label="Habilidades & Stack"
           className="p-2 rounded-full hover:bg-slate-800 hover:text-cyan-400 active:scale-90 transition-all cursor-pointer"
           title="Habilidades"
@@ -40,8 +40,8 @@ export const FloatingDock: React.FC<FloatingDockProps> = ({ onOpenResume }) => {
         </a>
 
         <a
-          href="#historial"
-          aria-label="Historial"
+          href="#trayectoria"
+          aria-label="Trayectoria & Formación"
           className="p-2 rounded-full hover:bg-slate-800 hover:text-cyan-400 active:scale-90 transition-all cursor-pointer"
           title="Formación & Experiencia"
         >
