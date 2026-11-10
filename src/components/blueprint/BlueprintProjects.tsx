@@ -93,6 +93,43 @@ export const BlueprintProjects: React.FC = () => {
 
   const tags = ['TODOS', 'IoT & Hardware', 'Software & Full-Stack', 'Videojuegos', 'Ciberseguridad'];
 
+  const getTagCount = (tag: string) => {
+    if (tag === 'TODOS') return PROJECTS_DATA.length;
+    return PROJECTS_DATA.filter((p) => p.category === tag).length;
+  };
+
+  const getProjectHighlightBadge = (id: string) => {
+    switch (id) {
+      case 'iqsense-iot':
+        return {
+          label: '⭐ PROYECTO INSIGNIA',
+          style: 'bg-amber-500/10 text-amber-300 border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.2)]'
+        };
+      case 'omnistream-hub':
+        return {
+          label: '🚀 NUEVA ARQUITECTURA',
+          style: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/40 shadow-[0_0_12px_rgba(99,102,241,0.2)]'
+        };
+      case 'hfs-sentry':
+        return {
+          label: '🛡️ SUITE ZERO-DEPS',
+          style: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40 shadow-[0_0_12px_rgba(16,185,129,0.2)]'
+        };
+      case 'botcripto-trading':
+        return {
+          label: '📈 ML SERIES TEMPORALES',
+          style: 'bg-sky-500/15 text-sky-300 border-sky-500/40 shadow-[0_0_12px_rgba(14,165,233,0.2)]'
+        };
+      case 'pcb-kicad-lab':
+        return {
+          label: '⚡ HARDWARE INDUSTRIAL',
+          style: 'bg-rose-500/15 text-rose-300 border-rose-500/40 shadow-[0_0_12px_rgba(244,63,94,0.2)]'
+        };
+      default:
+        return null;
+    }
+  };
+
   const filtered = PROJECTS_DATA.filter((p) => {
     const matchesTag = filterTag === 'TODOS' || p.category === filterTag;
     const matchesSearch = search === '' ||
@@ -109,7 +146,7 @@ export const BlueprintProjects: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 pb-6 border-b border-cyan-500/20">
           <div>
             <div className="flex items-center gap-2 text-xs text-cyan-400 font-semibold uppercase tracking-wider mb-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400" />
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
               <span>Casos Prácticos & Desarrollos</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -128,33 +165,46 @@ export const BlueprintProjects: React.FC = () => {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar por tecnología o nombre..."
-                className="w-full pl-10 pr-3.5 py-2 text-xs bg-slate-900/60 border border-cyan-500/30 text-white placeholder-zinc-500 rounded-xl focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 transition-all"
+                placeholder="Buscar tecnología, framework..."
+                className="w-full pl-10 pr-3.5 py-2.5 text-xs bg-slate-900/80 border border-cyan-500/30 text-white placeholder-zinc-500 rounded-xl focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 transition-all"
               />
             </div>
           </div>
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex flex-wrap gap-2 mb-10">
-          {tags.map((t) => (
-            <button
-              key={t}
-              onClick={() => setFilterTag(t)}
-              className={`px-3.5 py-1.5 text-xs font-medium rounded-full border transition-all cursor-pointer ${
-                filterTag === t
-                  ? 'bg-cyan-400 text-slate-950 font-bold border-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.35)]'
-                  : 'bg-slate-900/50 text-zinc-300 border-slate-700/60 hover:border-cyan-400/60 hover:text-white'
-              }`}
-            >
-              {t}
-            </button>
-          ))}
+        {/* Filter Pills with Counts */}
+        <div className="flex flex-wrap gap-2.5 mb-10">
+          {tags.map((t) => {
+            const count = getTagCount(t);
+            const isSelected = filterTag === t;
+
+            return (
+              <button
+                key={t}
+                onClick={() => setFilterTag(t)}
+                className={`px-4 py-2 text-xs font-semibold rounded-full border transition-all cursor-pointer flex items-center gap-2 ${
+                  isSelected
+                    ? 'bg-cyan-400 text-slate-950 border-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.4)] scale-105'
+                    : 'bg-slate-900/60 text-zinc-300 border-slate-700/80 hover:border-cyan-400/60 hover:text-white'
+                }`}
+              >
+                <span>{t}</span>
+                <span
+                  className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
+                    isSelected ? 'bg-slate-950 text-cyan-300' : 'bg-slate-800 text-zinc-400'
+                  }`}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Modern Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filtered.map((project, idx) => {
+            const highlightBadge = getProjectHighlightBadge(project.id);
             const imgKeys = project.images && project.images.length > 0
               ? project.images
               : project.imageUrl
@@ -168,15 +218,25 @@ export const BlueprintProjects: React.FC = () => {
             return (
               <div
                 key={project.id}
-                className="modern-card rounded-2xl p-6 border border-cyan-500/20 flex flex-col justify-between hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
+                className="modern-card rounded-3xl p-6 sm:p-7 border border-cyan-500/25 flex flex-col justify-between hover:border-cyan-400/60 transition-all duration-300 group shadow-xl relative overflow-hidden"
               >
+                {/* Top Subtle Gradient Accent Line */}
+                <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-cyan-400 via-sky-300 to-emerald-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+
                 <div>
                   {/* Card Header Title Block */}
                   <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-cyan-500/15 text-xs">
-                    <span className="font-semibold text-cyan-400 font-mono tracking-wide flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                      PROYECTO #0{idx + 1}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-cyan-400 font-mono tracking-wide flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                        PROYECTO #0{idx + 1}
+                      </span>
+                      {highlightBadge && (
+                        <span className={`text-[10px] px-2 py-0.5 rounded-md font-mono font-bold border ${highlightBadge.style}`}>
+                          {highlightBadge.label}
+                        </span>
+                      )}
+                    </div>
                     <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 font-medium">
                       {project.category}
                     </span>
@@ -191,29 +251,8 @@ export const BlueprintProjects: React.FC = () => {
                         aspectRatio="aspect-[16/10]"
                       />
                     </div>
-                  ) : project.id === 'botcripto-trading' ? (
-                    <div className="h-52 w-full rounded-xl bg-black/70 border border-cyan-500/30 mb-5 p-4 flex flex-col justify-between font-mono text-xs relative">
-                      <div className="flex justify-between text-cyan-400 text-[11px]">
-                        <span>CANVAS: STOCHASTIC BACKTEST ENGINE</span>
-                        <span className="text-emerald-400 font-bold">SHARPE: 2.41</span>
-                      </div>
-                      <div className="flex items-end justify-between gap-1.5 h-20 py-2 border-b border-cyan-500/20">
-                        <div className="w-3 bg-cyan-500/40 h-8 self-end rounded-t-sm" />
-                        <div className="w-3 bg-cyan-400 h-14 self-end rounded-t-sm" />
-                        <div className="w-3 bg-emerald-400 h-18 self-end rounded-t-sm" />
-                        <div className="w-3 bg-red-400/80 h-9 self-end rounded-t-sm" />
-                        <div className="w-3 bg-cyan-400 h-16 self-end rounded-t-sm" />
-                        <div className="w-3 bg-emerald-400 h-20 self-end rounded-t-sm" />
-                        <div className="w-3 bg-emerald-500 h-15 self-end rounded-t-sm" />
-                        <div className="w-3 bg-cyan-300 h-12 self-end rounded-t-sm" />
-                      </div>
-                      <div className="flex justify-between text-[10px] text-zinc-400">
-                        <span>MODEL: WALK-FORWARD REAL</span>
-                        <span className="text-emerald-400 font-semibold">+34.8% PROFIT SIMULADO</span>
-                      </div>
-                    </div>
                   ) : (
-                    <div className="h-52 w-full rounded-xl bg-slate-950 border border-red-500/30 mb-5 p-4 flex flex-col justify-between font-mono text-xs relative">
+                    <div className="h-52 w-full rounded-2xl bg-slate-950 border border-red-500/30 mb-5 p-4 flex flex-col justify-between font-mono text-xs relative">
                       <div className="flex justify-between text-red-400 text-[11px]">
                         <span>ENTORNO AUDITORÍA // KALI LINUX</span>
                         <span className="text-emerald-400 font-bold">STATUS: AUDIT_OK</span>
@@ -232,7 +271,7 @@ export const BlueprintProjects: React.FC = () => {
                   )}
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-300 transition-colors">
                     {project.title}
                   </h3>
                   <p className="text-xs text-cyan-400 font-mono mt-1 font-medium">
@@ -261,7 +300,7 @@ export const BlueprintProjects: React.FC = () => {
                     {project.tags.map((tag, tIdx) => (
                       <span
                         key={tIdx}
-                        className="px-2.5 py-1 text-[10px] font-mono rounded-md bg-slate-900/80 text-cyan-300 border border-cyan-500/25"
+                        className="px-2.5 py-1 text-[11px] font-mono rounded-lg bg-slate-900/90 text-cyan-300 border border-cyan-500/25 group-hover:border-cyan-400/40 transition-colors"
                       >
                         {tag}
                       </span>
@@ -273,10 +312,10 @@ export const BlueprintProjects: React.FC = () => {
                 <div className="mt-6 pt-4 border-t border-cyan-500/15 flex items-center justify-between">
                   <button
                     onClick={() => setActiveModalProject(project)}
-                    className="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 hover:text-white uppercase tracking-wider transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 hover:text-white uppercase tracking-wider transition-colors cursor-pointer group-hover:translate-x-1 duration-200"
                   >
-                    <span>Ver detalles del proyecto</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <span>Explorar en detalle</span>
+                    <ArrowRight className="w-4 h-4" />
                   </button>
 
                   {project.githubUrl && (
@@ -285,7 +324,7 @@ export const BlueprintProjects: React.FC = () => {
                       target="_blank"
                       rel="noreferrer"
                       aria-label="GitHub"
-                      className="p-2 rounded-lg border border-cyan-500/30 hover:border-cyan-300 text-cyan-400 hover:text-white hover:bg-cyan-950/40 transition-colors"
+                      className="p-2 rounded-xl border border-cyan-500/30 hover:border-cyan-300 text-cyan-400 hover:text-white hover:bg-cyan-950/40 transition-colors"
                     >
                       <GithubIcon className="w-4 h-4" />
                     </a>

@@ -7,33 +7,65 @@
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    background-color: #080d1a;
+    background-color: #060a13;
     color: #e2e8f0;
+    overflow-x: hidden;
   }
 }
 
-/* Subtle modern dark ambient background */
+/* Atmospheric futuristic mesh background */
 .modern-bg,
 .blueprint-grid {
-  background-color: #080d1a;
+  background-color: #060a13;
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 100% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 0% 50%, rgba(99, 102, 241, 0.04) 0%, transparent 40%);
+    radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 85% 25%, rgba(99, 102, 241, 0.10) 0%, transparent 45%),
+    radial-gradient(circle at 50% 60%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 85%, rgba(14, 165, 233, 0.10) 0%, transparent 45%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+  background-attachment: fixed;
 }
 
-/* Clean glassmorphic card */
+/* Glassmorphic card with subtle gradient border & hover glow */
 .modern-card,
 .blueprint-card {
-  background: rgba(13, 22, 41, 0.65);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(148, 163, 184, 0.12);
-  border-radius: 1rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(11, 19, 36, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.14);
+  border-radius: 1.25rem;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
 }
 
 .modern-card:hover,
 .blueprint-card:hover {
-  border-color: rgba(56, 189, 248, 0.35);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 15px -3px rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px -4px rgba(34, 211, 238, 0.18);
+  transform: translateY(-2px);
+}
+
+/* Highlight badge */
+.badge-glow {
+  box-shadow: 0 0 15px -2px rgba(34, 211, 238, 0.35);
+}
+
+/* Pulsing radar dot animation */
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 0.3; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+.radar-pulse {
+  animation: pulse-ring 2.5s infinite ease-in-out;
+}
+
+/* Shimmer gradient text */
+.text-gradient-shimmer {
+  background: linear-gradient(135deg, #38bdf8 0%, #a7f3d0 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

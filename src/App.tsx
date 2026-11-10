@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BlueprintHeader } from './components/blueprint/BlueprintHeader';
 import { BlueprintHero } from './components/blueprint/BlueprintHero';
+import { TechExplorer } from './components/TechExplorer';
 import { BlueprintProjects } from './components/blueprint/BlueprintProjects';
 import { BlueprintBOM } from './components/blueprint/BlueprintBOM';
 import { BlueprintHistory } from './components/blueprint/BlueprintHistory';
@@ -20,6 +21,9 @@ export function App() {
       <main className="flex-grow">
         {/* Executive Hero */}
         <BlueprintHero onOpenCv={() => setIsResumeOpen(true)} />
+
+        {/* Interactive 4-Pillars Tech Explorer */}
+        <TechExplorer />
 
         {/* Featured Projects with Live 5s Carousel */}
         <BlueprintProjects />

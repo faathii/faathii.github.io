@@ -51,7 +51,7 @@ export const BlueprintCarousel: React.FC<BlueprintCarouselProps> = ({
 
   return (
     <div
-      className={`relative rounded border border-cyan-500/30 overflow-hidden bg-[#030914] group/carousel ${className}`}
+      className={`relative rounded-2xl border border-cyan-500/25 overflow-hidden bg-slate-950 group/carousel shadow-md ${className}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -62,23 +62,17 @@ export const BlueprintCarousel: React.FC<BlueprintCarouselProps> = ({
             key={idx}
             src={imgSrc}
             alt={`${title} - Foto ${idx + 1}`}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
-              idx === currentIndex ? 'opacity-100 z-0 scale-100' : 'opacity-0 -z-10 pointer-events-none'
+            className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
+              idx === currentIndex ? 'opacity-100 z-0 scale-100' : 'opacity-0 -z-10 pointer-events-none scale-105'
             }`}
           />
         ))}
 
-        {/* Technical Reticle Corners */}
-        <div className="absolute top-1 left-1 w-2.5 h-2.5 border-t border-l border-cyan-400 pointer-events-none z-10" />
-        <div className="absolute top-1 right-1 w-2.5 h-2.5 border-t border-r border-cyan-400 pointer-events-none z-10" />
-        <div className="absolute bottom-1 left-1 w-2.5 h-2.5 border-b border-l border-cyan-400 pointer-events-none z-10" />
-        <div className="absolute bottom-1 right-1 w-2.5 h-2.5 border-b border-r border-cyan-400 pointer-events-none z-10" />
-
-        {/* Blueprint Top Badge: Calibration / Auto Indicator */}
+        {/* Top Status Badge */}
         {total > 1 && (
-          <div className="absolute top-2 right-2 z-10 px-2 py-0.5 rounded bg-[#050d1a]/85 backdrop-blur-md border border-cyan-500/50 text-[10px] font-mono text-cyan-300 flex items-center gap-1.5 shadow-[0_0_10px_rgba(0,0,0,0.5)]">
-            <span className={`w-1.5 h-1.5 rounded-full ${isPaused ? 'bg-amber-400' : 'bg-cyan-400 animate-ping'}`} />
-            <span>{isPaused ? 'PAUSADO' : 'AUTO: 5s'}</span>
+          <div className="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-cyan-500/40 text-[10px] font-mono text-cyan-300 flex items-center gap-1.5 shadow-lg">
+            <span className={`w-1.5 h-1.5 rounded-full ${isPaused ? 'bg-amber-400' : 'bg-cyan-400 animate-pulse'}`} />
+            <span>{isPaused ? 'Pausa' : 'Auto 5s'}</span>
           </div>
         )}
 
@@ -87,9 +81,9 @@ export const BlueprintCarousel: React.FC<BlueprintCarouselProps> = ({
           <button
             onClick={handlePrev}
             aria-label="Foto anterior"
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded bg-[#050d1a]/90 hover:bg-cyan-500 border border-cyan-500/60 hover:border-cyan-300 text-cyan-300 hover:text-black flex items-center justify-center transition-all shadow-[0_0_12px_rgba(0,0,0,0.8)] cursor-pointer active:scale-90"
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-slate-950/80 hover:bg-cyan-400 border border-slate-700 hover:border-cyan-400 text-cyan-300 hover:text-slate-950 flex items-center justify-center transition-all shadow-lg cursor-pointer active:scale-90 opacity-80 group-hover/carousel:opacity-100"
           >
-            <ChevronLeft className="w-4 h-4 stroke-[2.5]" />
+            <ChevronLeft className="w-4 h-4" />
           </button>
         )}
 
@@ -98,31 +92,31 @@ export const BlueprintCarousel: React.FC<BlueprintCarouselProps> = ({
           <button
             onClick={handleNext}
             aria-label="Siguiente foto"
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded bg-[#050d1a]/90 hover:bg-cyan-500 border border-cyan-500/60 hover:border-cyan-300 text-cyan-300 hover:text-black flex items-center justify-center transition-all shadow-[0_0_12px_rgba(0,0,0,0.8)] cursor-pointer active:scale-90"
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-slate-950/80 hover:bg-cyan-400 border border-slate-700 hover:border-cyan-400 text-cyan-300 hover:text-slate-950 flex items-center justify-center transition-all shadow-lg cursor-pointer active:scale-90 opacity-80 group-hover/carousel:opacity-100"
           >
-            <ChevronRight className="w-4 h-4 stroke-[2.5]" />
+            <ChevronRight className="w-4 h-4" />
           </button>
         )}
 
-        {/* Bottom Technical Indicator Bar */}
+        {/* Bottom Indicator Bar */}
         {total > 1 && (
-          <div className="absolute bottom-2 inset-x-0 z-10 flex items-center justify-between px-3 pointer-events-none">
+          <div className="absolute bottom-3 inset-x-0 z-10 flex items-center justify-between px-3 pointer-events-none">
             {/* Counter */}
-            <div className="px-2 py-0.5 rounded bg-[#050d1a]/85 backdrop-blur-md border border-cyan-500/40 text-[10px] font-mono text-cyan-300 tracking-wider">
-              [ 0{currentIndex + 1} / 0{total} ]
+            <div className="px-2.5 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-slate-700/80 text-[10px] font-mono text-cyan-300 tracking-wider">
+              0{currentIndex + 1} / 0{total}
             </div>
 
             {/* Clickable Dots */}
-            <div className="flex items-center gap-1.5 pointer-events-auto bg-[#050d1a]/85 backdrop-blur-md px-2 py-1 rounded border border-cyan-500/40">
+            <div className="flex items-center gap-1.5 pointer-events-auto bg-slate-950/85 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-slate-700/80">
               {images.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={(e) => handleDotClick(idx, e)}
                   aria-label={`Ir a foto ${idx + 1}`}
-                  className={`transition-all rounded-sm cursor-pointer ${
+                  className={`transition-all rounded-full cursor-pointer ${
                     idx === currentIndex
-                      ? 'w-4 h-1.5 bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)]'
-                      : 'w-1.5 h-1.5 bg-cyan-800/80 hover:bg-cyan-400'
+                      ? 'w-4 h-1.5 bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]'
+                      : 'w-1.5 h-1.5 bg-slate-600 hover:bg-cyan-400'
                   }`}
                 />
               ))}

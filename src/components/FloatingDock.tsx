@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Cpu, Sparkles, FileText, Briefcase } from 'lucide-react';
+import { Home, Cpu, Sparkles, FileText, Briefcase, Mail } from 'lucide-react';
 
 interface FloatingDockProps {
   onOpenResume: () => void;
@@ -10,12 +10,12 @@ export const FloatingDock: React.FC<FloatingDockProps> = ({ onOpenResume }) => {
     <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 sm:bottom-6">
       <nav 
         aria-label="Navegación rápida"
-        className="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-zinc-900/90 dark:bg-zinc-900/90 backdrop-blur-md border border-zinc-700/60 shadow-2xl shadow-black/40 text-zinc-300"
+        className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-950/85 backdrop-blur-xl border border-cyan-500/30 shadow-[0_10px_35px_-5px_rgba(0,0,0,0.8),0_0_15px_-3px_rgba(34,211,238,0.25)] text-zinc-300"
       >
         <a
           href="#hero"
           aria-label="Inicio"
-          className="p-2 rounded-xl hover:bg-zinc-800 hover:text-emerald-400 active:scale-95 transition-all cursor-pointer"
+          className="p-2 rounded-full hover:bg-slate-800 hover:text-cyan-400 active:scale-90 transition-all cursor-pointer"
           title="Inicio"
         >
           <Home className="w-4 h-4" />
@@ -24,38 +24,49 @@ export const FloatingDock: React.FC<FloatingDockProps> = ({ onOpenResume }) => {
         <a
           href="#proyectos"
           aria-label="Proyectos"
-          className="p-2 rounded-xl hover:bg-zinc-800 hover:text-emerald-400 active:scale-95 transition-all cursor-pointer"
-          title="Proyectos"
+          className="p-2 rounded-full hover:bg-slate-800 hover:text-cyan-400 active:scale-90 transition-all cursor-pointer"
+          title="Proyectos Destacados"
         >
           <Cpu className="w-4 h-4" />
         </a>
 
         <a
           href="#bom"
-          aria-label="Lista de Materiales y Skills (B.O.M.)"
-          className="p-2 rounded-xl hover:bg-zinc-800 hover:text-emerald-400 active:scale-95 transition-all cursor-pointer"
-          title="B.O.M. / Skills"
+          aria-label="Habilidades & Stack"
+          className="p-2 rounded-full hover:bg-slate-800 hover:text-cyan-400 active:scale-90 transition-all cursor-pointer"
+          title="Habilidades"
         >
           <Sparkles className="w-4 h-4" />
         </a>
 
         <a
           href="#historial"
-          aria-label="Historial de Calificaciones"
-          className="p-2 rounded-xl hover:bg-zinc-800 hover:text-emerald-400 active:scale-95 transition-all cursor-pointer"
-          title="Historial Técnico"
+          aria-label="Historial"
+          className="p-2 rounded-full hover:bg-slate-800 hover:text-cyan-400 active:scale-90 transition-all cursor-pointer"
+          title="Formación & Experiencia"
         >
           <Briefcase className="w-4 h-4" />
         </a>
 
+        <a
+          href="#contacto"
+          aria-label="Contacto"
+          className="p-2 rounded-full hover:bg-slate-800 hover:text-cyan-400 active:scale-90 transition-all cursor-pointer"
+          title="Contacto"
+        >
+          <Mail className="w-4 h-4" />
+        </a>
+
+        <div className="w-px h-5 bg-slate-700/80 mx-0.5" />
+
         <button
           onClick={onOpenResume}
           aria-label="Ver CV"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 text-xs font-semibold active:scale-95 transition-all cursor-pointer border border-emerald-500/30"
-          title="Ver CV"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-cyan-400 text-slate-950 hover:bg-cyan-300 text-xs font-bold active:scale-95 transition-all cursor-pointer shadow-[0_0_10px_rgba(34,211,238,0.4)]"
+          title="Descargar Currículum"
         >
           <FileText className="w-3.5 h-3.5" />
-          <span className="text-[11px] font-mono">CV</span>
+          <span>CV</span>
         </button>
       </nav>
     </div>
