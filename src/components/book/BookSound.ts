@@ -37,3 +37,4 @@ export const playPageTurnSound = () => {
     // Ignore if audio is restricted by autoplay policies
   }
 };
+
