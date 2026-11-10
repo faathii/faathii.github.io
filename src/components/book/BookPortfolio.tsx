@@ -108,6 +108,7 @@ export const BookPortfolio: React.FC = () => {
   const [targetSpread, setTargetSpread] = useState<number>(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   // Contact form state
   const [formSent, setFormSent] = useState(false);
@@ -127,13 +128,19 @@ export const BookPortfolio: React.FC = () => {
     setIsFlipping(true);
     setMobileSide('left');
 
-    // 880ms realistic page turn timing
+    // Fallback timer (720ms) matching 680ms CSS animation
     setTimeout(() => {
       setCurrentSpread(newSpread);
       setIsFlipping(false);
       setFlipDirection(null);
-    }, 860);
+    }, 720);
   }, [totalSpreads, isFlipping, soundEnabled, currentSpread]);
+
+  const handleAnimationEnd = useCallback(() => {
+    setCurrentSpread(targetSpread);
+    setIsFlipping(false);
+    setFlipDirection(null);
+  }, [targetSpread]);
 
   const handleNext = useCallback(() => {
     if (currentSpread < totalSpreads - 1 && !isFlipping) {
@@ -146,6 +153,21 @@ export const BookPortfolio: React.FC = () => {
       goToSpread(currentSpread - 1, 'prev');
     }
   }, [currentSpread, isFlipping, goToSpread]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (diff > 50) {
+      handleNext();
+    } else if (diff < -50) {
+      handlePrev();
+    }
+    setTouchStartX(null);
+  };
 
   // Keyboard navigation
   useEffect(() => {
@@ -1138,20 +1160,32 @@ export const BookPortfolio: React.FC = () => {
         </div>
 
         {/* Physical Real Book Container */}
-        <div className="w-full h-full max-w-[1240px] max-h-[790px] relative real-book-container">
+        <div 
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          className="w-full h-full max-w-[1240px] max-h-[790px] relative real-book-container"
+        >
           {/* Hardcover Square Outer Trim (Cejilla sobresaliente de tapa dura de piel noble) */}
           <div className="absolute -inset-2.5 rounded-3xl hardcover-casing book-desk-shadow pointer-events-none" />
 
-          {/* Dynamic Physical Edge Stacks (Grosor variable según avance del libro) */}
+          {/* Dynamic Physical Edge Stacks (Grosor variable según avance del libro) - Clickeable para pasar página */}
           <div 
-            className="absolute top-4 bottom-4 left-[-7px] rounded-l-md pointer-events-none shadow-md transition-all duration-500"
+            onClick={handlePrev}
+            title={currentSpread > 0 ? "Página anterior" : ""}
+            className={`absolute top-4 bottom-4 left-[-7px] rounded-l-md shadow-md transition-all duration-500 z-30 ${
+              currentSpread > 0 ? 'cursor-pointer hover:brightness-110 active:scale-95' : 'pointer-events-none'
+            }`}
             style={{
               width: `${leftEdgeThickness}px`,
               background: 'repeating-linear-gradient(to right, #cfc9ba 0px, #faf7f2 1px, #b8b19e 2px, #ede9df 3px)'
             }}
           />
           <div 
-            className="absolute top-4 bottom-4 right-[-7px] rounded-r-md pointer-events-none shadow-md transition-all duration-500"
+            onClick={handleNext}
+            title={currentSpread < totalSpreads - 1 ? "Página siguiente" : ""}
+            className={`absolute top-4 bottom-4 right-[-7px] rounded-r-md shadow-md transition-all duration-500 z-30 ${
+              currentSpread < totalSpreads - 1 ? 'cursor-pointer hover:brightness-110 active:scale-95' : 'pointer-events-none'
+            }`}
             style={{
               width: `${rightEdgeThickness}px`,
               background: 'repeating-linear-gradient(to right, #cfc9ba 0px, #faf7f2 1px, #b8b19e 2px, #ede9df 3px)'
@@ -1194,7 +1228,10 @@ export const BookPortfolio: React.FC = () => {
             {/* 3D AUTHENTIC PHYSICAL PAGE TURN LEAF (CURVATURA REAL)     */}
             {/* ========================================================= */}
             {isFlipping && flipDirection === 'next' && (
-              <div className="turning-paper-leaf leaf-turn-forward">
+              <div 
+                className="turning-paper-leaf leaf-turn-forward"
+                onAnimationEnd={handleAnimationEnd}
+              >
                 {/* Front Face: The page being lifted off the right stack */}
                 <div className="leaf-face-front">
                   {currentPages.right}
@@ -1209,7 +1246,10 @@ export const BookPortfolio: React.FC = () => {
             )}
 
             {isFlipping && flipDirection === 'prev' && (
-              <div className="turning-paper-leaf leaf-turn-backward">
+              <div 
+                className="turning-paper-leaf leaf-turn-backward"
+                onAnimationEnd={handleAnimationEnd}
+              >
                 {/* Front Face: The page being lifted off the left stack */}
                 <div className="leaf-face-front">
                   {currentPages.left}
