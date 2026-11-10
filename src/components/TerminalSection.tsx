@@ -7,7 +7,11 @@ interface HistoryEntry {
   output: React.ReactNode;
 }
 
-export const TerminalSection: React.FC = () => {
+interface TerminalSectionProps {
+  onOpenBook?: () => void;
+}
+
+export const TerminalSection: React.FC<TerminalSectionProps> = ({ onOpenBook }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<HistoryEntry[]>([
     {
@@ -38,6 +42,7 @@ export const TerminalSection: React.FC = () => {
         out = (
           <div className="space-y-1 text-xs text-zinc-300">
             <p className="text-cyan-400 font-semibold mb-1">Comandos disponibles:</p>
+            <p><span className="text-amber-400 font-mono">book</span> — Abrir la Monografía Técnica en Libro Físico 3D (Extra)</p>
             <p><span className="text-emerald-400 font-mono">projects</span> — Ver lista de proyectos y especificaciones</p>
             <p><span className="text-emerald-400 font-mono">hfs-sentry</span> — Ejecutar auditoría y ver catálogo de HFS-Sentry</p>
             <p><span className="text-emerald-400 font-mono">cisco</span> — Ver acreditaciones oficiales y badges verificados de Cisco</p>
@@ -47,6 +52,19 @@ export const TerminalSection: React.FC = () => {
             <p><span className="text-emerald-400 font-mono">hardware</span> — Resumen de diseño de PCBs KiCad y CAD 3D</p>
             <p><span className="text-emerald-400 font-mono">contact</span> — Canales de comunicación directa</p>
             <p><span className="text-emerald-400 font-mono">clear</span> — Limpiar pantalla de la terminal</p>
+          </div>
+        );
+        break;
+
+      case 'book':
+      case 'libro':
+        if (onOpenBook) {
+          onOpenBook();
+        }
+        out = (
+          <div className="space-y-1 text-xs text-amber-300">
+            <p className="font-bold">📖 Abriendo Monografía Técnica en Libro Físico 3D...</p>
+            <p className="text-zinc-400 text-[11px]">Cargando física de papel, sonido binaural y páginas encuadernadas.</p>
           </div>
         );
         break;

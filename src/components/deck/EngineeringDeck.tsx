@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { 
-  BookOpen, ShieldCheck, Download, 
+  ShieldCheck, Download, 
   Cpu, Layers, ExternalLink, Mail, Phone, MapPin, 
-  Send, Check, Sparkles, ArrowRight, FileText, 
-  Shield
+  Send, Check, FileText, Shield
 } from 'lucide-react';
 import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES } from '../../data/portfolioData';
 import { BlueprintCarousel } from '../blueprint/BlueprintCarousel';
@@ -93,10 +92,10 @@ const projectImages: Record<string, string> = {
 type CategoryFilter = 'all' | 'IoT & Hardware' | 'Software & Full-Stack' | 'Ciberseguridad' | 'Videojuegos';
 
 interface EngineeringDeckProps {
-  onOpenBook: () => void;
+  onOpenBook?: () => void;
 }
 
-export const EngineeringDeck: React.FC<EngineeringDeckProps> = ({ onOpenBook }) => {
+export const EngineeringDeck: React.FC<EngineeringDeckProps> = ({ onOpenBook: _onOpenBook }) => {
   const [activeTab, setActiveTab] = useState<CategoryFilter>('all');
   const [selectedProjectId, setSelectedProjectId] = useState<string>('iqsense-iot');
   const [modalProject, setModalProject] = useState<Project | null>(null);
@@ -167,27 +166,14 @@ export const EngineeringDeck: React.FC<EngineeringDeckProps> = ({ onOpenBook }) 
 
         {/* Action Center Buttons */}
         <div className="flex items-center gap-2.5">
-          {/* SPECIAL EXTRA: 3D Book Mode Launcher */}
-          <button
-            onClick={onOpenBook}
-            className="group px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
-          >
-            <BookOpen className="w-4 h-4 text-slate-950 transition-transform group-hover:rotate-[-10deg]" />
-            <span className="hidden sm:inline">Abrir Monografía 3D</span>
-            <span className="sm:hidden">Libro 3D</span>
-            <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-slate-950/20 text-slate-950 font-bold">
-              EXTRA
-            </span>
-          </button>
-
           {/* CV Downloads */}
           <a
             href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
             download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
-            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 text-xs font-semibold transition-all"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all shadow-sm"
           >
-            <Download className="w-3.5 h-3.5 text-cyan-400" />
-            <span>CV PDF</span>
+            <Download className="w-3.5 h-3.5" />
+            <span>Descargar CV</span>
           </a>
         </div>
       </header>
@@ -196,7 +182,7 @@ export const EngineeringDeck: React.FC<EngineeringDeckProps> = ({ onOpenBook }) 
       <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
         
         {/* ========================================================================= */}
-        {/* HERO SECTION: BIOMETRIC PROFILE & FEATURED 3D BOOK PROMO CARD             */}
+        {/* HERO SECTION: BIOMETRIC PROFILE & OFFICIAL PORTRAIT CARD                  */}
         {/* ========================================================================= */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
@@ -285,64 +271,69 @@ export const EngineeringDeck: React.FC<EngineeringDeckProps> = ({ onOpenBook }) 
             </div>
           </div>
 
-          {/* Right Column: PREMIER EXTRA — 3D PHYSICAL BOOK SHOWCASE CARD (5 cols) */}
-          <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-amber-950/40 via-slate-900/80 to-slate-950 border border-amber-500/30 shadow-2xl relative overflow-hidden flex flex-col justify-between group">
-            {/* Ambient gold glow */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+          {/* Right Column: Hamza's High-Impact Official Portrait Card (5 cols) */}
+          <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-slate-800/80 shadow-2xl backdrop-blur-xl relative overflow-hidden flex flex-col justify-between items-center text-center">
+            {/* Ambient subtle glow */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
-            <div>
-              <div className="flex items-center justify-between pb-3 border-b border-amber-500/20 text-xs font-mono">
-                <span className="text-amber-300 font-bold flex items-center gap-2">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  <span>EXPERIENCIA ESPECIAL EXTRA</span>
-                </span>
-                <span className="px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 text-[10px] font-bold border border-amber-400/30">
-                  TOMO I COMPLETO
-                </span>
-              </div>
+            <div className="w-full flex items-center justify-between pb-3 border-b border-slate-800 text-xs font-mono">
+              <span className="text-cyan-400 font-bold flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>ESTADO: ACTIVO / DISPONIBLE</span>
+              </span>
+              <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[10px] font-bold border border-slate-700">
+                ESPAÑA
+              </span>
+            </div>
 
-              <div className="my-5 text-center sm:text-left">
-                <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight editorial-serif leading-tight">
-                  Monografía Técnica en Libro Físico 3D
-                </h2>
-                <p className="text-xs text-slate-300 mt-2 leading-relaxed">
-                  Sumérgete en la experiencia de un libro real abierto sobre un escritorio de nogal. 12 páginas encuadernadas, curvatura de papel, física 3D de pasador de hoja a 60–120 FPS y sonido táctil.
-                </p>
-              </div>
-
-              {/* Realistic 3D Mini Book Mockup */}
-              <div 
-                onClick={onOpenBook}
-                className="my-3 p-4 rounded-2xl bg-black/40 border border-amber-400/20 flex items-center gap-4 cursor-pointer hover:border-amber-400/60 hover:bg-black/60 transition-all group/mockup shadow-lg"
-              >
-                <div className="w-16 h-20 rounded-md bg-gradient-to-r from-amber-900 to-amber-700 border border-amber-300/40 p-1.5 flex flex-col justify-between shrink-0 shadow-xl relative group-hover/mockup:scale-105 transition-transform">
-                  <div className="w-full h-1 bg-amber-400/40 rounded-full" />
-                  <span className="text-[7px] font-black text-amber-200 text-center uppercase tracking-widest font-mono">
-                    HFS 2026
-                  </span>
-                  <div className="w-2 h-4 bg-sky-500 rounded-b absolute top-0 left-2 shadow" />
+            <div className="my-auto py-4 flex flex-col items-center">
+              {/* Photo Frame */}
+              <div className="relative group">
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-cyan-500 to-emerald-500 opacity-25 blur-md group-hover:opacity-50 transition duration-500" />
+                <div className="w-48 h-60 sm:w-56 sm:h-72 rounded-2xl overflow-hidden border-2 border-slate-700 relative z-10 shadow-2xl bg-slate-950">
+                  <img 
+                    src={hamzaImg} 
+                    alt={PERSONAL_INFO.name} 
+                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" 
+                  />
+                  <div className="absolute inset-x-0 bottom-0 py-2 px-3 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 flex items-center justify-between">
+                    <span className="text-xs font-bold text-white font-mono">{PERSONAL_INFO.name}</span>
+                    <span className="text-[10px] text-cyan-400 font-mono">UNED</span>
+                  </div>
                 </div>
+              </div>
 
-                <div className="space-y-1">
-                  <p className="text-xs font-bold text-amber-200 group-hover/mockup:text-white transition-colors">
-                    Expediente Encuadernado con Efecto Real
-                  </p>
-                  <p className="text-[11px] text-slate-400">
-                    Frontispicio, esquemas KiCad, telemetría iQsense y carruseles integrados.
-                  </p>
+              <div className="mt-4 space-y-1">
+                <p className="text-xs font-mono text-slate-400">
+                  Ávila / Madrid • España
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-1.5 pt-1">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950/70 text-cyan-300 border border-cyan-500/30">
+                    Cisco CyberOps
+                  </span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/70 text-emerald-300 border border-emerald-500/30">
+                    Intro to Cyber
+                  </span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-amber-500/20 flex flex-col sm:flex-row items-center gap-3">
-              <button
-                onClick={onOpenBook}
-                className="w-full py-3 px-5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:scale-102 active:scale-98 cursor-pointer"
+            <div className="w-full pt-4 border-t border-slate-800 flex items-center justify-center gap-3">
+              <a
+                href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
+                download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
+                className="flex-1 py-2.5 px-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
               >
-                <BookOpen className="w-4 h-4" />
-                <span>Abrir Libro 3D Interactivo</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+                <Download className="w-3.5 h-3.5" />
+                <span>Descargar CV</span>
+              </a>
+              <a
+                href={`mailto:${PERSONAL_INFO.email}`}
+                className="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 text-xs font-semibold transition-all flex items-center justify-center gap-2"
+              >
+                <Mail className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Contactar</span>
+              </a>
             </div>
           </div>
         </div>
