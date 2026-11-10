@@ -34,6 +34,12 @@ import sentryCertsentry from '../assets/projects/sentry-certsentry.png';
 import sentrySubnetsweep from '../assets/projects/sentry-subnetsweep.png';
 import sentryIntegrityguard from '../assets/projects/sentry-integrityguard.png';
 
+import cryptoMlTraining from '../assets/projects/crypto-ml-training.png';
+import cryptoDashboardOverview from '../assets/projects/crypto-dashboard-overview.png';
+import cryptoTradingTerminal from '../assets/projects/crypto-trading-terminal.png';
+import cryptoRiskManagement from '../assets/projects/crypto-risk-management.png';
+import cryptoListMarket from '../assets/projects/crypto-list-market.png';
+
 const projectImages: Record<string, string> = {
   // iQsense
   'iqsense-cad-despiece': iqsenseCadImg,
@@ -69,6 +75,13 @@ const projectImages: Record<string, string> = {
   'sentry-certsentry': sentryCertsentry,
   'sentry-subnetsweep': sentrySubnetsweep,
   'sentry-integrityguard': sentryIntegrityguard,
+
+  // CryptoQuant ML Bot
+  'crypto-ml-training': cryptoMlTraining,
+  'crypto-dashboard-overview': cryptoDashboardOverview,
+  'crypto-trading-terminal': cryptoTradingTerminal,
+  'crypto-risk-management': cryptoRiskManagement,
+  'crypto-list-market': cryptoListMarket,
 };
 
 type IqsenseTab = 'cad' | 'dashboard' | 'monitor' | 'cableado' | 'cocina' | 'render';

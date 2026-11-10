@@ -473,3 +473,4 @@ def build_curriculum_docx(output_path):
 if __name__ == "__main__":
     out_docx = "Curriculum_Hamza_El_Fathi_Sofyani.docx"
     build_curriculum_docx(out_docx)
+

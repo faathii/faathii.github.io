@@ -94,6 +94,14 @@ export const PROJECTS_DATA: Project[] = [
     category: 'Software & Full-Stack',
     iconName: 'TrendingUp',
     badge: 'Machine Learning & Finanzas Cuantitativas',
+    imageUrl: 'crypto-ml-training',
+    images: [
+      'crypto-ml-training',
+      'crypto-dashboard-overview',
+      'crypto-trading-terminal',
+      'crypto-risk-management',
+      'crypto-list-market'
+    ],
     description: 'Motor algorítmico impulsado por modelos de IA entrenados sobre millones de series temporales financieras (OHLCV) con validación Walk-Forward y gestión estricta de drawdown.',
     longDescription: 'CryptoQuant es un motor cuantitativo de alto rendimiento que combina el entrenamiento de modelos de Machine Learning (detección de patrones de volatilidad, clasificación de regímenes de mercado y predicción de retornos estocásticos) con una infraestructura de ejecución determinista en Node.js y Python. Procesa millones de registros tick-by-tick y evalúa las decisiones de la IA en entornos simulados de microestructura de mercado.',
     challenge: 'Entrenar modelos predictivos sobre series temporales altamente no estacionarias evitando a toda costa el sobreajuste (overfitting) y el sesgo de anticipación (look-ahead bias), garantizando al mismo tiempo ejecución en tiempo real.',

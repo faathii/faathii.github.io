@@ -10,82 +10,74 @@ import ciscoNetSecImg from '../../assets/certificates/cisco-module-network-secur
 
 export const BlueprintBOM: React.FC = () => {
   return (
-    <section id="bom" className="py-16 sm:py-24 border-b border-cyan-500/30 font-mono">
+    <section id="bom" className="py-16 sm:py-24 border-b border-cyan-500/20 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Title Block */}
         <div className="mb-10 pb-6 border-b border-cyan-500/20 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs text-cyan-400 font-bold mb-2">
-              <span className="w-2 h-2 bg-emerald-400" />
-              <span>HOJA 03 // B.O.M. (BILL OF MATERIALS) & REPERTORIO TÉCNICO</span>
+            <div className="flex items-center gap-2 text-xs text-cyan-400 font-semibold uppercase tracking-wider mb-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span>Competencias & Especialidades</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-              LISTA TÉCNICA DE MATERIALES & STACK
+              Habilidades & Tecnologías
             </h2>
-            <p className="text-xs sm:text-sm text-cyan-200/70 mt-1 max-w-xl font-sans sm:font-mono">
-              Inventario clasificado de competencias técnicas, microelectrónica, frameworks de software y protocolos de red.
+            <p className="text-xs sm:text-sm text-zinc-400 mt-1.5 max-w-xl leading-relaxed">
+              Stack integral en arquitectura de software, sistemas ciberfísicos IoT, ciberseguridad defensiva y desarrollo full-stack.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-xs px-3 py-1.5 rounded bg-cyan-950 border border-cyan-500/40 text-cyan-300">
-              INSPECCIÓN: 100% VERIFICADO
+            <span className="text-xs px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-cyan-500/30 text-cyan-300 font-mono">
+              Stack Verificado en Producción
             </span>
           </div>
         </div>
 
-        {/* 4 B.O.M. Category Blocks */}
+        {/* 4 Category Blocks */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {SKILL_CATEGORIES.map((cat, idx) => (
             <div
               key={idx}
-              className="blueprint-card p-6 rounded-lg border border-cyan-500/40"
+              className="modern-card p-6 sm:p-7 rounded-2xl border border-cyan-500/20 shadow-lg hover:border-cyan-400/40 transition-all flex flex-col justify-between"
             >
-              {/* Category Header */}
-              <div className="flex items-center justify-between pb-3 mb-4 border-b border-cyan-500/20">
-                <div>
-                  <span className="text-[10px] text-cyan-500 font-bold tracking-widest uppercase block">
-                    SECCIÓN B.O.M. 0{idx + 1}
-                  </span>
-                  <h3 className="text-base font-bold text-white tracking-wide">
+              <div>
+                {/* Category Header */}
+                <div className="flex items-center justify-between pb-3.5 mb-3.5 border-b border-cyan-500/15">
+                  <h3 className="text-lg font-bold text-white tracking-wide">
                     {cat.title}
                   </h3>
+                  <span className="text-xs font-mono text-cyan-400 font-semibold">
+                    0{idx + 1}
+                  </span>
                 </div>
-                <span className="text-xs font-mono text-emerald-400">
-                  [ OK ]
-                </span>
-              </div>
 
-              <p className="text-xs text-cyan-200/70 mb-4 font-sans sm:font-mono">
-                {cat.description}
-              </p>
+                <p className="text-xs sm:text-sm text-zinc-400 mb-5 leading-relaxed">
+                  {cat.description}
+                </p>
 
-              {/* B.O.M. Table Style List */}
-              <div className="divide-y divide-cyan-500/20 border-t border-b border-cyan-500/20">
-                {cat.skills.map((skill, sIdx) => (
-                  <div
-                    key={sIdx}
-                    className="py-2 flex items-center justify-between text-xs font-mono hover:bg-cyan-950/30 px-1 transition-colors"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="text-cyan-500 font-mono text-[10px]">
-                        0{idx + 1}.{sIdx + 1}
-                      </span>
-                      <span className={`font-semibold ${skill.highlight ? 'text-white' : 'text-zinc-300'}`}>
+                {/* Skills Modern Pill Grid */}
+                <div className="space-y-2 mb-4">
+                  {cat.skills.map((skill, sIdx) => (
+                    <div
+                      key={sIdx}
+                      className="py-2 px-3 rounded-lg flex items-center justify-between text-xs bg-slate-900/50 hover:bg-slate-900/80 border border-slate-800/80 transition-colors"
+                    >
+                      <span className={`font-medium ${skill.highlight ? 'text-cyan-300 font-semibold' : 'text-zinc-200'}`}>
                         {skill.name}
                       </span>
-                    </div>
 
-                    <span className="text-[10px] px-2 py-0.5 rounded border border-cyan-500/30 bg-cyan-950/60 text-cyan-300">
-                      {skill.level}
-                    </span>
-                  </div>
-                ))}
+                      <span className="text-[10px] px-2 py-0.5 rounded-md font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-500/25">
+                        {skill.level}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Cisco Verified Badges Footer for Cybersecurity Section */}
               {cat.title.includes('Ciberseguridad') && (
-                <div className="mt-4 pt-4 border-t border-cyan-500/20 bg-cyan-950/40 p-3.5 rounded space-y-3">
+                <div className="mt-4 pt-4 border-t border-cyan-500/20 bg-slate-900/60 p-4 rounded-xl border border-cyan-500/20 space-y-3">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
                       <div className="flex -space-x-2 shrink-0">
@@ -101,23 +93,23 @@ export const BlueprintBOM: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <span className="text-[10px] text-cyan-400 font-bold font-mono block">
-                          ACREDITACIONES OFICIALES CISCO
+                        <span className="text-[10px] text-cyan-400 font-bold uppercase tracking-wider block">
+                          Acreditaciones Oficiales Cisco
                         </span>
-                        <span className="text-[11px] text-white font-mono block">
+                        <span className="text-xs text-white font-medium block">
                           CyberOps Associate + Intro to Cybersecurity
                         </span>
                       </div>
                     </div>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 font-mono font-bold shrink-0">
-                      VERIFICADO
+                    <span className="text-[10px] px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold shrink-0">
+                      Verificado
                     </span>
                   </div>
 
                   {/* 5 Modular Skill Badges Strip */}
-                  <div className="pt-2 border-t border-cyan-500/20 flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-[9px] text-cyan-400 font-mono font-bold uppercase">
-                      5 Módulos Superados:
+                  <div className="pt-2.5 border-t border-cyan-500/15 flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-[10px] text-zinc-400 font-medium">
+                      5 Módulos de especialización:
                     </span>
                     <div className="flex items-center gap-2">
                       <img src={ciscoFirewallImg} alt="Firewalls" className="w-6 h-6 object-contain" title="Defensa Perimetral & Firewalls" />

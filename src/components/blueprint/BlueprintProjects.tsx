@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PROJECTS_DATA } from '../../data/portfolioData';
 import type { Project } from '../../types';
 import { ProjectModal } from '../ProjectModal';
-import { Compass, ArrowRight, Search } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 import { GithubIcon } from '../Icons';
 import { BlueprintCarousel } from './BlueprintCarousel';
 
@@ -23,6 +23,12 @@ import omnistreamUiSettings from '../../assets/projects/omnistream-ui-settings.p
 import pcbEsp32Img from '../../assets/projects/pcb-esp32.png';
 import pcbAngle3Img from '../../assets/projects/pcb-angle-3.png';
 import pcbTop5Img from '../../assets/projects/pcb-top-5.png';
+
+import cryptoMlTrainingImg from '../../assets/projects/crypto-ml-training.png';
+import cryptoDashboardImg from '../../assets/projects/crypto-dashboard-overview.png';
+import cryptoTerminalImg from '../../assets/projects/crypto-trading-terminal.png';
+import cryptoRiskImg from '../../assets/projects/crypto-risk-management.png';
+import cryptoListImg from '../../assets/projects/crypto-list-market.png';
 
 import godotImg from '../../assets/projects/godot-runner.png';
 
@@ -52,6 +58,13 @@ const projectImages: Record<string, string> = {
   'omnistream-ui-settings': omnistreamUiSettings,
   'omnistream-banner': omnistreamBanner,
   'omnistream-logo': omnistreamLogo,
+
+  // CryptoQuant
+  'crypto-ml-training': cryptoMlTrainingImg,
+  'crypto-dashboard-overview': cryptoDashboardImg,
+  'crypto-trading-terminal': cryptoTerminalImg,
+  'crypto-risk-management': cryptoRiskImg,
+  'crypto-list-market': cryptoListImg,
 
   // MicroHardware Lab / PCBs
   'pcb-esp32': pcbEsp32Img,
@@ -90,33 +103,33 @@ export const BlueprintProjects: React.FC = () => {
   });
 
   return (
-    <section id="proyectos" className="py-16 sm:py-24 border-b border-cyan-500/30 font-mono">
+    <section id="proyectos" className="py-16 sm:py-24 border-b border-cyan-500/20 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Title Block */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 pb-6 border-b border-cyan-500/20">
           <div>
-            <div className="flex items-center gap-2 text-xs text-cyan-400 font-bold mb-2">
-              <span className="w-2 h-2 bg-cyan-400" />
-              <span>HOJA 02 // EXPEDIENTE TÉCNICO DE PROYECTOS</span>
+            <div className="flex items-center gap-2 text-xs text-cyan-400 font-semibold uppercase tracking-wider mb-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-400" />
+              <span>Casos Prácticos & Desarrollos</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-              ESPECIFICACIONES DE INGENIERÍA
+              Proyectos Destacados
             </h2>
-            <p className="text-xs sm:text-sm text-cyan-200/70 mt-1 max-w-xl font-sans sm:font-mono">
-              Planos y memorias técnicas de prototipos funcionales: microelectrónica física, algoritmos concurrentes y simulación 2D.
+            <p className="text-xs sm:text-sm text-zinc-400 mt-1.5 max-w-xl leading-relaxed">
+              Sistemas ciberfísicos IoT, plataformas streaming concurrentes, microelectrónica PCB y algoritmos de trading predictivo.
             </p>
           </div>
 
-          {/* Search bar inside blueprint */}
+          {/* Search bar */}
           <div className="w-full md:w-72">
             <div className="relative">
-              <Search className="w-3.5 h-3.5 text-cyan-500 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-cyan-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="FILTRAR POR BUSCAR..."
-                className="w-full pl-9 pr-3 py-1.5 text-xs bg-cyan-950/40 border border-cyan-500/40 text-cyan-200 placeholder-cyan-700 rounded focus:outline-none focus:border-cyan-300"
+                placeholder="Buscar por tecnología o nombre..."
+                className="w-full pl-10 pr-3.5 py-2 text-xs bg-slate-900/60 border border-cyan-500/30 text-white placeholder-zinc-500 rounded-xl focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 transition-all"
               />
             </div>
           </div>
@@ -128,21 +141,20 @@ export const BlueprintProjects: React.FC = () => {
             <button
               key={t}
               onClick={() => setFilterTag(t)}
-              className={`px-3 py-1 text-xs uppercase tracking-wider rounded border transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 text-xs font-medium rounded-full border transition-all cursor-pointer ${
                 filterTag === t
-                  ? 'bg-cyan-400 text-black font-extrabold border-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.3)]'
-                  : 'bg-cyan-950/40 text-cyan-300/80 border-cyan-500/30 hover:border-cyan-400'
+                  ? 'bg-cyan-400 text-slate-950 font-bold border-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.35)]'
+                  : 'bg-slate-900/50 text-zinc-300 border-slate-700/60 hover:border-cyan-400/60 hover:text-white'
               }`}
             >
-              [ {t} ]
+              {t}
             </button>
           ))}
         </div>
 
-        {/* Blueprint Project Cards Grid */}
+        {/* Modern Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filtered.map((project, idx) => {
-            const specNumber = `SPEC-0${idx + 1}`;
             const imgKeys = project.images && project.images.length > 0
               ? project.images
               : project.imageUrl
@@ -156,23 +168,23 @@ export const BlueprintProjects: React.FC = () => {
             return (
               <div
                 key={project.id}
-                className="blueprint-card rounded-lg p-6 border border-cyan-500/40 flex flex-col justify-between hover:border-cyan-300 transition-all duration-300 group"
+                className="modern-card rounded-2xl p-6 border border-cyan-500/20 flex flex-col justify-between hover:border-cyan-400/50 transition-all duration-300 group shadow-lg"
               >
                 <div>
                   {/* Card Header Title Block */}
-                  <div className="flex items-center justify-between pb-3 mb-4 border-b border-cyan-500/20 text-xs">
-                    <span className="font-bold text-cyan-400 font-mono tracking-wider flex items-center gap-1.5">
-                      <Compass className="w-3.5 h-3.5" />
-                      PLANO REF: {specNumber}
+                  <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-cyan-500/15 text-xs">
+                    <span className="font-semibold text-cyan-400 font-mono tracking-wide flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                      PROYECTO #0{idx + 1}
                     </span>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/40">
+                    <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 font-medium">
                       {project.category}
                     </span>
                   </div>
 
-                  {/* Visual Render Carousel or Technical Diagram Frame */}
+                  {/* Visual Render Carousel or Technical Fallback Frame */}
                   {hasImgs ? (
-                    <div className="relative mb-4">
+                    <div className="relative mb-5">
                       <BlueprintCarousel
                         images={projectImgUrls}
                         title={project.title}
@@ -180,33 +192,33 @@ export const BlueprintProjects: React.FC = () => {
                       />
                     </div>
                   ) : project.id === 'botcripto-trading' ? (
-                    <div className="h-52 w-full rounded bg-black/70 border border-cyan-500/30 mb-4 p-4 flex flex-col justify-between font-mono text-xs relative">
+                    <div className="h-52 w-full rounded-xl bg-black/70 border border-cyan-500/30 mb-5 p-4 flex flex-col justify-between font-mono text-xs relative">
                       <div className="flex justify-between text-cyan-400 text-[11px]">
                         <span>CANVAS: STOCHASTIC BACKTEST ENGINE</span>
                         <span className="text-emerald-400 font-bold">SHARPE: 2.41</span>
                       </div>
                       <div className="flex items-end justify-between gap-1.5 h-20 py-2 border-b border-cyan-500/20">
-                        <div className="w-3 bg-cyan-500/40 h-8 self-end" />
-                        <div className="w-3 bg-cyan-400 h-14 self-end" />
-                        <div className="w-3 bg-emerald-400 h-18 self-end" />
-                        <div className="w-3 bg-red-400/80 h-9 self-end" />
-                        <div className="w-3 bg-cyan-400 h-16 self-end" />
-                        <div className="w-3 bg-emerald-400 h-20 self-end" />
-                        <div className="w-3 bg-emerald-500 h-15 self-end" />
-                        <div className="w-3 bg-cyan-300 h-12 self-end" />
+                        <div className="w-3 bg-cyan-500/40 h-8 self-end rounded-t-sm" />
+                        <div className="w-3 bg-cyan-400 h-14 self-end rounded-t-sm" />
+                        <div className="w-3 bg-emerald-400 h-18 self-end rounded-t-sm" />
+                        <div className="w-3 bg-red-400/80 h-9 self-end rounded-t-sm" />
+                        <div className="w-3 bg-cyan-400 h-16 self-end rounded-t-sm" />
+                        <div className="w-3 bg-emerald-400 h-20 self-end rounded-t-sm" />
+                        <div className="w-3 bg-emerald-500 h-15 self-end rounded-t-sm" />
+                        <div className="w-3 bg-cyan-300 h-12 self-end rounded-t-sm" />
                       </div>
                       <div className="flex justify-between text-[10px] text-zinc-400">
                         <span>MODEL: WALK-FORWARD REAL</span>
-                        <span className="text-emerald-400">+34.8% PROFIT SIMULADO</span>
+                        <span className="text-emerald-400 font-semibold">+34.8% PROFIT SIMULADO</span>
                       </div>
                     </div>
                   ) : (
-                    <div className="h-52 w-full rounded bg-black/70 border border-red-500/30 mb-4 p-4 flex flex-col justify-between font-mono text-xs relative">
+                    <div className="h-52 w-full rounded-xl bg-slate-950 border border-red-500/30 mb-5 p-4 flex flex-col justify-between font-mono text-xs relative">
                       <div className="flex justify-between text-red-400 text-[11px]">
-                        <span>TERMINAL DE AUDITORÍA // KALI LINUX</span>
-                        <span className="text-emerald-400">STATUS: AUDIT_OK</span>
+                        <span>ENTORNO AUDITORÍA // KALI LINUX</span>
+                        <span className="text-emerald-400 font-bold">STATUS: AUDIT_OK</span>
                       </div>
-                      <div className="bg-black/90 p-2.5 rounded border border-zinc-800 text-[10px] space-y-1 text-zinc-300 font-mono">
+                      <div className="bg-black/90 p-3 rounded-lg border border-zinc-800 text-[10px] space-y-1 text-zinc-300 font-mono">
                         <p className="text-zinc-500"># ./auditoria_kali.sh --stealth</p>
                         <p className="text-emerald-400">[+] Host 192.168.1.1 is UP (0.0012s)</p>
                         <p className="text-cyan-400">    22/tcp OPEN [OpenSSH] | 443/tcp OPEN [HTTPS]</p>
@@ -223,22 +235,22 @@ export const BlueprintProjects: React.FC = () => {
                   <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-cyan-400/80 font-mono mt-1">
+                  <p className="text-xs text-cyan-400 font-mono mt-1 font-medium">
                     {project.subtitle}
                   </p>
 
-                  {/* Technical Description */}
-                  <p className="text-xs text-cyan-100/80 my-4 leading-relaxed font-sans sm:font-mono">
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-zinc-300 my-4 leading-relaxed font-sans">
                     {project.description}
                   </p>
 
                   {/* Metrics Row */}
                   {project.metrics && (
-                    <div className="grid grid-cols-3 gap-2 my-4 p-2.5 rounded bg-cyan-950/60 border border-cyan-500/20 text-center">
+                    <div className="grid grid-cols-3 gap-2 my-4 p-3 rounded-xl bg-slate-900/70 border border-cyan-500/20 text-center">
                       {project.metrics.map((m, mIdx) => (
                         <div key={mIdx}>
-                          <span className="block text-xs font-bold text-cyan-300 font-mono">{m.value}</span>
-                          <span className="text-[9px] text-cyan-500/80 uppercase tracking-widest">{m.label}</span>
+                          <span className="block text-xs sm:text-sm font-bold text-cyan-300 font-mono">{m.value}</span>
+                          <span className="text-[10px] text-zinc-400 uppercase tracking-wider">{m.label}</span>
                         </div>
                       ))}
                     </div>
@@ -249,7 +261,7 @@ export const BlueprintProjects: React.FC = () => {
                     {project.tags.map((tag, tIdx) => (
                       <span
                         key={tIdx}
-                        className="px-2 py-0.5 text-[10px] font-mono rounded bg-cyan-950/80 text-cyan-300 border border-cyan-500/30"
+                        className="px-2.5 py-1 text-[10px] font-mono rounded-md bg-slate-900/80 text-cyan-300 border border-cyan-500/25"
                       >
                         {tag}
                       </span>
@@ -258,13 +270,13 @@ export const BlueprintProjects: React.FC = () => {
                 </div>
 
                 {/* Footer Actions */}
-                <div className="mt-6 pt-4 border-t border-cyan-500/20 flex items-center justify-between">
+                <div className="mt-6 pt-4 border-t border-cyan-500/15 flex items-center justify-between">
                   <button
                     onClick={() => setActiveModalProject(project)}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-white uppercase tracking-wider transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 hover:text-white uppercase tracking-wider transition-colors cursor-pointer"
                   >
-                    <span>[ DESPLEGAR PLANO DETALLADO ]</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    <span>Ver detalles del proyecto</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
 
                   {project.githubUrl && (
@@ -273,7 +285,7 @@ export const BlueprintProjects: React.FC = () => {
                       target="_blank"
                       rel="noreferrer"
                       aria-label="GitHub"
-                      className="p-1.5 rounded border border-cyan-500/30 hover:border-cyan-300 text-cyan-400 hover:text-white transition-colors"
+                      className="p-2 rounded-lg border border-cyan-500/30 hover:border-cyan-300 text-cyan-400 hover:text-white hover:bg-cyan-950/40 transition-colors"
                     >
                       <GithubIcon className="w-4 h-4" />
                     </a>
