@@ -2,17 +2,15 @@
 
 @layer base {
   html, body {
-    height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* No scroll: complete book experience fitted in viewport */
+    min-height: 100%;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     -webkit-tap-highlight-color: transparent;
-    user-select: none;
   }
   body {
-    background-color: #080604;
-    color: #1e293b;
+    background-color: #07090e;
+    color: #e2e8f0;
   }
 }
 
