@@ -10,7 +10,7 @@ export const PERSONAL_INFO = {
   phone: '+34 609 38 64 12',
   availability: 'Disponible para proyectos de alta exigencia técnica',
   email: 'hamzaelfathisofyani@gmail.com',
-  github: 'https://github.com',
+  github: 'https://github.com/faathii',
   linkedin: 'https://linkedin.com',
   cvPdfPath: './Curriculum_Hamza_El_Fathi_Sofyani.pdf',
   stats: [
