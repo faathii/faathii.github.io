@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
-  ShieldCheck, Download, Layers, ExternalLink, Mail, Phone, MapPin,
+  ShieldCheck, Download, ExternalLink, Mail, Phone, MapPin,
   Send, Check, Volume2, VolumeX, ChevronLeft, ChevronRight,
   ArrowRight, Eye, FileText, GraduationCap, BookOpen,
   User, Sliders, Radio, Tv, CircuitBoard, TrendingUp, Terminal, Copy, Lock, Languages
 } from 'lucide-react';
 import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES } from '../../data/portfolioData';
 import { ProjectModal } from '../ProjectModal';
+import { EngineeringMatrixStage } from './EngineeringMatrixStage';
 import { sendContactMessage } from '../../utils/contactService';
 import { trackEvent } from '../../utils/analytics';
 import {
@@ -514,98 +515,16 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
               {/* STAGE 02: DOMINIOS DE INGENIERÍA & STACK (BEFORE PROJECTS)         */}
               {/* ================================================================= */}
               {currentStage.id === 'skills' && (
-                <div className="h-full flex flex-col justify-between space-y-3 text-left font-mono">
-                  <div>
-                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-800">
-                      <div>
-                        <h2 className="text-lg sm:text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
-                          <Layers className="w-4 h-4 text-orange-400" />
-                          <span>{t.skillsTitle}</span>
-                        </h2>
-                        <p className="text-[11px] text-neutral-400 font-sans mt-0.5">
-                          {t.skillsSubtitle}
-                        </p>
-                      </div>
-
-                      <button
-                        onClick={handleNext}
-                        className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm"
-                      >
-                        <span>{t.seeProjects}</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-
-                    {/* 5 Tactile Rack Panels */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2.5">
-                      {getLocalizedSkillCategories(SKILL_CATEGORIES, lang).map((cat, idx) => (
-                        <div key={idx} className="p-3 rounded-xl bg-neutral-900/90 border border-neutral-800 hover:border-neutral-700 transition-colors flex flex-col justify-between space-y-2">
-                          <div className="space-y-1">
-                            <div className="flex items-center justify-between">
-                              <span className="text-[11px] font-bold text-white uppercase tracking-tight leading-tight">{cat.title}</span>
-                              <span className="text-[9px] px-1.5 py-0.2 rounded bg-neutral-800 text-orange-400 font-bold border border-neutral-700 shrink-0">
-                                {t.pillarPrefix} 0{idx + 1}
-                              </span>
-                            </div>
-
-                            <p className="text-[10px] text-neutral-400 font-sans leading-relaxed line-clamp-2">
-                              {cat.description}
-                            </p>
-                          </div>
-
-                          <div className="flex flex-wrap gap-1 pt-1">
-                            {cat.skills.map((s, sIdx) => (
-                              <span
-                                key={sIdx}
-                                className={`text-[9px] px-1.5 py-0.5 rounded border ${
-                                  s.highlight
-                                    ? 'bg-neutral-800 text-orange-300 border-orange-500/40 font-bold'
-                                    : 'bg-neutral-950 text-neutral-400 border-neutral-800'
-                                }`}
-                              >
-                                {s.name}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Precision Engineering Telemetry Strip */}
-                  <div className="p-3 rounded-xl bg-neutral-950 border border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-4 w-full sm:w-auto text-center sm:text-left text-xs">
-                      <div>
-                        <span className="font-black text-orange-400 block">&lt; 18 ms</span>
-                        <span className="text-[9px] text-neutral-500 uppercase">{t.kpiLabels[0]}</span>
-                      </div>
-                      <div>
-                        <span className="font-black text-emerald-400 block">111M+</span>
-                        <span className="text-[9px] text-neutral-500 uppercase">{t.kpiLabels[1]}</span>
-                      </div>
-                      <div>
-                        <span className="font-black text-sky-400 block">0 Deps</span>
-                        <span className="text-[9px] text-neutral-500 uppercase">{t.kpiLabels[2]}</span>
-                      </div>
-                      <div>
-                        <span className="font-black text-amber-400 block">±0.15 mm</span>
-                        <span className="text-[9px] text-neutral-500 uppercase">{t.kpiLabels[3]}</span>
-                      </div>
-                      <div>
-                        <span className="font-black text-purple-400 block">{lang === 'es' ? '540 Horas' : '540 Hours'}</span>
-                        <span className="text-[9px] text-neutral-500 uppercase">{t.kpiLabels[4]}</span>
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={handleNext}
-                      className="w-full sm:w-auto px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer shadow-md transition-all shrink-0"
-                    >
-                      <span>{t.exploreFirstProject}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
+                <EngineeringMatrixStage
+                  categories={getLocalizedSkillCategories(SKILL_CATEGORIES, lang)}
+                  lang={lang}
+                  onNextStage={handleNext}
+                  onNavigateToStageId={(targetId) => {
+                    const idx = localizedStages.findIndex((s) => s.id === targetId);
+                    if (idx !== -1) goToStage(idx);
+                  }}
+                  onSelectSound={soundEnabled ? playTactileClick : undefined}
+                />
               )}
 
               {/* ================================================================= */}

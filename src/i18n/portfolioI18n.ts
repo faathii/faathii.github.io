@@ -32,6 +32,12 @@ export const UI_TEXT = {
     skillsSubtitle: 'Evaluación técnica rigurosa desde la microelectrónica y el diseño físico de hardware hasta arquitecturas distribuidas, SOC defensivo y modelos de IA predictiva.',
     seeProjects: 'Ver Proyectos ➔',
     pillarPrefix: 'PILAR',
+    matrixViewConsole: 'Consola Radar',
+    matrixViewAll: 'Vista 5 Pilares',
+    matrixRadarTitle: 'ESPECTRO DE DOMINIO TÉCNICO',
+    matrixCoreLabel: 'CORE',
+    matrixJumpProject: 'Ver Caso Real:',
+    matrixShortLabels: ['IA & ML', 'IT & Cloud', 'CiberSOC', 'Software', 'PCB & CAD'],
     kpiLabels: [
       'Inferencia Edge AI',
       'Dataset ML Financiero',
@@ -115,6 +121,12 @@ export const UI_TEXT = {
     skillsSubtitle: 'Full-spectrum engineering from physical electronics and custom PCBs up to distributed systems, defensive SOC tooling, and predictive ML pipelines.',
     seeProjects: 'Explore Projects ➔',
     pillarPrefix: 'PILLAR',
+    matrixViewConsole: 'Radar Console',
+    matrixViewAll: '5-Pillar Grid',
+    matrixRadarTitle: 'TECHNICAL DOMAIN SPECTRUM',
+    matrixCoreLabel: 'CORE',
+    matrixJumpProject: 'Inspect Real Proof:',
+    matrixShortLabels: ['AI & ML', 'IT & Cloud', 'CyberSOC', 'Software', 'PCB & CAD'],
     kpiLabels: [
       'Edge AI Inference',
       'Financial ML Dataset',
@@ -397,3 +409,4 @@ export function getLocalizedSkillCategories(categories: SkillCategory[], lang: L
     };
   });
 }
+
