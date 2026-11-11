@@ -8,6 +8,7 @@ import {
 import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES } from '../../data/portfolioData';
 import { ProjectModal } from '../ProjectModal';
 import { sendContactMessage } from '../../utils/contactService';
+import { trackEvent } from '../../utils/analytics';
 import type { Project } from '../../types';
 
 import hamzaImg from '../../assets/hamza.jpg';
@@ -146,8 +147,11 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
   const goToStage = useCallback((idx: number) => {
     if (idx < 0 || idx >= totalStages) return;
     if (soundEnabled) playTactileClick(750 + idx * 60);
+    if (idx !== currentStageIdx) {
+      trackEvent(`stage/${STAGES[idx].id}`, STAGES[idx].title);
+    }
     setCurrentStageIdx(idx);
-  }, [totalStages, soundEnabled]);
+  }, [totalStages, soundEnabled, currentStageIdx]);
 
   const handleNext = useCallback(() => {
     goToStage((currentStageIdx + 1) % totalStages);
@@ -216,6 +220,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
     setIsSendingContact(true);
     try {
       const result = await sendContactMessage(contactData);
+      trackEvent(`contact/submit-${result.method}`, 'Contacto Enviado');
       setContactSent(result.method);
       setContactData({ name: '', email: '', message: '' });
       setTimeout(() => {
@@ -289,6 +294,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
           <a
             href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
             download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
+            onClick={() => trackEvent('cv/download-pdf', 'Descarga CV PDF')}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 text-xs font-mono font-black uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(249,115,22,0.35)] cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
@@ -794,6 +800,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                         <a
                           href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
                           download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
+                          onClick={() => trackEvent('cv/download-pdf', 'Descarga CV PDF')}
                           className="py-2.5 px-3 rounded-xl bg-orange-500 hover:bg-orange-400 text-neutral-950 font-mono font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md text-center cursor-pointer"
                         >
                           <Download className="w-4 h-4 shrink-0" />
@@ -802,6 +809,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                         <a
                           href="./Curriculum_Hamza_El_Fathi_Sofyani.docx"
                           download="Curriculum_Hamza_El_Fathi_Sofyani.docx"
+                          onClick={() => trackEvent('cv/download-docx', 'Descarga CV DOCX')}
                           className="py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-700 font-mono font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center cursor-pointer"
                         >
                           <FileText className="w-4 h-4 text-orange-400 shrink-0" />

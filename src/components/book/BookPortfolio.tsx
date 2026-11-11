@@ -10,6 +10,7 @@ import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES, TIMELINE_DATA } from '.
 import { ProjectModal } from '../ProjectModal';
 import { BlueprintCarousel } from '../blueprint/BlueprintCarousel';
 import { sendContactMessage } from '../../utils/contactService';
+import { trackEvent } from '../../utils/analytics';
 import type { Project } from '../../types';
 
 import hamzaImg from '../../assets/hamza.jpg';
@@ -197,6 +198,7 @@ export const BookPortfolio: React.FC<BookPortfolioProps> = ({ onBackToDeck }) =>
     setIsSendingForm(true);
     try {
       const result = await sendContactMessage(formData);
+      trackEvent(`contact/submit-book-${result.method}`, 'Contacto Libro 3D');
       setFormSent(result.method);
       setFormData({ name: '', email: '', message: '' });
       setTimeout(() => {
@@ -277,6 +279,7 @@ export const BookPortfolio: React.FC<BookPortfolioProps> = ({ onBackToDeck }) =>
             <a
               href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
               download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
+              onClick={() => trackEvent('cv/download-pdf', 'Descarga CV PDF')}
               className="py-1.5 px-2.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-[10px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all text-center"
             >
               <Download className="w-3 h-3 shrink-0" />
@@ -285,6 +288,7 @@ export const BookPortfolio: React.FC<BookPortfolioProps> = ({ onBackToDeck }) =>
             <a
               href="./Curriculum_Hamza_El_Fathi_Sofyani.docx"
               download="Curriculum_Hamza_El_Fathi_Sofyani.docx"
+              onClick={() => trackEvent('cv/download-docx', 'Descarga CV DOCX')}
               className="py-1.5 px-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/30 font-semibold text-[10px] flex items-center justify-center gap-1.5 transition-all text-center"
             >
               <FileText className="w-3 h-3 shrink-0" />
@@ -1011,6 +1015,7 @@ export const BookPortfolio: React.FC<BookPortfolioProps> = ({ onBackToDeck }) =>
           <a
             href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
             download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
+            onClick={() => trackEvent('cv/download-pdf', 'Descarga CV PDF')}
             className="w-full py-2 px-3 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_12px_rgba(245,158,11,0.3)] hover:scale-102 cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
@@ -1020,6 +1025,7 @@ export const BookPortfolio: React.FC<BookPortfolioProps> = ({ onBackToDeck }) =>
           <a
             href="./Curriculum_Hamza_El_Fathi_Sofyani.docx"
             download="Curriculum_Hamza_El_Fathi_Sofyani.docx"
+            onClick={() => trackEvent('cv/download-docx', 'Descarga CV DOCX')}
             className="w-full py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/30 font-semibold text-xs flex items-center justify-center gap-2 transition-all hover:scale-102 cursor-pointer"
           >
             <FileText className="w-3.5 h-3.5" />
@@ -1135,6 +1141,7 @@ export const BookPortfolio: React.FC<BookPortfolioProps> = ({ onBackToDeck }) =>
           <a
             href="./Curriculum_Hamza_El_Fathi_Sofyani.pdf"
             download="Curriculum_Hamza_El_Fathi_Sofyani.pdf"
+            onClick={() => trackEvent('cv/download-pdf', 'Descarga CV PDF')}
             className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold transition-all shadow-[0_0_12px_rgba(245,158,11,0.25)]"
           >
             <Download className="w-3.5 h-3.5" />

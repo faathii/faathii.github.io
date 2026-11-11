@@ -1,17 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { BookPortfolio } from './components/book/BookPortfolio';
 import { CinematicShowcase } from './components/showcase/CinematicShowcase';
 import { BookOpen } from 'lucide-react';
+import { trackEvent } from './utils/analytics';
 
 export function App() {
   const [viewMode, setViewMode] = useState<'showcase' | 'book'>('showcase');
+
+  const openBookMode = useCallback(() => {
+    trackEvent('mode/book-3d', 'Apertura Libro 3D');
+    setViewMode('book');
+  }, []);
 
   // Allow pressing 'B' to toggle 3D book mode anytime
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
       if (e.key === 'b' || e.key === 'B') {
-        setViewMode((prev) => (prev === 'showcase' ? 'book' : 'showcase'));
+        setViewMode((prev) => {
+          if (prev === 'showcase') {
+            trackEvent('mode/book-3d', 'Apertura Libro 3D');
+            return 'book';
+          }
+          return 'showcase';
+        });
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -24,11 +36,11 @@ export function App() {
         <BookPortfolio onBackToDeck={() => setViewMode('showcase')} />
       ) : (
         <>
-          <CinematicShowcase onOpenBook={() => setViewMode('book')} />
+          <CinematicShowcase onOpenBook={openBookMode} />
 
           {/* Floating Pill in Bottom-Right Corner for Direct 3D Book Launch */}
           <button
-            onClick={() => setViewMode('book')}
+            onClick={openBookMode}
             className="fixed bottom-4 right-4 z-50 px-3.5 py-2 rounded-xl bg-[#14161f]/95 hover:bg-[#1a1d29] text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-[0_10px_30px_rgba(0,0,0,0.8)] hover:scale-105 active:scale-95 transition-all cursor-pointer border border-orange-500/50"
             title="Abrir Monografía Técnica en Libro Físico 3D (Atajo: tecla B)"
           >
