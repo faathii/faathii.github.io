@@ -11,7 +11,7 @@ export const PERSONAL_INFO = {
   availability: 'Disponible para proyectos de alta exigencia técnica',
   email: 'hamzaelfathisofyani@gmail.com',
   github: 'https://github.com/faathii',
-  linkedin: '',
+  linkedin: 'https://www.linkedin.com/in/hamzaelfathi/',
   cvPdfPath: './Curriculum_Hamza_El_Fathi_Sofyani.pdf',
   stats: [
     { label: 'Especialización', value: 'Sistemas, IA & Ciberseguridad' },

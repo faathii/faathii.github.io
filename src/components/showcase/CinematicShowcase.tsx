@@ -8,6 +8,7 @@ import {
 import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES } from '../../data/portfolioData';
 import { ProjectModal } from '../ProjectModal';
 import { EngineeringMatrixStage } from './EngineeringMatrixStage';
+import { LinkedinIcon } from '../Icons';
 import { sendContactMessage } from '../../utils/contactService';
 import { trackEvent } from '../../utils/analytics';
 import {
@@ -456,6 +457,17 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                         <Phone className="w-3.5 h-3.5 text-orange-400" />
                         <span>{PERSONAL_INFO.phone}</span>
                       </a>
+                      {PERSONAL_INFO.linkedin && (
+                        <a
+                          href={PERSONAL_INFO.linkedin}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-2.5 py-1 rounded bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-neutral-300 hover:text-sky-400 flex items-center gap-1.5 transition-colors"
+                        >
+                          <LinkedinIcon className="w-3.5 h-3.5 text-sky-400" />
+                          <span>LinkedIn</span>
+                        </a>
+                      )}
                       <span className="px-2.5 py-1 rounded bg-neutral-900 border border-neutral-700 text-neutral-400 flex items-center gap-1.5">
                         <MapPin className="w-3.5 h-3.5 text-orange-400" />
                         <span>{PERSONAL_INFO.location}</span>
@@ -758,6 +770,14 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                           github.com/faathii
                         </a>
                       </div>
+                      {PERSONAL_INFO.linkedin && (
+                        <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center gap-2.5 sm:col-span-2">
+                          <LinkedinIcon className="w-4 h-4 text-sky-400 shrink-0" />
+                          <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noreferrer" className="text-neutral-200 hover:text-sky-400 font-bold transition-colors truncate">
+                            linkedin.com/in/hamzaelfathi
+                          </a>
+                        </div>
+                      )}
                     </div>
 
                     {/* Dual CV Downloads Heavy-Duty Panel */}
