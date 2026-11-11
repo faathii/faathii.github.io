@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import {
-  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   Box,
   CheckCircle2,
   Code2,
   Cpu,
-  Layers,
+  Filter,
   Server,
   ShieldCheck,
   Sparkles,
@@ -24,72 +23,84 @@ interface EngineeringMatrixStageProps {
   onSelectSound?: (freq: number) => void;
 }
 
-interface BentoTheme {
-  spanClass: string;
-  gradientClass: string;
-  accentText: string;
-  pillClass: string;
-  glowDot: string;
+interface PillarTheme {
+  stripBorder: string;
+  stripBg: string;
+  iconBox: string;
+  iconColor: string;
+  coreChip: string;
+  coreDot: string;
+  statBadge: string;
   stageId: string;
-  projectLabelEs: string;
-  projectLabelEn: string;
+  projectShortEs: string;
+  projectShortEn: string;
   icon: React.ComponentType<{ className?: string }>;
 }
 
-const BENTO_THEMES: BentoTheme[] = [
+const PILLAR_THEMES: PillarTheme[] = [
   {
-    spanClass: 'md:col-span-3',
-    gradientClass: 'from-orange-500/[0.10] via-[#151822] to-[#101219] border-orange-500/30 hover:border-orange-400/70',
-    accentText: 'text-orange-400',
-    pillClass: 'bg-orange-500/15 text-orange-300 border-orange-500/35',
-    glowDot: 'bg-orange-400',
+    stripBorder: 'border-l-orange-500 border-neutral-800/90 hover:border-orange-500/50',
+    stripBg: 'bg-gradient-to-r from-orange-500/[0.08] via-[#141720] to-[#11131a]',
+    iconBox: 'bg-orange-500/15 border-orange-500/35',
+    iconColor: 'text-orange-400',
+    coreChip: 'bg-orange-500/12 border-orange-500/35 text-orange-100',
+    coreDot: 'bg-orange-400',
+    statBadge: 'text-orange-300 bg-orange-500/10 border-orange-500/25',
     stageId: 'iqsense',
-    projectLabelEs: 'iQsense 2.0 & CryptoQuant',
-    projectLabelEn: 'iQsense 2.0 & CryptoQuant',
+    projectShortEs: 'iQsense 2.0',
+    projectShortEn: 'iQsense 2.0',
     icon: TrendingUp,
   },
   {
-    spanClass: 'md:col-span-3',
-    gradientClass: 'from-sky-500/[0.09] via-[#151822] to-[#101219] border-sky-500/25 hover:border-sky-400/60',
-    accentText: 'text-sky-400',
-    pillClass: 'bg-sky-500/15 text-sky-300 border-sky-500/35',
-    glowDot: 'bg-sky-400',
+    stripBorder: 'border-l-sky-500 border-neutral-800/90 hover:border-sky-500/50',
+    stripBg: 'bg-gradient-to-r from-sky-500/[0.08] via-[#141720] to-[#11131a]',
+    iconBox: 'bg-sky-500/15 border-sky-500/35',
+    iconColor: 'text-sky-400',
+    coreChip: 'bg-sky-500/12 border-sky-500/35 text-sky-100',
+    coreDot: 'bg-sky-400',
+    statBadge: 'text-sky-300 bg-sky-500/10 border-sky-500/25',
     stageId: 'sentry',
-    projectLabelEs: 'Infraestructura & HFS-Sentry',
-    projectLabelEn: 'Infrastructure & HFS-Sentry',
+    projectShortEs: 'HFS-Sentry',
+    projectShortEn: 'HFS-Sentry',
     icon: Server,
   },
   {
-    spanClass: 'md:col-span-2',
-    gradientClass: 'from-emerald-500/[0.10] via-[#151822] to-[#101219] border-emerald-500/30 hover:border-emerald-400/70',
-    accentText: 'text-emerald-400',
-    pillClass: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/35',
-    glowDot: 'bg-emerald-400',
+    stripBorder: 'border-l-emerald-500 border-neutral-800/90 hover:border-emerald-500/50',
+    stripBg: 'bg-gradient-to-r from-emerald-500/[0.08] via-[#141720] to-[#11131a]',
+    iconBox: 'bg-emerald-500/15 border-emerald-500/35',
+    iconColor: 'text-emerald-400',
+    coreChip: 'bg-emerald-500/12 border-emerald-500/35 text-emerald-100',
+    coreDot: 'bg-emerald-400',
+    statBadge: 'text-emerald-300 bg-emerald-500/10 border-emerald-500/25',
     stageId: 'sentry',
-    projectLabelEs: 'HFS-Sentry SOC',
-    projectLabelEn: 'HFS-Sentry SOC',
+    projectShortEs: 'HFS-Sentry SOC',
+    projectShortEn: 'HFS-Sentry SOC',
     icon: ShieldCheck,
   },
   {
-    spanClass: 'md:col-span-2',
-    gradientClass: 'from-violet-500/[0.09] via-[#151822] to-[#101219] border-violet-500/25 hover:border-violet-400/60',
-    accentText: 'text-violet-400',
-    pillClass: 'bg-violet-500/15 text-violet-300 border-violet-500/35',
-    glowDot: 'bg-violet-400',
+    stripBorder: 'border-l-violet-500 border-neutral-800/90 hover:border-violet-500/50',
+    stripBg: 'bg-gradient-to-r from-violet-500/[0.08] via-[#141720] to-[#11131a]',
+    iconBox: 'bg-violet-500/15 border-violet-500/35',
+    iconColor: 'text-violet-400',
+    coreChip: 'bg-violet-500/12 border-violet-500/35 text-violet-100',
+    coreDot: 'bg-violet-400',
+    statBadge: 'text-violet-300 bg-violet-500/10 border-violet-500/25',
     stageId: 'omnistream',
-    projectLabelEs: 'OmniStream & Core Apps',
-    projectLabelEn: 'OmniStream & Core Apps',
+    projectShortEs: 'OmniStream',
+    projectShortEn: 'OmniStream',
     icon: Code2,
   },
   {
-    spanClass: 'md:col-span-2',
-    gradientClass: 'from-amber-500/[0.09] via-[#151822] to-[#101219] border-amber-500/25 hover:border-amber-400/60',
-    accentText: 'text-amber-400',
-    pillClass: 'bg-amber-500/15 text-amber-300 border-amber-500/35',
-    glowDot: 'bg-amber-400',
+    stripBorder: 'border-l-amber-500 border-neutral-800/90 hover:border-amber-500/50',
+    stripBg: 'bg-gradient-to-r from-amber-500/[0.08] via-[#141720] to-[#11131a]',
+    iconBox: 'bg-amber-500/15 border-amber-500/35',
+    iconColor: 'text-amber-400',
+    coreChip: 'bg-amber-500/12 border-amber-500/35 text-amber-100',
+    coreDot: 'bg-amber-400',
+    statBadge: 'text-amber-300 bg-amber-500/10 border-amber-500/25',
     stageId: 'pcb',
-    projectLabelEs: 'KiCad PCBs & CAD',
-    projectLabelEn: 'KiCad PCBs & CAD',
+    projectShortEs: 'KiCad PCBs',
+    projectShortEn: 'KiCad PCBs',
     icon: Box,
   },
 ];
@@ -108,226 +119,210 @@ export const EngineeringMatrixStage: React.FC<EngineeringMatrixStageProps> = ({
   onNavigateToStageId,
   onSelectSound,
 }) => {
-  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const [focusedIdx, setFocusedIdx] = useState<number | null>(null);
+  const [coreOnly, setCoreOnly] = useState(false);
   const t = UI_TEXT[lang];
 
-  const openDetail = (idx: number) => {
-    onSelectSound?.(790 + idx * 60);
-    setSelectedIdx(idx);
+  const handleFilterClick = (idx: number | null) => {
+    onSelectSound?.(idx === null ? 740 : 790 + idx * 50);
+    setFocusedIdx((prev) => (prev === idx ? null : idx));
   };
 
-  const closeDetail = () => {
-    onSelectSound?.(720);
-    setSelectedIdx(null);
-  };
-
-  const activeCategory = selectedIdx !== null ? categories[selectedIdx] : null;
-  const activeTheme = selectedIdx !== null ? (BENTO_THEMES[selectedIdx] ?? BENTO_THEMES[0]) : null;
-  const ActiveIcon = activeTheme?.icon ?? Layers;
+  const visibleCategories =
+    focusedIdx === null
+      ? categories.map((cat, idx) => ({ cat, idx }))
+      : [{ cat: categories[focusedIdx], idx: focusedIdx }];
 
   return (
-    <div className="h-full flex flex-col justify-between space-y-2.5 text-left font-sans">
-      {/* Stage Title Strip */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-neutral-800/90 shrink-0">
-        <div>
-          <h2 className="text-base sm:text-xl font-black text-white tracking-tight flex items-center gap-2 font-mono uppercase">
-            <Cpu className="w-4 h-4 text-orange-400" />
-            <span>{t.skillsTitle}</span>
-          </h2>
-          <p className="text-[11px] text-neutral-400 mt-0.5 hidden sm:block">
-            {t.skillsSubtitle}
-          </p>
+    <div className="h-full flex flex-col justify-between space-y-2 text-left font-sans">
+      {/* Header Row + Quick Filter Bar */}
+      <div className="flex flex-col gap-2 pb-2 border-b border-neutral-800/90 shrink-0">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 className="text-base sm:text-xl font-black text-white tracking-tight flex items-center gap-2 font-mono uppercase">
+              <Cpu className="w-4 h-4 text-orange-400" />
+              <span>{t.skillsTitle}</span>
+            </h2>
+          </div>
+
+          {/* Color Legend + Next Action */}
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-3 text-[10px] font-mono text-neutral-400">
+              <span className="inline-flex items-center gap-1">
+                <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                <span>{t.matrixLegendCert}</span>
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-orange-400" />
+                <span>{t.matrixLegendCore}</span>
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-neutral-600" />
+                <span>{t.matrixLegendAux}</span>
+              </span>
+            </div>
+
+            <button
+              onClick={onNextStage}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-mono font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+            >
+              <span>{t.seeProjects}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          {selectedIdx !== null && (
+        {/* Versatile Filter Toolbar: All visible by default + instant 1-tap focus/core filter */}
+        <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar touch-pan-x pb-0.5">
+          <div className="flex items-center gap-1.5 shrink-0">
             <button
               type="button"
-              onClick={closeDetail}
-              className="px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-700 font-mono font-bold text-xs flex items-center gap-1.5 cursor-pointer transition-all"
+              onClick={() => handleFilterClick(null)}
+              className={`px-2.5 py-1 rounded-lg font-mono text-[11px] font-bold border transition-all cursor-pointer shrink-0 ${
+                focusedIdx === null
+                  ? 'bg-white text-neutral-950 border-white shadow-sm'
+                  : 'bg-neutral-900/90 text-neutral-400 border-neutral-800 hover:text-white'
+              }`}
             >
-              <ArrowLeft className="w-3.5 h-3.5 text-orange-400" />
-              <span>{t.matrixBackToBento.replace('← ', '')}</span>
+              {t.matrixAllFilter}
             </button>
-          )}
+
+            {categories.map((cat, idx) => {
+              const theme = PILLAR_THEMES[idx] ?? PILLAR_THEMES[0];
+              const isSelected = focusedIdx === idx;
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleFilterClick(idx)}
+                  className={`px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold border transition-all cursor-pointer shrink-0 flex items-center gap-1.5 ${
+                    isSelected
+                      ? 'bg-neutral-800 text-white border-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.22)]'
+                      : 'bg-neutral-950/80 text-neutral-400 border-neutral-800 hover:text-white hover:border-neutral-700'
+                  }`}
+                  title={cat.title}
+                >
+                  <span className={`w-1.5 h-1.5 rounded-full ${theme.coreDot}`} />
+                  <span>0{idx + 1} · {t.matrixShortTabs[idx]}</span>
+                </button>
+              );
+            })}
+          </div>
 
           <button
-            onClick={onNextStage}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-mono font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+            type="button"
+            onClick={() => {
+              onSelectSound?.(940);
+              setCoreOnly((prev) => !prev);
+            }}
+            className={`px-2.5 py-1 rounded-lg font-mono text-[10px] font-bold border transition-all cursor-pointer shrink-0 flex items-center gap-1 ${
+              coreOnly
+                ? 'bg-orange-500/20 text-orange-300 border-orange-500/60'
+                : 'bg-neutral-950 text-neutral-400 border-neutral-800 hover:text-neutral-200'
+            }`}
           >
-            <span>{t.seeProjects}</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <Filter className="w-3 h-3" />
+            <span>{t.matrixCoreOnlyFilter}</span>
           </button>
         </div>
       </div>
 
-      {/* BODY: Apple Pro Bento Grid OR Focused Pillar Sheet */}
-      {selectedIdx === null ? (
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-6 gap-3 min-h-0">
-          {categories.map((cat, idx) => {
-            const theme = BENTO_THEMES[idx] ?? BENTO_THEMES[0];
-            const cardData = t.bentoCards[idx];
-            const CardIcon = theme.icon;
+      {/* Main Content: 5 Full-Visibility Horizontal Spotlight Strips (Zero Hidden Content) */}
+      <div className="flex-1 flex flex-col justify-between gap-2 min-h-0">
+        {visibleCategories.map(({ cat, idx }) => {
+          const theme = PILLAR_THEMES[idx] ?? PILLAR_THEMES[0];
+          const cardData = t.bentoCards[idx];
+          const IconComp = theme.icon;
+          const isSingleFocus = focusedIdx !== null;
+          const skillsToRender = coreOnly
+            ? cat.skills.filter((s) => s.highlight)
+            : cat.skills;
 
-            return (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => openDetail(idx)}
-                className={`${theme.spanClass} group relative overflow-hidden rounded-2xl bg-gradient-to-br ${theme.gradientClass} border p-4 text-left transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(0,0,0,0.55)] flex flex-col justify-between cursor-pointer`}
-              >
-                {/* Background Subtle Architectural Watermark Icon */}
-                <CardIcon className={`absolute -right-4 -bottom-4 w-28 h-28 ${theme.accentText} opacity-[0.06] group-hover:opacity-[0.12] group-hover:scale-110 transition-all duration-300 pointer-events-none`} />
-
-                {/* Card Top Meta + Affordance */}
-                <div className="w-full flex items-center justify-between gap-2 relative z-10">
-                  <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[10px] font-mono font-bold ${theme.pillClass}`}>
-                    <CardIcon className="w-3 h-3" />
-                    <span>0{idx + 1} · {cat.title}</span>
-                  </span>
-
-                  <span className="inline-flex items-center gap-1 text-[10px] font-mono text-neutral-400 group-hover:text-white transition-colors shrink-0">
-                    <span className="hidden sm:inline">{t.matrixInspectTile}</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-orange-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </span>
+          return (
+            <div
+              key={idx}
+              className={`rounded-xl border border-l-[3px] ${theme.stripBorder} ${theme.stripBg} ${
+                isSingleFocus ? 'p-4 sm:p-5 flex-1 justify-between' : 'px-3 py-2.5'
+              } grid grid-cols-1 lg:grid-cols-12 gap-2.5 lg:gap-4 items-center transition-all`}
+            >
+              {/* Left Block: Colored Icon + Title + Hero KPI + Project Jump */}
+              <div className="lg:col-span-4 flex items-start gap-2.5 min-w-0">
+                <div className={`w-9 h-9 rounded-xl border ${theme.iconBox} flex items-center justify-center shrink-0 mt-0.5`}>
+                  <IconComp className={`w-4 h-4 ${theme.iconColor}`} />
                 </div>
 
-                {/* Big Typographic Hero Focus */}
-                <div className="my-2 relative z-10">
-                  <div className="flex items-baseline gap-2.5 flex-wrap">
-                    <span className="text-2xl sm:text-3xl font-black tracking-tight text-white font-mono">
-                      {cardData?.heroStat}
+                <div className="min-w-0 flex-1 space-y-0.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-xs sm:text-[13px] font-bold text-white leading-tight">
+                      {cat.title}
                     </span>
-                    <span className={`text-xs font-medium ${theme.accentText}`}>
-                      {cardData?.heroSub}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Clean Curated Stack Keycaps + Full Count */}
-                <div className="flex flex-wrap items-center justify-between gap-2 relative z-10 pt-2 border-t border-white/[0.06]">
-                  <div className="flex flex-wrap gap-1.5">
-                    {(cardData?.stackChips ?? []).map((chip, cIdx) => (
-                      <span
-                        key={cIdx}
-                        className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-neutral-950/80 border border-neutral-800 text-neutral-200 group-hover:border-neutral-700 transition-colors"
-                      >
-                        {chip}
+                    {cardData?.heroStat && (
+                      <span className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border ${theme.statBadge} shrink-0`}>
+                        {cardData.heroStat}
                       </span>
-                    ))}
+                    )}
                   </div>
-                  <span className="text-[10px] font-mono text-neutral-500 shrink-0">
-                    +{cat.skills.length} specs
-                  </span>
+
+                  <p className={`text-[11px] text-neutral-400 leading-snug ${isSingleFocus ? '' : 'line-clamp-1'}`}>
+                    {cat.description}
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={() => onNavigateToStageId(theme.stageId)}
+                    className="inline-flex items-center gap-1 text-[10px] font-mono text-neutral-400 hover:text-orange-400 transition-colors cursor-pointer pt-0.5"
+                  >
+                    <span className={theme.iconColor}>{t.matrixJumpProject}</span>
+                    <span className="underline decoration-neutral-700 underline-offset-2">
+                      {lang === 'es' ? theme.projectShortEs : theme.projectShortEn}
+                    </span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </button>
                 </div>
-              </button>
-            );
-          })}
-        </div>
-      ) : (
-        activeCategory &&
-        activeTheme && (
-          <div className={`flex-1 rounded-2xl bg-gradient-to-br ${activeTheme.gradientClass} border p-4 sm:p-5 flex flex-col justify-between space-y-3 stage-fade-enter`}>
-            {/* Top Quick-Pillar Switcher Bar inside Detail Sheet */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-white/[0.08]">
-              <div className="flex flex-wrap items-center gap-1.5">
-                {categories.map((cat, idx) => {
-                  const isCur = idx === selectedIdx;
+              </div>
+
+              {/* Right Block: ALL Skills Immediately Visible, Clean & Scannable */}
+              <div className="lg:col-span-8 flex flex-wrap gap-1.5 items-center">
+                {skillsToRender.map((skill, sIdx) => {
+                  const isCertified = skill.level.toLowerCase().includes('cert');
+                  const levelLabel = getLocalizedLevelText(skill.level, lang);
                   return (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => openDetail(idx)}
-                      className={`px-2.5 py-1 rounded-lg font-mono text-[10px] font-bold border transition-all cursor-pointer ${
-                        isCur
-                          ? 'bg-white text-neutral-950 border-white shadow-sm'
-                          : 'bg-neutral-950/70 text-neutral-400 border-neutral-800 hover:text-white hover:border-neutral-700'
+                    <span
+                      key={sIdx}
+                      title={`${skill.name} — ${levelLabel}`}
+                      className={`inline-flex items-center gap-1.5 px-2.5 ${
+                        isSingleFocus ? 'py-1.5 text-xs' : 'py-1 text-[11px]'
+                      } rounded-lg border font-medium transition-colors ${
+                        isCertified
+                          ? 'bg-emerald-950/75 border-emerald-500/45 text-emerald-200 font-semibold'
+                          : skill.highlight
+                            ? theme.coreChip
+                            : 'bg-neutral-950/75 border-neutral-800 text-neutral-300'
                       }`}
                     >
-                      0{idx + 1} · {cat.title.split('&')[0].trim()}
-                    </button>
+                      {isCertified ? (
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      ) : skill.highlight ? (
+                        <Sparkles className={`w-3 h-3 ${theme.iconColor} shrink-0`} />
+                      ) : (
+                        <span className="w-1.5 h-1.5 rounded-full bg-neutral-600 shrink-0" />
+                      )}
+                      <span>{skill.name}</span>
+                      {isSingleFocus && (
+                        <span className="text-[9px] font-mono opacity-75 border-l border-current/20 pl-1.5 ml-0.5">
+                          {levelLabel}
+                        </span>
+                      )}
+                    </span>
                   );
                 })}
               </div>
-
-              <button
-                type="button"
-                onClick={() => onNavigateToStageId(activeTheme.stageId)}
-                className="px-3 py-1.5 rounded-lg bg-neutral-950 hover:bg-neutral-900 border border-neutral-700 hover:border-orange-500/60 text-xs font-mono text-white flex items-center gap-1.5 transition-all cursor-pointer"
-              >
-                <span className="text-orange-400 font-bold">{t.matrixJumpProject}</span>
-                <span>{lang === 'es' ? activeTheme.projectLabelEs : activeTheme.projectLabelEn}</span>
-                <ArrowRight className="w-3.5 h-3.5 text-orange-400" />
-              </button>
             </div>
+          );
+        })}
+      </div>
 
-            {/* Pillar Hero Headline & Full Description */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md border text-[10px] font-mono font-bold ${activeTheme.pillClass}`}>
-                    <ActiveIcon className="w-3.5 h-3.5" />
-                    <span>{t.pillarPrefix} 0{selectedIdx + 1}</span>
-                  </span>
-                  <span className="text-sm font-mono font-bold text-neutral-300">
-                    {t.bentoCards[selectedIdx]?.heroStat}
-                  </span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                  {activeCategory.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-neutral-300 max-w-3xl">
-                  {activeCategory.description}
-                </p>
-              </div>
-            </div>
-
-            {/* Clean Apple-Style Capability List (100% of skills & exact levels, zero bar noise) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 flex-1 content-start">
-              {activeCategory.skills.map((skill, sIdx) => {
-                const isCertified = skill.level.toLowerCase().includes('cert');
-                return (
-                  <div
-                    key={sIdx}
-                    className={`px-3.5 py-2.5 rounded-xl border flex items-center justify-between gap-3 ${
-                      skill.highlight
-                        ? 'bg-neutral-950/90 border-neutral-700/90'
-                        : 'bg-neutral-950/55 border-neutral-800/80'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      {isCertified ? (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                      ) : skill.highlight ? (
-                        <Sparkles className={`w-3.5 h-3.5 ${activeTheme.accentText} shrink-0`} />
-                      ) : (
-                        <span className="w-1.5 h-1.5 rounded-full bg-neutral-600 shrink-0 ml-1 mr-0.5" />
-                      )}
-                      <span className="text-xs sm:text-sm font-medium text-neutral-100 leading-snug">
-                        {skill.name}
-                      </span>
-                    </div>
-
-                    <span
-                      className={`text-[10px] font-mono px-2 py-0.5 rounded-md border shrink-0 ${
-                        isCertified
-                          ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40 font-bold'
-                          : skill.highlight
-                            ? 'bg-neutral-900 text-neutral-200 border-neutral-700 font-semibold'
-                            : 'bg-neutral-950 text-neutral-500 border-neutral-800'
-                      }`}
-                    >
-                      {getLocalizedLevelText(skill.level, lang)}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )
-      )}
-
-      {/* Bottom Compact Action Strip */}
+      {/* Bottom Compact KPI Bar */}
       <div className="px-3 py-2 rounded-xl bg-neutral-950/90 border border-neutral-800/90 flex flex-col sm:flex-row items-center justify-between gap-2 shrink-0 font-mono">
         <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1 text-[10px] text-neutral-400">
           <span><strong className="text-orange-400">&lt; 18 ms</strong> {t.kpiLabels[0]}</span>
