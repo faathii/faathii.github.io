@@ -190,6 +190,12 @@ A continuación tienes la explicación en profundidad de cada término, protocol
   * **Sharpe:** $\frac{Retorno - TasaLibreDeRiesgo}{VolatilidadTotal}$. Mide cuánto retorno obtienes por cada unidad de volatilidad.
   * **Sortino:** Similar a Sharpe, pero en el denominador solo penaliza la **volatilidad a la baja** (las pérdidas), ignorando la volatilidad al alza (las ganancias rápidas), ofreciendo una visión más justa de la robustez del modelo.
 
+### OHLCV, Backtesting, Slippage y Max Drawdown
+* **OHLCV (Open, High, Low, Close, Volume):** Formato estándar de velas financieras que resume los cinco puntos clave de cada intervalo temporal: precio de apertura, máximo alcanzado, mínimo, precio de cierre y volumen negociado.
+* **Backtesting:** Simulación histórica de una estrategia o modelo de ML sobre datos pasados para evaluar cómo habría rendido antes de arriesgar capital real.
+* **Slippage (Deslizamiento):** La diferencia entre el precio esperado de ejecución de una orden y el precio real al que se ejecuta debido a la latencia o falta de liquidez en el libro de órdenes. Modelarlo evita resultados artificialmente optimistas.
+* **Max Drawdown:** La caída porcentual máxima registrada desde un pico de capital hasta el valle posterior más profundo. Es el indicador definitivo de riesgo catastrófico.
+
 ---
 
 ## 2. Ciberseguridad Defensiva & Operaciones SOC (Cisco)
@@ -237,6 +243,11 @@ A continuación tienes la explicación en profundidad de cada término, protocol
 ### Air-Gapped Systems (Sistemas Aislados)
 * **Qué es:** Una medida de seguridad de máxima exigencia donde un ordenador o red crítica está físicamente aislado y desconectado de Internet y de cualquier otra red externa no segura. Diseñaste HFS-Sentry con cero dependencias precisamente para poder auditar estos entornos sin requerir conexión a repositorios de paquetes.
 
+### Criptografía RSA, Hashing SHA-256 y MFA
+* **RSA (Rivest-Shamir-Adleman):** Algoritmo de criptografía asimétrica basado en un par de claves (pública y privada) sustentado en la dificultad computacional de factorizar números primos grandes. Es vital para intercambio seguro de claves y firmas digitales.
+* **SHA-256:** Función resumen criptográfica unidireccional que genera una "huella digital" única de 256 bits (64 caracteres hexadecimales) para cualquier dato; cambiar un solo bit altera por completo el hash.
+* **MFA (Autenticación Multifactor):** Controles de acceso que exigen dos o más pruebas independientes (algo que sabes, algo que tienes, algo que eres) mitigando el robo de contraseñas.
+
 ---
 
 ## 3. Hardware, Microelectrónica & CAD Paramétrico
@@ -249,9 +260,9 @@ A continuación tienes la explicación en profundidad de cada término, protocol
 * **Qué es:** Componentes electrónicos (resistencias, condensadores, transistores, microchips) diseñados para ser soldados directamente sobre pistas de la superficie de la placa, sin necesidad de que sus terminales atraviesen agujeros perforados (*Through-Hole*).
 * **Ventajas:** Permiten reducir drásticamente el tamaño físico de la PCB, abaratar costes y mejorar la respuesta en alta frecuencia al reducir inductancias parásitas.
 
-### Aislamiento Galvánico
-* **Qué es:** El principio de diseño donde dos circuitos eléctricos están separados funcionalmente sin que exista un camino de conducción eléctrica directa entre ellos, pero pudiendo intercambiar señales (por ejemplo, mediante luz con optoacopladores o campos magnéticos).
-* **Por qué fue crítico en tu PCB:** Porque si una electroválvula o relé de 12V/24V sufre un pico inductivo de sobretensión (*back-EMF*) al apagarse, el aislamiento galvánico evita que la descarga queme el procesador de 3.3V de la Raspberry Pi 5.
+### Aislamiento Galvánico & Header GPIO
+* **Aislamiento Galvánico:** El principio de diseño donde dos circuitos eléctricos están separados funcionalmente sin que exista un camino de conducción eléctrica directa entre ellos, pero pudiendo intercambiar señales (por ejemplo, mediante luz con optoacopladores o campos magnéticos). Fue crítico en tu PCB porque evita que picos inductivos (*back-EMF*) de electroválvulas o relés quemen el procesador de 3.3V de la Raspberry Pi 5.
+* **Header GPIO (General-Purpose Input/Output):** Conector físico de 40 pines programables en placas como Raspberry Pi o ESP32 que permite intercambiar señales digitales (PWM, SPI, I2C, UART) directamente entre el software Linux/firmware y los componentes físicos externos.
 
 ### Plano de Masa Continuo (Ground Plane)
 * **Qué es:** Una superficie amplia e ininterrumpida de cobre en la PCB conectada a masa (GND). 
@@ -309,6 +320,13 @@ A continuación tienes la explicación en profundidad de cada término, protocol
 ### FSM (Finite State Machine / Máquina de Estados Finitos)
 * **Qué es:** Modelo matemático de computación que define que una entidad solo puede encontrarse en un estado a la vez (ejemplo en ciberseguridad o videojuegos: `Patrulla`, `Alerta`, `Hostil`, `Retirada`). Las transiciones entre estados ocurren únicamente bajo condiciones estrictas y predecibles, evitando comportamientos erráticos o condiciones de carrera.
 
+### WebSockets de Alta Frecuencia vs APIs REST
+* **REST API:** Comunicación bajo demanda (*request-response*). El cliente pregunta, el servidor responde y cierra. Ideal para consultas puntuales (catálogos de OmniStream).
+* **WebSockets:** Canal TCP persistente y bidireccional (*full-duplex*) donde el servidor empuja datos en tiempo real hacia el cliente sin que este tenga que preguntar cada milisegundo (*polling*). Indispensable en telemetría continua (iQsense) o flujos financieros tick-by-tick (CryptoQuant).
+
+### PyInstaller & Pipeline de Distribución
+* **Qué es:** Herramienta que empaqueta scripts de Python junto con el propio intérprete y todas sus librerías compiladas en un único archivo ejecutable autónomo (`.exe` en Windows) para que el usuario final pueda ejecutarlo con doble clic sin tener que instalar Python ni configurar entornos virtuales.
+
 ---
 
 ## 5. Sistemas Operativos, Redes & Cloud IT
@@ -352,3 +370,4 @@ A continuación tienes la explicación en profundidad de cada término, protocol
 > Si te preguntan algo que no conoces al 100%, tu respuesta debe ser:  
 > *"No me he cruzado aún con esa tecnología en particular en mis proyectos, pero basándome en cómo funciona [concepto similar que sí conoces], entiendo que el enfoque sería X. ¿Es así como lo implementan ustedes aquí?"*  
 > Eso transforma una debilidad en una demostración brillante de razonamiento técnico.
+
