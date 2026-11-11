@@ -9,6 +9,7 @@ export interface Project {
   solution: string;
   tags: string[];
   features: string[];
+  architectureFlow?: string[];
   metrics?: { label: string; value: string }[];
   githubUrl?: string;
   demoUrl?: string;

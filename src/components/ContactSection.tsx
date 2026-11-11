@@ -112,15 +112,17 @@ export const ContactSection: React.FC = () => {
                   <GithubIcon className="w-4 h-4" />
                   <span>GitHub</span>
                 </a>
-                <a
-                  href={PERSONAL_INFO.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-750 text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition-colors"
-                >
-                  <LinkedinIcon className="w-4 h-4 text-blue-500" />
-                  <span>LinkedIn</span>
-                </a>
+                {PERSONAL_INFO.linkedin && (
+                  <a
+                    href={PERSONAL_INFO.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-750 text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition-colors"
+                  >
+                    <LinkedinIcon className="w-4 h-4 text-blue-500" />
+                    <span>LinkedIn</span>
+                  </a>
+                )}
               </div>
             </div>
           </div>

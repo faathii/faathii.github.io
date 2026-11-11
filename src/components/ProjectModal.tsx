@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import type { Project } from '../types';
-import { X, CheckCircle2, Target, Lightbulb, BarChart3, Image as ImageIcon, Activity, Layers } from 'lucide-react';
+import { X, CheckCircle2, Target, Lightbulb, BarChart3, Image as ImageIcon, Activity, Layers, Lock, ArrowRight } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { BlueprintCarousel } from './blueprint/BlueprintCarousel';
+import { getLocalizedProject, UI_TEXT, type Lang } from '../i18n/portfolioI18n';
 
 import iqsenseCadImg from '../assets/projects/iqsense-cad-despiece.jpg';
 import iqsenseDashboardImg from '../assets/projects/iqsense-view-dashboard.png';
@@ -122,14 +123,17 @@ const iqsenseGallery: Record<IqsenseTab, { src: string; label: string; desc: str
 interface ProjectModalProps {
   project: Project | null;
   onClose: () => void;
+  lang?: Lang;
 }
 
-export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
+export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, lang = 'es' }) => {
   const [iqsenseTab, setIqsenseTab] = useState<IqsenseTab>('cad');
 
   if (!project) return null;
 
-  const isIqsense = project.id === 'iqsense-iot';
+  const localized = getLocalizedProject(project, lang);
+  const t = UI_TEXT[lang];
+  const isIqsense = localized.id === 'iqsense-iot';
   const imgKeys = project.images && project.images.length > 0
     ? project.images
     : project.imageUrl
@@ -155,19 +159,19 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="px-2.5 py-1 text-xs font-semibold rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-mono">
-                {project.category}
+                {localized.category}
               </span>
-              {project.badge && (
+              {localized.badge && (
                 <span className="px-2 py-0.5 text-xs rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 font-mono">
-                  {project.badge}
+                  {localized.badge}
                 </span>
               )}
             </div>
             <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
-              {project.title}
+              {localized.title}
             </h3>
             <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-              {project.subtitle}
+              {localized.subtitle}
             </p>
           </div>
           <button
@@ -269,29 +273,51 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         {/* Long Description */}
         <div className="mb-6">
           <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed">
-            {project.longDescription}
+            {localized.longDescription}
           </p>
         </div>
+
+        {/* Visual Architecture Flow Diagram */}
+        {localized.architectureFlow && localized.architectureFlow.length > 0 && (
+          <div className="mb-6 p-4 rounded-xl bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800">
+            <div className="text-[11px] font-bold font-mono uppercase tracking-wider text-orange-500 mb-3">
+              {t.archFlowLabel}
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {localized.architectureFlow.map((node, idx) => (
+                <React.Fragment key={idx}>
+                  <div className="px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-xs font-mono font-semibold text-zinc-800 dark:text-zinc-200 shadow-xs">
+                    <span className="text-orange-500 mr-1.5">0{idx + 1}.</span>
+                    {node}
+                  </div>
+                  {idx < localized.architectureFlow!.length - 1 && (
+                    <ArrowRight className="w-3.5 h-3.5 text-orange-500 shrink-0" />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Challenge & Solution Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div className="p-4 rounded-xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/20">
             <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold text-sm mb-2">
               <Target className="w-4 h-4" />
-              <span>El Desafío</span>
+              <span>{t.challengeLabel}</span>
             </div>
             <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
-              {project.challenge}
+              {localized.challenge}
             </p>
           </div>
 
           <div className="p-4 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20">
             <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm mb-2">
               <Lightbulb className="w-4 h-4" />
-              <span>La Solución Técnica</span>
+              <span>{t.solutionLabel}</span>
             </div>
             <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
-              {project.solution}
+              {localized.solution}
             </p>
           </div>
         </div>
@@ -299,10 +325,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         {/* Key Features */}
         <div className="mb-6">
           <h4 className="text-sm font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">
-            Características Clave & Arquitectura
+            {t.modalFeatures}
           </h4>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {project.features.map((feature, idx) => (
+            {localized.features.map((feature, idx) => (
               <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                 <span>{feature}</span>
@@ -312,14 +338,14 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         </div>
 
         {/* Metrics */}
-        {project.metrics && (
+        {localized.metrics && (
           <div className="mb-6 p-4 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-800">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3">
               <BarChart3 className="w-4 h-4 text-cyan-500" />
-              <span>Métricas del Proyecto</span>
+              <span>{lang === 'es' ? 'Métricas del Proyecto' : 'Project Metrics'}</span>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              {project.metrics.map((m, idx) => (
+              {localized.metrics.map((m, idx) => (
                 <div key={idx} className="text-center p-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800">
                   <p className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white font-mono">{m.value}</p>
                   <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">{m.label}</p>
@@ -332,10 +358,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         {/* Tech tags */}
         <div className="mb-8">
           <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">
-            Tecnologías Empleadas
+            {lang === 'es' ? 'Tecnologías Empleadas' : 'Technology Stack'}
           </h4>
           <div className="flex flex-wrap gap-1.5">
-            {project.tags.map((tag, idx) => (
+            {localized.tags.map((tag, idx) => (
               <span
                 key={idx}
                 className="px-2.5 py-1 text-xs font-mono rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
@@ -347,24 +373,34 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         </div>
 
         {/* Footer Actions */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-          >
-            Cerrar
-          </button>
-          {project.githubUrl && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
-            >
-              <GithubIcon className="w-4 h-4" />
-              <span>Ver Repositorio</span>
-            </a>
+        <div className="flex items-center justify-between gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+          {!localized.githubUrl ? (
+            <span className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-500 dark:text-zinc-400">
+              <Lock className="w-3.5 h-3.5 text-orange-400" />
+              <span>{t.modalPrivateNote}</span>
+            </span>
+          ) : (
+            <span />
           )}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onClose}
+              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+            >
+              {t.modalClose}
+            </button>
+            {localized.githubUrl && (
+              <a
+                href={localized.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-zinc-800 dark:text-zinc-200 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+              >
+                <GithubIcon className="w-4 h-4" />
+                <span>{t.modalViewRepo}</span>
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </div>

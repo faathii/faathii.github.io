@@ -4,11 +4,11 @@ import tailwindcss from '@tailwindcss/vite'
 import { viteSingleFile } from 'vite-plugin-singlefile'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   base: './',
   plugins: [
     react(),
     tailwindcss(),
-    viteSingleFile(),
+    ...(mode === 'offline' ? [viteSingleFile()] : []),
   ],
-})
+}))

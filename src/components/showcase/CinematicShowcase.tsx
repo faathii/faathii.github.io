@@ -3,12 +3,18 @@ import {
   ShieldCheck, Download, Layers, ExternalLink, Mail, Phone, MapPin,
   Send, Check, Volume2, VolumeX, ChevronLeft, ChevronRight,
   ArrowRight, Eye, FileText, GraduationCap, BookOpen,
-  User, Sliders, Radio, Tv, CircuitBoard, TrendingUp, Terminal, Copy
+  User, Sliders, Radio, Tv, CircuitBoard, TrendingUp, Terminal, Copy, Lock, Languages
 } from 'lucide-react';
 import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES } from '../../data/portfolioData';
 import { ProjectModal } from '../ProjectModal';
 import { sendContactMessage } from '../../utils/contactService';
 import { trackEvent } from '../../utils/analytics';
+import {
+  getLocalizedProject,
+  getLocalizedSkillCategories,
+  UI_TEXT,
+  type Lang,
+} from '../../i18n/portfolioI18n';
 import type { Project } from '../../types';
 
 import hamzaImg from '../../assets/hamza.jpg';
@@ -130,6 +136,13 @@ const STAGES = [
 ];
 
 export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook }) => {
+  const [lang, setLang] = useState<Lang>(() => {
+    try {
+      return window.localStorage.getItem('portfolio_lang') === 'en' ? 'en' : 'es';
+    } catch {
+      return 'es';
+    }
+  });
   const [currentStageIdx, setCurrentStageIdx] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [modalProject, setModalProject] = useState<Project | null>(null);
@@ -141,8 +154,27 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
-  const totalStages = STAGES.length;
-  const currentStage = STAGES[currentStageIdx];
+  const t = UI_TEXT[lang];
+  const localizedStages = STAGES.map((st) => {
+    const tr = t.stages[st.id as keyof typeof t.stages];
+    return tr ? { ...st, title: tr.title, tag: tr.tag } : st;
+  });
+
+  const toggleLang = useCallback(() => {
+    const next: Lang = lang === 'es' ? 'en' : 'es';
+    if (soundEnabled) playTactileClick(980);
+    setLang(next);
+    try {
+      window.localStorage.setItem('portfolio_lang', next);
+      document.documentElement.lang = next;
+    } catch {
+      // Ignore storage errors
+    }
+    trackEvent(`lang/switch-${next}`, `Idioma ${next.toUpperCase()}`);
+  }, [lang, soundEnabled]);
+
+  const totalStages = localizedStages.length;
+  const currentStage = localizedStages[currentStageIdx];
 
   const goToStage = useCallback((idx: number) => {
     if (idx < 0 || idx >= totalStages) return;
@@ -264,7 +296,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
               </span>
             </div>
             <p className="text-[10px] text-neutral-400 tracking-tight hidden sm:block">
-              Ingeniería Ciberfísica • UNED Grado Informática
+              {t.headerSubtitle}
             </p>
           </div>
         </div>
@@ -277,8 +309,19 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
           <span className="text-neutral-200 font-semibold tracking-wide uppercase">{currentStage.title}</span>
         </div>
 
-        {/* Right Tools: Audio Switcher & Release CV */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Right Tools: Language Switcher, Audio Switcher & Release CV */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
+          <button
+            onClick={toggleLang}
+            className="px-2 py-1.5 rounded-lg border border-neutral-700 bg-neutral-900 hover:border-orange-500/60 text-neutral-200 font-mono text-[11px] font-bold flex items-center gap-1 transition-colors cursor-pointer"
+            title={lang === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+          >
+            <Languages className="w-3.5 h-3.5 text-orange-400" />
+            <span className={lang === 'es' ? 'text-orange-400' : 'text-neutral-500'}>ES</span>
+            <span className="text-neutral-600">/</span>
+            <span className={lang === 'en' ? 'text-orange-400' : 'text-neutral-500'}>EN</span>
+          </button>
+
           <button
             onClick={() => setSoundEnabled(!soundEnabled)}
             className={`p-1.5 rounded-lg border font-mono text-xs transition-colors cursor-pointer ${
@@ -298,8 +341,8 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 text-xs font-mono font-black uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(249,115,22,0.35)] cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Descargar CV (PDF)</span>
-            <span className="sm:hidden">CV</span>
+            <span className="hidden sm:inline">{t.downloadPdfHeader}</span>
+            <span className="sm:hidden">{t.downloadPdfShort}</span>
           </a>
         </div>
       </header>
@@ -325,7 +368,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
             </div>
 
             <div className="flex items-center gap-3 text-neutral-500">
-              <span className="hidden sm:inline font-mono">ESTACIÓN 0{currentStageIdx + 1} / 0{totalStages}</span>
+              <span className="hidden sm:inline font-mono">{t.stationLabel} 0{currentStageIdx + 1} / 0{totalStages}</span>
               <div className="flex items-center gap-1">
                 <button
                   onClick={handlePrev}
@@ -359,7 +402,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                   <div className="shrink-0 w-full sm:w-64 rounded-2xl bg-[#171a23] border border-neutral-700/80 p-3.5 shadow-xl relative overflow-hidden">
                     <div className="flex items-center justify-between pb-2 mb-2 border-b border-neutral-800 text-[10px] font-mono text-neutral-400">
                       <span>DOC ID: #8924-ENG</span>
-                      <span className="text-orange-400 font-bold">VERIFICADO</span>
+                      <span className="text-orange-400 font-bold">{t.verifiedBadge}</span>
                     </div>
 
                     <div className="w-full h-56 rounded-xl overflow-hidden border border-neutral-700 relative bg-black shadow-inner">
@@ -373,12 +416,12 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                     {/* Metadata tags */}
                     <div className="mt-3 space-y-1.5 font-mono text-[10px]">
                       <div className="flex justify-between py-1 px-2 rounded bg-neutral-900/90 border border-neutral-800">
-                        <span className="text-neutral-500">DISCIPLINA:</span>
-                        <span className="text-neutral-200 font-bold">SISTEMAS CIBERFÍSICOS</span>
+                        <span className="text-neutral-500">{t.disciplineLabel}</span>
+                        <span className="text-neutral-200 font-bold">{t.disciplineValue}</span>
                       </div>
                       <div className="flex justify-between py-1 px-2 rounded bg-neutral-900/90 border border-neutral-800">
-                        <span className="text-neutral-500">ESTADO:</span>
-                        <span className="text-emerald-400 font-bold">DISPONIBLE 2026</span>
+                        <span className="text-neutral-500">{t.statusLabel}</span>
+                        <span className="text-emerald-400 font-bold">{t.statusValue}</span>
                       </div>
                     </div>
                   </div>
@@ -387,19 +430,19 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                   <div className="flex-1 space-y-3">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="px-2.5 py-0.5 rounded bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs font-mono font-bold">
-                        EXPEDIENTE TÉCNICO OFICIAL
+                        {t.officialDossier}
                       </span>
                       <span className="text-xs font-mono text-neutral-400">
-                        ÁVILA / MADRID • DISPONIBILIDAD INMEDIATA
+                        {t.locationBadge}
                       </span>
                     </div>
 
                     <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
-                      Ingeniería de Hardware, Software Distribuido & Seguridad Defensiva
+                      {t.heroHeadline}
                     </h1>
 
                     <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed text-justify">
-                      {PERSONAL_INFO.bio}
+                      {t.bio}
                     </p>
 
                     {/* Contact metadata pills */}
@@ -418,7 +461,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                       </span>
                       <span className="px-2.5 py-1 rounded bg-neutral-900 border border-neutral-700 text-neutral-300 flex items-center gap-1.5">
                         <GraduationCap className="w-3.5 h-3.5 text-orange-400" />
-                        <span>UNED: Grado en Ingeniería Informática</span>
+                        <span>{t.unedPill}</span>
                       </span>
                     </div>
 
@@ -427,49 +470,29 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                       <div className="flex items-center justify-between pb-1.5 border-b border-neutral-800 text-xs font-mono">
                         <span className="font-bold text-neutral-200 flex items-center gap-1.5">
                           <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                          <span>ACREDITACIONES OFICIALES CISCO NETWORKING ACADEMY</span>
+                          <span>{t.ciscoRackTitle}</span>
                         </span>
                         <span className="text-[9px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 font-bold">
-                          7 INSIGNIAS VERIFICADAS
+                          {t.ciscoVerifiedCount}
                         </span>
                       </div>
 
                       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 text-center">
-                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
-                          <img src={ciscoCyberOpsImg} alt="CyberOps" className="w-8 h-8 object-contain mb-1" />
-                          <span className="text-[9px] font-bold text-white">CyberOps</span>
-                          <span className="text-[8px] text-neutral-500 font-mono">Associate</span>
-                        </div>
-                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
-                          <img src={ciscoIntroImg} alt="Intro" className="w-8 h-8 object-contain mb-1" />
-                          <span className="text-[9px] font-bold text-white">Intro Cyber</span>
-                          <span className="text-[8px] text-neutral-500 font-mono">Security</span>
-                        </div>
-                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
-                          <img src={ciscoEnterpriseImg} alt="Enterprise" className="w-7 h-7 object-contain mb-1" />
-                          <span className="text-[9px] font-bold text-neutral-300">Empresas</span>
-                          <span className="text-[8px] text-neutral-500 font-mono">Protección</span>
-                        </div>
-                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
-                          <img src={ciscoThreatsImg} alt="Threats" className="w-7 h-7 object-contain mb-1" />
-                          <span className="text-[9px] font-bold text-neutral-300">Amenazas</span>
-                          <span className="text-[8px] text-neutral-500 font-mono">& SOC</span>
-                        </div>
-                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
-                          <img src={ciscoCryptoImg} alt="Crypto" className="w-7 h-7 object-contain mb-1" />
-                          <span className="text-[9px] font-bold text-neutral-300">Criptografía</span>
-                          <span className="text-[8px] text-neutral-500 font-mono">& Claves</span>
-                        </div>
-                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
-                          <img src={ciscoFirewallImg} alt="Firewall" className="w-7 h-7 object-contain mb-1" />
-                          <span className="text-[9px] font-bold text-neutral-300">Firewalls</span>
-                          <span className="text-[8px] text-neutral-500 font-mono">Perimetral</span>
-                        </div>
-                        <div className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
-                          <img src={ciscoNetSecImg} alt="NetSec" className="w-7 h-7 object-contain mb-1" />
-                          <span className="text-[9px] font-bold text-neutral-300">Redes Sec</span>
-                          <span className="text-[8px] text-neutral-500 font-mono">Infraestructura</span>
-                        </div>
+                        {[
+                          ciscoCyberOpsImg,
+                          ciscoIntroImg,
+                          ciscoEnterpriseImg,
+                          ciscoThreatsImg,
+                          ciscoCryptoImg,
+                          ciscoFirewallImg,
+                          ciscoNetSecImg,
+                        ].map((imgSrc, cIdx) => (
+                          <div key={cIdx} className="p-1.5 rounded-lg bg-[#14161f] border border-neutral-800 flex flex-col items-center">
+                            <img src={imgSrc} alt={t.ciscoBadges[cIdx].title} className={`${cIdx < 2 ? 'w-8 h-8' : 'w-7 h-7'} object-contain mb-1`} />
+                            <span className={`text-[9px] font-bold ${cIdx < 2 ? 'text-white' : 'text-neutral-300'}`}>{t.ciscoBadges[cIdx].title}</span>
+                            <span className="text-[8px] text-neutral-500 font-mono">{t.ciscoBadges[cIdx].sub}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
 
@@ -479,7 +502,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                         onClick={handleNext}
                         className="px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-mono font-bold text-xs uppercase tracking-wider flex items-center gap-2 cursor-pointer shadow-md transition-all"
                       >
-                        <span>Avanzar a Matriz de Tecnologías ➔</span>
+                        <span>{t.advanceToSkills}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     </div>
@@ -497,10 +520,10 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                       <div>
                         <h2 className="text-lg sm:text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
                           <Layers className="w-4 h-4 text-orange-400" />
-                          <span>Matriz de Dominios Técnicos & Pilares de Ingeniería</span>
+                          <span>{t.skillsTitle}</span>
                         </h2>
                         <p className="text-[11px] text-neutral-400 font-sans mt-0.5">
-                          Evaluación técnica rigurosa desde la microelectrónica y el diseño físico de hardware hasta arquitecturas distribuidas, SOC defensivo y modelos de IA predictiva.
+                          {t.skillsSubtitle}
                         </p>
                       </div>
 
@@ -508,20 +531,20 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                         onClick={handleNext}
                         className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm"
                       >
-                        <span>Ver Proyectos ➔</span>
+                        <span>{t.seeProjects}</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     </div>
 
                     {/* 5 Tactile Rack Panels */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2.5">
-                      {SKILL_CATEGORIES.map((cat, idx) => (
+                      {getLocalizedSkillCategories(SKILL_CATEGORIES, lang).map((cat, idx) => (
                         <div key={idx} className="p-3 rounded-xl bg-neutral-900/90 border border-neutral-800 hover:border-neutral-700 transition-colors flex flex-col justify-between space-y-2">
                           <div className="space-y-1">
                             <div className="flex items-center justify-between">
                               <span className="text-[11px] font-bold text-white uppercase tracking-tight leading-tight">{cat.title}</span>
                               <span className="text-[9px] px-1.5 py-0.2 rounded bg-neutral-800 text-orange-400 font-bold border border-neutral-700 shrink-0">
-                                PILAR 0{idx + 1}
+                                {t.pillarPrefix} 0{idx + 1}
                               </span>
                             </div>
 
@@ -554,23 +577,23 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                     <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-4 w-full sm:w-auto text-center sm:text-left text-xs">
                       <div>
                         <span className="font-black text-orange-400 block">&lt; 18 ms</span>
-                        <span className="text-[9px] text-neutral-500 uppercase">Inferencia Edge AI</span>
+                        <span className="text-[9px] text-neutral-500 uppercase">{t.kpiLabels[0]}</span>
                       </div>
                       <div>
                         <span className="font-black text-emerald-400 block">111M+</span>
-                        <span className="text-[9px] text-neutral-500 uppercase">Dataset ML Financiero</span>
+                        <span className="text-[9px] text-neutral-500 uppercase">{t.kpiLabels[1]}</span>
                       </div>
                       <div>
                         <span className="font-black text-sky-400 block">0 Deps</span>
-                        <span className="text-[9px] text-neutral-500 uppercase">Python SOC Puro</span>
+                        <span className="text-[9px] text-neutral-500 uppercase">{t.kpiLabels[2]}</span>
                       </div>
                       <div>
                         <span className="font-black text-amber-400 block">±0.15 mm</span>
-                        <span className="text-[9px] text-neutral-500 uppercase">Tolerancia CAD / PCB</span>
+                        <span className="text-[9px] text-neutral-500 uppercase">{t.kpiLabels[3]}</span>
                       </div>
                       <div>
-                        <span className="font-black text-purple-400 block">540 Horas</span>
-                        <span className="text-[9px] text-neutral-500 uppercase">Oficial Cisco SOC</span>
+                        <span className="font-black text-purple-400 block">{lang === 'es' ? '540 Horas' : '540 Hours'}</span>
+                        <span className="text-[9px] text-neutral-500 uppercase">{t.kpiLabels[4]}</span>
                       </div>
                     </div>
 
@@ -578,7 +601,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                       onClick={handleNext}
                       className="w-full sm:w-auto px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer shadow-md transition-all shrink-0"
                     >
-                      <span>Explorar iQsense 2.0 (RPi 5)</span>
+                      <span>{t.exploreFirstProject}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
@@ -597,8 +620,9 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                   'crypto': 'botcripto-trading',
                 };
                 const pId = projectMapping[currentStage.id];
-                const project = PROJECTS_DATA.find((p) => p.id === pId);
-                if (!project) return null;
+                const rawProject = PROJECTS_DATA.find((p) => p.id === pId);
+                if (!rawProject) return null;
+                const project = getLocalizedProject(rawProject, lang);
 
                 const images = getProjectImages(pId);
                 const activeImgIdx = selectedPhotoIdx[pId] || 0;
@@ -609,7 +633,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                     
                     {/* Left 60%: High-Precision Hardware Visualizer */}
                     <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-2">
-                      <div className="w-full h-[280px] sm:h-[360px] rounded-xl overflow-hidden border border-neutral-700 bg-black relative group shadow-xl">
+                      <div className="w-full h-[255px] sm:h-[325px] rounded-xl overflow-hidden border border-neutral-700 bg-black relative group shadow-xl">
                         <img
                           src={activeImg}
                           alt={project.title}
@@ -619,19 +643,39 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                         {/* Top Watermark Overlay */}
                         <div className="absolute top-2 left-2 px-2 py-1 rounded bg-neutral-950/80 backdrop-blur border border-neutral-800 text-[10px] font-mono text-neutral-300 flex items-center gap-2">
                           <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                          <span>REGISTRO: {project.id.toUpperCase()}</span>
+                          <span>{t.recordPrefix}: {project.id.toUpperCase()}</span>
                           <span className="text-neutral-500">[{activeImgIdx + 1}/{images.length}]</span>
                         </div>
 
                         {/* Direct Modal Magnifier Button */}
                         <button
-                          onClick={() => setModalProject(project)}
+                          onClick={() => setModalProject(rawProject)}
                           className="absolute bottom-2 right-2 px-3 py-1.5 rounded-lg bg-neutral-900/90 hover:bg-neutral-800 text-white border border-neutral-700 text-xs font-mono font-bold flex items-center gap-1.5 shadow-lg cursor-pointer"
                         >
                           <Eye className="w-3.5 h-3.5 text-orange-400" />
-                          <span>Ficha Completa</span>
+                          <span>{t.fullSpec}</span>
                         </button>
                       </div>
+
+                      {/* Visual Architecture Flow Diagram */}
+                      {project.architectureFlow && project.architectureFlow.length > 0 && (
+                        <div className="px-2.5 py-2 rounded-xl bg-neutral-950/90 border border-neutral-800 flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x">
+                          <span className="text-[9px] font-mono font-bold text-orange-400 uppercase tracking-wider shrink-0 pr-1 border-r border-neutral-800">
+                            {t.archFlowLabel}
+                          </span>
+                          {project.architectureFlow.map((step, stepIdx) => (
+                            <React.Fragment key={stepIdx}>
+                              <span className="text-[10px] font-mono text-neutral-200 bg-neutral-900 border border-neutral-800 px-2 py-0.5 rounded whitespace-nowrap shrink-0">
+                                <span className="text-orange-400 mr-1">0{stepIdx + 1}</span>
+                                {step}
+                              </span>
+                              {stepIdx < project.architectureFlow!.length - 1 && (
+                                <ArrowRight className="w-3 h-3 text-orange-500 shrink-0" />
+                              )}
+                            </React.Fragment>
+                          ))}
+                        </div>
+                      )}
 
                       {/* Tactile Hardware Photo Selector Strip */}
                       {images.length > 1 && (
@@ -643,7 +687,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                                 if (soundEnabled) playTactileClick(850 + idx * 40);
                                 setSelectedPhotoIdx((prev) => ({ ...prev, [pId]: idx }));
                               }}
-                              className={`h-12 w-16 sm:w-20 rounded-lg overflow-hidden border transition-all shrink-0 cursor-pointer ${
+                              className={`h-11 w-16 sm:w-20 rounded-lg overflow-hidden border transition-all shrink-0 cursor-pointer ${
                                 activeImgIdx === idx
                                   ? 'border-orange-500 ring-2 ring-orange-500/30 scale-105'
                                   : 'border-neutral-800 opacity-60 hover:opacity-100 hover:border-neutral-600'
@@ -674,11 +718,11 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                         {/* Engineering Challenge & Solution Box */}
                         <div className="mt-3 p-2.5 rounded-xl bg-neutral-950 border border-neutral-800 space-y-1.5 text-[11px] font-sans">
                           <div>
-                            <span className="text-orange-400 font-mono font-bold text-[10px] uppercase block">Desafío Técnico:</span>
+                            <span className="text-orange-400 font-mono font-bold text-[10px] uppercase block">{t.challengeLabel}</span>
                             <p className="text-neutral-400 leading-tight">{project.challenge}</p>
                           </div>
                           <div>
-                            <span className="text-emerald-400 font-mono font-bold text-[10px] uppercase block">Solución de Ingeniería:</span>
+                            <span className="text-emerald-400 font-mono font-bold text-[10px] uppercase block">{t.solutionLabel}</span>
                             <p className="text-neutral-300 leading-tight">{project.solution}</p>
                           </div>
                         </div>
@@ -697,9 +741,9 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
 
                         {/* Tags as tactile key caps */}
                         <div className="flex flex-wrap gap-1 mt-2.5">
-                          {project.tags.slice(0, 5).map((t, tIdx) => (
+                          {project.tags.slice(0, 5).map((tTag, tIdx) => (
                             <span key={tIdx} className="text-[9px] px-2 py-0.5 rounded bg-neutral-900 border border-neutral-700 text-neutral-300">
-                              {t}
+                              {tTag}
                             </span>
                           ))}
                         </div>
@@ -708,13 +752,13 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                       {/* Action buttons */}
                       <div className="flex items-center gap-2 pt-2 border-t border-neutral-800">
                         <button
-                          onClick={() => setModalProject(project)}
+                          onClick={() => setModalProject(rawProject)}
                           className="flex-1 py-2 px-3 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer shadow-md transition-all"
                         >
                           <Eye className="w-3.5 h-3.5" />
-                          <span>Ficha Técnica Completa</span>
+                          <span>{t.fullTechnicalSpec}</span>
                         </button>
-                        {project.githubUrl && (
+                        {project.githubUrl ? (
                           <a
                             href={project.githubUrl}
                             target="_blank"
@@ -724,6 +768,12 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                             <ExternalLink className="w-3.5 h-3.5 text-orange-400" />
                             <span>GitHub</span>
                           </a>
+                        ) : (
+                          <span className="py-2 px-2.5 rounded-lg bg-neutral-950 text-neutral-400 border border-neutral-800 text-[10px] font-bold flex items-center gap-1.5 shrink-0">
+                            <Lock className="w-3 h-3 text-orange-400" />
+                            <span className="hidden sm:inline">{t.privateRepoBadge}</span>
+                            <span className="sm:hidden">{lang === 'es' ? 'Privado' : 'Private'}</span>
+                          </span>
                         )}
                       </div>
                     </div>
@@ -741,13 +791,13 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                   <div className="lg:col-span-6 space-y-4">
                     <div>
                       <span className="text-xs font-mono text-orange-400 uppercase tracking-wider block font-bold">
-                        CANAL DE COMUNICACIÓN & CONTRATACIÓN
+                        {t.contactOverline}
                       </span>
                       <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                        Contacto Directo & Expediente Oficial
+                        {t.contactTitle}
                       </h2>
                       <p className="text-xs text-neutral-400 font-sans mt-1">
-                        Descarga el currículum técnico en formato oficial o transmite un mensaje cifrado para concertar entrevista técnica.
+                        {t.dispatchSubtitle}
                       </p>
                     </div>
 
@@ -794,7 +844,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                     {/* Dual CV Downloads Heavy-Duty Panel */}
                     <div className="p-3.5 rounded-2xl bg-neutral-950 border border-orange-500/40 space-y-2">
                       <span className="text-xs font-mono text-orange-400 uppercase tracking-wider block font-bold text-center">
-                        CURRÍCULUM VITAE 2026 (1 PÁGINA CON FOTO)
+                        {t.cvHeader}
                       </span>
                       <div className="grid grid-cols-2 gap-2">
                         <a
@@ -804,7 +854,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                           className="py-2.5 px-3 rounded-xl bg-orange-500 hover:bg-orange-400 text-neutral-950 font-mono font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md text-center cursor-pointer"
                         >
                           <Download className="w-4 h-4 shrink-0" />
-                          <span>Descargar PDF</span>
+                          <span>{t.downloadPdf}</span>
                         </a>
                         <a
                           href="./Curriculum_Hamza_El_Fathi_Sofyani.docx"
@@ -813,7 +863,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                           className="py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-700 font-mono font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center cursor-pointer"
                         >
                           <FileText className="w-4 h-4 text-orange-400 shrink-0" />
-                          <span>Descargar Word</span>
+                          <span>{t.downloadWord}</span>
                         </a>
                       </div>
                     </div>
@@ -824,10 +874,10 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                     <div>
                       <h3 className="text-xs font-mono uppercase tracking-wider text-orange-400 font-bold flex items-center gap-2">
                         <Send className="w-3.5 h-3.5" />
-                        <span>Despacho Inmediato de Mensaje</span>
+                        <span>{t.dispatchTitle}</span>
                       </h3>
                       <p className="text-[11px] text-neutral-400 font-sans mt-0.5">
-                        Transmisión directa al buzón de Hamza para ofertas técnicas, colaboraciones o entrevistas.
+                        {t.dispatchSubtitle}
                       </p>
                     </div>
 
@@ -837,8 +887,8 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                           <Check className="w-4 h-4 shrink-0" />
                           <span>
                             {contactSent === 'mailto'
-                              ? 'Abriendo tu cliente de correo con el mensaje preparado para Hamza.'
-                              : 'Mensaje enviado al correo de Hamza. Respuesta en menos de 24 horas.'}
+                              ? t.dispatchSuccessMailto
+                              : t.dispatchSuccessApi}
                           </span>
                         </div>
                       )}
@@ -849,7 +899,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                           required
                           value={contactData.name}
                           onChange={(e) => setContactData({ ...contactData, name: e.target.value })}
-                          placeholder="Nombre / Empresa"
+                          placeholder={t.namePlaceholder}
                           className="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-orange-500"
                         />
                         <input
@@ -857,7 +907,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                           required
                           value={contactData.email}
                           onChange={(e) => setContactData({ ...contactData, email: e.target.value })}
-                          placeholder="Correo electrónico"
+                          placeholder={t.emailPlaceholder}
                           className="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-orange-500"
                         />
                       </div>
@@ -867,7 +917,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                         rows={3}
                         value={contactData.message}
                         onChange={(e) => setContactData({ ...contactData, message: e.target.value })}
-                        placeholder="Detalles de la propuesta técnica, rol o vacante..."
+                        placeholder={t.messagePlaceholder}
                         className="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-700 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-orange-500 resize-none"
                       />
 
@@ -877,7 +927,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                         className="w-full py-2.5 px-4 rounded-lg bg-orange-500 hover:bg-orange-400 disabled:opacity-60 disabled:cursor-wait text-neutral-950 font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
                       >
                         <Send className="w-3.5 h-3.5" />
-                        <span>{isSendingContact ? 'Transmitiendo...' : 'Transmitir Mensaje'}</span>
+                        <span>{isSendingContact ? t.sendingBtn : t.sendBtn}</span>
                       </button>
                     </form>
                   </div>
@@ -891,14 +941,14 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
           <div className="pt-2 border-t border-neutral-800/80 flex items-center justify-between text-[11px] font-mono text-neutral-500 shrink-0">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
-              <span>SISTEMA INDUSTRIAL v3.0 // HAMZA EL FATHI SOFYANI</span>
+              <span>{t.footerBrand}</span>
             </div>
             <div className="hidden sm:flex items-center gap-3">
-              <span>ATAJOS: [1 - 8] MODS</span>
+              <span>{t.shortcuts[0]}</span>
               <span>•</span>
-              <span>[B] LIBRO 3D</span>
+              <span>{t.shortcuts[1]}</span>
               <span>•</span>
-              <span>[← →] NAV</span>
+              <span>{t.shortcuts[2]}</span>
             </div>
           </div>
         </div>
@@ -909,7 +959,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
       {/* ========================================================================= */}
       <nav className="fixed bottom-3 inset-x-0 mx-auto w-fit z-40 max-w-[96vw] px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-2xl bg-[#14161f]/95 backdrop-blur-2xl border border-neutral-700/80 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar touch-pan-x">
         
-        {STAGES.map((st, idx) => {
+        {localizedStages.map((st, idx) => {
           const IconComp = st.icon;
           const isActive = currentStageIdx === idx;
           return (
@@ -941,7 +991,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
           title="Abrir Monografía Técnica en Libro Físico 3D (Atajo: tecla B)"
         >
           <BookOpen className="w-3.5 h-3.5 text-orange-400" />
-          <span className="hidden sm:inline">Libro 3D</span>
+          <span className="hidden sm:inline">{t.bookLabel}</span>
           <span className="text-[9px] px-1 py-0.2 rounded bg-orange-500/20 text-orange-300 font-mono">EXTRA</span>
         </button>
       </nav>
@@ -951,6 +1001,7 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
         <ProjectModal
           project={modalProject}
           onClose={() => setModalProject(null)}
+          lang={lang}
         />
       )}
     </div>

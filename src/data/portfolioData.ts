@@ -11,7 +11,7 @@ export const PERSONAL_INFO = {
   availability: 'Disponible para proyectos de alta exigencia técnica',
   email: 'hamzaelfathisofyani@gmail.com',
   github: 'https://github.com/faathii',
-  linkedin: 'https://linkedin.com',
+  linkedin: '',
   cvPdfPath: './Curriculum_Hamza_El_Fathi_Sofyani.pdf',
   stats: [
     { label: 'Especialización', value: 'Sistemas, IA & Ciberseguridad' },
@@ -48,8 +48,7 @@ export const PROJECTS_DATA: Project[] = [
       { label: 'Precisión Modelo IA', value: 'R² = 0.94 / VPD' },
       { label: 'Dataset Telemetría', value: '> 1.2M Muestras' }
     ],
-    githubUrl: 'https://github.com',
-    demoUrl: 'https://github.com'
+    architectureFlow: ['Sensores IoT & PCB GPIO', 'Feature Engine Python', 'Inferencia Edge (<18ms)', 'Relés & Telemetría']
   },
   {
     id: 'omnistream-hub',
@@ -84,8 +83,7 @@ export const PROJECTS_DATA: Project[] = [
       { label: 'Latencia Deep Link', value: '< 250 ms' },
       { label: 'Arquitectura', value: 'pywebview + Native URI' }
     ],
-    githubUrl: 'https://github.com',
-    demoUrl: 'https://github.com'
+    architectureFlow: ['APIs TMDb / JustWatch', 'Caché Indexada (>200k)', 'Puente RPC pywebview', 'Deep Link Nativo URI']
   },
   {
     id: 'botcripto-trading',
@@ -120,8 +118,7 @@ export const PROJECTS_DATA: Project[] = [
       { label: 'Features de IA', value: '> 45 Variables / Tick' },
       { label: 'Sharpe Ratio Simulado', value: '2.41' }
     ],
-    githubUrl: 'https://github.com',
-    demoUrl: 'https://github.com'
+    architectureFlow: ['Stream WebSockets', 'Extracción +45 Features', 'Modelo Walk-Forward', 'Control Riesgo & Órdenes']
   },
   {
     id: 'godot-topdown-runner',
@@ -149,8 +146,7 @@ export const PROJECTS_DATA: Project[] = [
       { label: 'GC Memory Spikes', value: '0 Pausas' },
       { label: 'Patrón Core', value: 'Object Pool + FSM' }
     ],
-    githubUrl: 'https://github.com',
-    demoUrl: 'https://github.com'
+    architectureFlow: ['Input Determinista', 'IA Enemiga FSM', 'Object Pooling (0 GC)', 'Renderizado 60 FPS']
   },
   {
     id: 'hardware-pcb-cad',
@@ -178,8 +174,7 @@ export const PROJECTS_DATA: Project[] = [
       { label: 'Modelado CAD', value: '100% Scripted' },
       { label: 'Topología PCB', value: '2 Layers / SMD' }
     ],
-    githubUrl: 'https://github.com',
-    demoUrl: 'https://github.com'
+    architectureFlow: ['Esquemático KiCad', 'Ruteo 2 Capas & SMD', 'Blender/FreeCAD Script', 'CNC & Impresión ±0.15mm']
   },
   {
     id: 'hfs-sentry',
@@ -219,6 +214,7 @@ export const PROJECTS_DATA: Project[] = [
       { label: 'Herramientas Integradas', value: '7 Módulos' },
       { label: 'Arquitectura', value: 'Dynamic Registry' }
     ],
+    architectureFlow: ['Red / Logs del Host', 'Core Python Puro (0 Deps)', 'ThreadPool & SHA-256', 'Auditoría + Bloqueo UFW'],
     githubUrl: 'https://github.com/faathii/HFS-Sentry',
     demoUrl: 'https://github.com/faathii/HFS-Sentry'
   }

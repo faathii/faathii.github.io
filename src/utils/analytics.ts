@@ -33,3 +33,4 @@ export function trackEvent(path: string, title?: string): void {
     // Nunca interrumpir la experiencia de usuario por analítica
   }
 }
+
