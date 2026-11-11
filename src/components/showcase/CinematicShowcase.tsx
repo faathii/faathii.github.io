@@ -3,10 +3,11 @@ import {
   ShieldCheck, Download, Layers, ExternalLink, Mail, Phone, MapPin,
   Send, Check, Volume2, VolumeX, ChevronLeft, ChevronRight,
   ArrowRight, Eye, FileText, GraduationCap, BookOpen,
-  User, Sliders, Radio, Tv, CircuitBoard, TrendingUp, Terminal
+  User, Sliders, Radio, Tv, CircuitBoard, TrendingUp, Terminal, Copy
 } from 'lucide-react';
 import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES } from '../../data/portfolioData';
 import { ProjectModal } from '../ProjectModal';
+import { sendContactMessage } from '../../utils/contactService';
 import type { Project } from '../../types';
 
 import hamzaImg from '../../assets/hamza.jpg';
@@ -132,7 +133,9 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [modalProject, setModalProject] = useState<Project | null>(null);
   const [selectedPhotoIdx, setSelectedPhotoIdx] = useState<Record<string, number>>({});
-  const [contactSent, setContactSent] = useState(false);
+  const [contactSent, setContactSent] = useState<'formsubmit' | 'mailto' | null>(null);
+  const [isSendingContact, setIsSendingContact] = useState(false);
+  const [emailCopied, setEmailCopied] = useState(false);
   const [contactData, setContactData] = useState({ name: '', email: '', message: '' });
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
@@ -207,13 +210,20 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
     return keys.map((k) => projectImages[k]).filter(Boolean);
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setContactSent(true);
-    setTimeout(() => {
-      setContactSent(false);
+    if (isSendingContact) return;
+    setIsSendingContact(true);
+    try {
+      const result = await sendContactMessage(contactData);
+      setContactSent(result.method);
       setContactData({ name: '', email: '', message: '' });
-    }, 4000);
+      setTimeout(() => {
+        setContactSent(null);
+      }, 6000);
+    } finally {
+      setIsSendingContact(false);
+    }
   };
 
   return (
@@ -737,11 +747,25 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
 
                     {/* Contact items */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-xs">
-                      <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center gap-2.5">
-                        <Mail className="w-4 h-4 text-orange-400 shrink-0" />
-                        <a href={`mailto:${PERSONAL_INFO.email}`} className="text-neutral-200 hover:text-orange-400 font-bold transition-colors truncate">
-                          {PERSONAL_INFO.email}
-                        </a>
+                      <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <Mail className="w-4 h-4 text-orange-400 shrink-0" />
+                          <a href={`mailto:${PERSONAL_INFO.email}`} className="text-neutral-200 hover:text-orange-400 font-bold transition-colors truncate">
+                            {PERSONAL_INFO.email}
+                          </a>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard?.writeText(PERSONAL_INFO.email).catch(() => {});
+                            setEmailCopied(true);
+                            setTimeout(() => setEmailCopied(false), 2000);
+                          }}
+                          className="p-1.5 rounded-lg bg-neutral-950 hover:bg-neutral-800 border border-neutral-700 text-neutral-400 hover:text-orange-400 transition-colors shrink-0 cursor-pointer"
+                          title="Copiar dirección de correo"
+                        >
+                          {emailCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                        </button>
                       </div>
                       <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center gap-2.5">
                         <Phone className="w-4 h-4 text-orange-400 shrink-0" />
@@ -803,7 +827,11 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
                       {contactSent && (
                         <div className="p-2.5 rounded-lg bg-emerald-950 border border-emerald-500 text-emerald-300 text-xs flex items-center gap-2">
                           <Check className="w-4 h-4 shrink-0" />
-                          <span>Mensaje despachado correctamente. Respuesta en menos de 24 horas.</span>
+                          <span>
+                            {contactSent === 'mailto'
+                              ? 'Abriendo tu cliente de correo con el mensaje preparado para Hamza.'
+                              : 'Mensaje enviado al correo de Hamza. Respuesta en menos de 24 horas.'}
+                          </span>
                         </div>
                       )}
 
@@ -837,10 +865,11 @@ export const CinematicShowcase: React.FC<CinematicShowcaseProps> = ({ onOpenBook
 
                       <button
                         type="submit"
-                        className="w-full py-2.5 px-4 rounded-lg bg-orange-500 hover:bg-orange-400 text-neutral-950 font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
+                        disabled={isSendingContact}
+                        className="w-full py-2.5 px-4 rounded-lg bg-orange-500 hover:bg-orange-400 disabled:opacity-60 disabled:cursor-wait text-neutral-950 font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
                       >
                         <Send className="w-3.5 h-3.5" />
-                        <span>Transmitir Mensaje</span>
+                        <span>{isSendingContact ? 'Transmitiendo...' : 'Transmitir Mensaje'}</span>
                       </button>
                     </form>
                   </div>

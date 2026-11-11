@@ -9,6 +9,7 @@ import { playPageTurnSound } from './BookSound';
 import { PERSONAL_INFO, PROJECTS_DATA, SKILL_CATEGORIES, TIMELINE_DATA } from '../../data/portfolioData';
 import { ProjectModal } from '../ProjectModal';
 import { BlueprintCarousel } from '../blueprint/BlueprintCarousel';
+import { sendContactMessage } from '../../utils/contactService';
 import type { Project } from '../../types';
 
 import hamzaImg from '../../assets/hamza.jpg';
@@ -115,7 +116,8 @@ export const BookPortfolio: React.FC<BookPortfolioProps> = ({ onBackToDeck }) =>
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   // Contact form state
-  const [formSent, setFormSent] = useState(false);
+  const [formSent, setFormSent] = useState<'formsubmit' | 'mailto' | null>(null);
+  const [isSendingForm, setIsSendingForm] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   const totalSpreads = CHAPTERS.length;
@@ -189,13 +191,20 @@ export const BookPortfolio: React.FC<BookPortfolioProps> = ({ onBackToDeck }) =>
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNext, handlePrev, selectedProject]);
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSent(true);
-    setTimeout(() => {
-      setFormSent(false);
+    if (isSendingForm) return;
+    setIsSendingForm(true);
+    try {
+      const result = await sendContactMessage(formData);
+      setFormSent(result.method);
       setFormData({ name: '', email: '', message: '' });
-    }, 4000);
+      setTimeout(() => {
+        setFormSent(null);
+      }, 6000);
+    } finally {
+      setIsSendingForm(false);
+    }
   };
 
   const getProjectImages = (pId: string): string[] => {
@@ -923,7 +932,11 @@ export const BookPortfolio: React.FC<BookPortfolioProps> = ({ onBackToDeck }) =>
           {formSent && (
             <div className="p-2 rounded-lg bg-emerald-100 border border-emerald-300 text-emerald-800 text-xs flex items-center gap-2">
               <Check className="w-4 h-4 shrink-0" />
-              <span>Mensaje recibido correctamente. Me pondré en contacto a la brevedad.</span>
+              <span>
+                {formSent === 'mailto'
+                  ? 'Abriendo tu cliente de correo con el mensaje preparado para Hamza.'
+                  : 'Mensaje enviado al correo de Hamza. Respuesta en la mayor brevedad.'}
+              </span>
             </div>
           )}
 
@@ -957,10 +970,11 @@ export const BookPortfolio: React.FC<BookPortfolioProps> = ({ onBackToDeck }) =>
 
           <button
             type="submit"
-            className="w-full py-2 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
+            disabled={isSendingForm}
+            className="w-full py-2 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 disabled:opacity-60 disabled:cursor-wait text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
           >
             <Send className="w-3.5 h-3.5" />
-            <span>Despachar Mensaje</span>
+            <span>{isSendingForm ? 'Transmitiendo...' : 'Despachar Mensaje'}</span>
           </button>
         </form>
       </div>
